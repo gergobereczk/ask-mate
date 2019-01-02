@@ -23,11 +23,11 @@ def find_answer_from_id(question_id):
 
 def create_id(filename):
     with open(filename, 'r') as file:
-        id = line[0]
         for line in file:
+            id = line[0]
             if line[0] == 'id':
                 id = 0
             else:
-                id +=1
+               id = int(id) + 1
         return id
 

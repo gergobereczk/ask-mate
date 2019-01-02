@@ -5,7 +5,6 @@ import data_manager
 app = Flask(__name__)
 
 
-
 @app.route("/question/<question_id>")
 def display_question(question_id):
     question_table = data_manager.find_question_from_id(question_id)
@@ -21,8 +20,8 @@ def add_a_question():
         id = new_data['id']
         return redirect(url_for('display_question', question_id=question_id))
     else:
-
-        return render_template("add_a_question.html", id='1', submission_time='1436520101', view_number='5', vote_number='5')
+        id = data_manager.create_id('/home/peter/WEB/Web_1st_week/ask-mate/sample_data/question.csv')
+        return render_template("add_a_question.html", id=id, submission_time='1436520101', view_number='5', vote_number='5')
 
 
 if __name__ == '__main__':
