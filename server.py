@@ -18,11 +18,11 @@ def display_question(question_id):
 def add_a_question():
     if request.method == "POST":
         new_data = request.form.to_dict()
-        id = new_data['id']
+        question_id = new_data['id']
+        data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, new_data)
         return redirect(url_for('display_question', question_id=question_id))
-    else:
-        id = data_manager.create_id('/home/peter/WEB/Web_1st_week/ask-mate/sample_data/question.csv')
-        return render_template("add_a_question.html", id=id, submission_time='1436520101', view_number='5', vote_number='5')
+    id = data_manager.create_id(data_manager.question_csv)
+    return render_template("add_a_question.html", id=id, submission_time='1436520101', view_nr='5', vote_nr='5')
 
 
 if __name__ == '__main__':
