@@ -10,7 +10,8 @@ def display_question(question_id):
     question_table = data_manager.find_question_from_id(question_id)
     answer_table = data_manager.find_answer_from_id(question_id)
     the_len=(len(answer_table))
-    return render_template("display_a_question.html", question_table=question_table ,answer_table=answer_table , the_len=the_len)
+    print(the_len)
+    return render_template("display_a_question.html", question_table=question_table, answer_table=answer_table , the_len=the_len)
 
 
 @app.route("/add_a_question", methods=["GET", "POST"])

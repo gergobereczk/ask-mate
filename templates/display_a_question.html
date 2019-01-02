@@ -9,10 +9,10 @@ h2 {line-height:70px;}</style>
 </head>
 <body>
 <p>
-<h1 class="big" align="center"><strong>{{ question_table[4] }}</strong></h1>
+<h1 class="big" align="center"><strong>{{ question_table["title"] }}</strong></h1>
 
 <p align="center">
- {{ question_table[5] }}
+ {{ question_table["message"] }}
 </p>
 <table align="center">
     <tr>
@@ -21,7 +21,7 @@ h2 {line-height:70px;}</style>
         </td>
                         <td width="150" align="center">
 
-        Wiew number
+        View number
                         </td>
                                 <td width="150" align="center">
 
@@ -32,15 +32,15 @@ h2 {line-height:70px;}</style>
         <tr>
 
                 <td width="150" align="center">
-        {{ question_table[1] }}
+        {{ question_table["submission_time"] }}
         </td>
                         <td width="150" align="center">
 
-        {{ question_table[2] }}
+        {{ question_table["view_number"] }}
                         </td>
                                 <td width="150" align="center">
 
-        {{ question_table[3] }}
+        {{ question_table["vote_number"] }}
                         </td>
     </tr>
 
@@ -51,7 +51,7 @@ h2 {line-height:70px;}</style>
 
 {% for line in range(the_len) %}
 
-<p1 align="center"> {{ answer_table[line][4] }} </p1>
+<p1 align="center"> {{ answer_table[line]["message"] }} </p1>
 <p>
 
     <table align="center">
@@ -62,8 +62,8 @@ h2 {line-height:70px;}</style>
     </tr>
 
     <tr>
-        <td width="150" align="center">{{ answer_table[line][1] }}</td>
-        <td width="150" align="center">{{ answer_table[line][2] }}</td>
+        <td width="150" align="center">{{ answer_table[line]["submission_time"] }}</td>
+        <td width="150" align="center">{{ answer_table[line]["vote_number"] }}</td>
     </tr>
 
     </table>
