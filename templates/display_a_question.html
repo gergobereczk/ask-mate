@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+    <style> p {line-height:40px;}
+    p1 {line-height:60px;}
+h1 {line-height:60px;}
+h2 {line-height:70px;}</style>
+
+    <title>Title</title>
+</head>
+<body>
+<p>
+<h1 class="big" align="center"><strong>{{ question_table[4] }}</strong></h1>
+
+<p align="center">
+ {{ question_table[5] }}
+</p>
+<table align="center">
+    <tr>
+                <td width="150" align="center">
+        Submission time
+        </td>
+                        <td width="150" align="center">
+
+        Wiew number
+                        </td>
+                                <td width="150" align="center">
+
+        Vote number
+                        </td>
+    </tr>
+
+        <tr>
+
+                <td width="150" align="center">
+        {{ question_table[1] }}
+        </td>
+                        <td width="150" align="center">
+
+        {{ question_table[2] }}
+                        </td>
+                                <td width="150" align="center">
+
+        {{ question_table[3] }}
+                        </td>
+    </tr>
+
+</table>
+
+
+<h2 align="center"><strong>Answers</strong></h2>
+
+{% for line in range(the_len) %}
+
+<p1 align="center"> {{ answer_table[line][4] }} </p1>
+<p>
+
+    <table align="center">
+
+        <tr>
+        <td width="150" align="center">Submission time</td>
+        <td width="150" align="center">Vote number</td>
+    </tr>
+
+    <tr>
+        <td width="150" align="center">{{ answer_table[line][1] }}</td>
+        <td width="150" align="center">{{ answer_table[line][2] }}</td>
+    </tr>
+
+    </table>
+</p>
+
+{% endfor %}
+<p align="right">
+<a href="/question/{{ question_table[0] }}/new-answer">Add new answer</a>
+</p>
+
+
+</body>
+</html>

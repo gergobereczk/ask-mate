@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new question</title>
+</head>
+<body>
+<p>
+    <h1>Add a new question:</h1>
+</p>
+<form action="/add_a_question" method="POST">
+    <input type="hidden" name="id" value="{{ id }}">
+    <input type="hidden" name="submission_time" value="{{ submission_time }}">
+    <input type="hidden" name="view_nr" value="{{ view_nr }}">
+    <input type="hidden" name="vote_nr" value="{{ vote_nr }}">
+    <p>
+        <label for="title"><strong>Question title:</strong></label>
+        <br>
+        <input type="text" id="title" name="title" size="50">
+    </p>
+    <p>
+        <label for="message"><strong>Your question:</strong></label>
+        <br>
+        <textarea id="message" name="question" rows="10" cols="50">Your Question goes here...</textarea>
+    </p>
+    <p>
+        <label for="image"><strong>Image about problem:</strong></label>
+        <br>
+        <input type="text" id="image" name="image" value="give path: images/image.jpg" size="50">
+    </p>
+    <p>
+        <input type="submit" value="Send Question">
+    </p>
+</form>
+</body>
+</html>
