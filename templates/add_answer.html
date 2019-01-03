@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add an Answer</title>
+</head>
+<body>
+    <form action="/question/{{ question_id }}" method="post">
+        <input type="hidden" name="id" value="{{ answer_id }}">
+        <input type="hidden" name="submission_time" value="{{ submission_time }}">
+        <input type="hidden" name="vote_number" value="{{ vote_number }}">
+        <input type="hidden" name="question_id" value="{{ question_id }}">
+        <p>
+            <label for="answer"><strong>Your answer</strong></label>
+            <br>
+            <input type="text" pattern=".{10,}" id="answer" name="message" size="50" placeholder="Your answer goes here..(min 10 characters)">
+        </p>
+        <p>
+            <label for="image"><strong>Upload your image</strong></label>
+            <br>
+            <input id="image" name="image" placeholder="give path like: image.jpg" size="50">
+        </p>
+        <p>
+            <input type="submit" value="Send Answer">
+        </p>
+    </form>
+
+</body>
+</html>
