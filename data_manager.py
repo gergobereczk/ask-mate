@@ -6,7 +6,7 @@ question_csv = "sample_data/question.csv"
 answer_csv = "sample_data/answer.csv"
 
 HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-
+HEADER_ANSWER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 def show_question():
     question_list = []
