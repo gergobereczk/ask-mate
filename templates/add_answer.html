@@ -6,7 +6,9 @@
 </head>
 <body>
     <form action="/add_answer" method="post">
-        <input type="hidden" name="id" value="{{ answer_id }}"
+        <input type="hidden" name="id" value="{{ answer_id }}">
+        <input type="hidden" name="submission_time" value="{{ submission_time }}">
+        <input type="hidden" name="vote_number" value="{{ vote_nr }}">
     </form>
 
 </body>
