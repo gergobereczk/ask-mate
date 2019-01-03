@@ -5,7 +5,7 @@ question_csv = "sample_data/question.csv"
 
 answer_csv = "sample_data/answer.csv"
 
-HEADER = ['id', 'submission_time', 'view_nr', 'vote_nr', 'title', 'question', 'image']
+HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 
 def find_question_from_id(question_id):
     question_data=connection.read_csv(question_csv)
