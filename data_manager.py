@@ -4,6 +4,17 @@ question_csv = "sample_data/question.csv"
 
 answer_csv = "sample_data/answer.csv"
 
+def show_question():
+    question_list = []
+    question_data=connection.read_csv(question_csv)
+    the_len_value = (len(question_data))+1
+    for item in range (1,the_len_value):
+        question_list.append (question_data[(item*-1)])
+    return question_list
+
+
+
+
 
 def find_question_from_id(question_id):
     question_data=connection.read_csv(question_csv)

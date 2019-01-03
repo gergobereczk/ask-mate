@@ -4,6 +4,12 @@ import data_manager
 
 app = Flask(__name__)
 
+@app.route("/list")
+def list_questions():
+    list_of_question = data_manager.show_question()
+    #print(list_of_question["id"])
+    return  render_template("list_questions.html", list_of_question=list_of_question)
+
 
 
 @app.route("/question/<question_id>")
