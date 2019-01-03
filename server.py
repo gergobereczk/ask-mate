@@ -12,7 +12,7 @@ def list_questions():
     return  render_template("list_questions.html", list_of_question=list_of_question)
 
 
-@app.route("/question/<question_id>")
+@app.route("/question/<question_id>", methods=['GET', 'POST'])
 def display_question(question_id):
     question_table = data_manager.find_question_from_id(question_id)
     answer_table = data_manager.find_answer_from_id(question_id)
@@ -36,7 +36,7 @@ def add_a_question():
 def add_an_answer(question_id):
     if request.method == 'POST':
         answer_data = request.form.to_dict()
-        return redirect('/')
+        return redirect(url_for('display_question', question_id=question_id))
     else:
         answer_id = data_manager.create_id(data_manager.answer_csv)
         return render_template('add_answer.html', question_id=question_id, answer_id=answer_id, submission_time='1436520101', vote_nr='5')
