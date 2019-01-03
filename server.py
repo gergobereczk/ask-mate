@@ -25,6 +25,14 @@ def add_a_question():
     return render_template("add_a_question.html", id=id, submission_time='1436520101', view_nr='5', vote_nr='5')
 
 
+@app.route('/question/<question_id>/new_answer' methods=['GET', 'POST'])
+def add_an_answer():
+    if request.method == 'POST':
+        new_data = request.form.to_dict()
+        question_id = new_data['id']
+
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
