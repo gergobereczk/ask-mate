@@ -4,6 +4,7 @@ import data_manager
 
 app = Flask(__name__)
 
+@app.route("/")
 @app.route("/list")
 def list_questions():
     list_of_question = data_manager.show_question()
