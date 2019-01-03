@@ -57,8 +57,9 @@ h3 {line-height:50px;}
 
 </table>
 
-
 <h2 align="center"><strong>Answers</strong></h2>
+
+    <input type="hidden" name="id" value="t">
 
 {% for line in range(the_len) %}
 
@@ -76,6 +77,8 @@ h3 {line-height:50px;}
     <tr>
         <td width="150" align="center">{{ answer_table[line]["submission_time"] }}</td>
         <td width="150" align="center">{{ answer_table[line]["vote_number"] }}</td>
+        <td><a href="/answer/{{ answer_table[line]["id"] }}/delete" >Delete answer</a></td>
+
     </tr>
 
     </table>

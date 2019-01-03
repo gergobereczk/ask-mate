@@ -5,7 +5,6 @@ def read_csv(filename):
     with open(filename) as csv_data:
         dict_data = csv.DictReader(csv_data)
         database = []
-        print (dict_data)
         for line in dict_data:
             database.append(line)
         return database
@@ -19,3 +18,10 @@ def write_csv(from_filename, to_filename, fieldnames, form_data):
         for line in data:
             writer.writerow(line)
         return data
+
+def rewrite_csv(filename, data, fieldnames):
+    with open(filename, 'w') as file:
+        writer = csv.DictWriter(file, fieldnames)
+        writer.writeheader()
+        for line in data:
+            writer.writerow(line)
