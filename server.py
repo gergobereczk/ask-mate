@@ -34,7 +34,8 @@ def add_a_question():
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_an_answer(question_id):
     if request.method == 'POST':
-        pass
+        answer_data = request.form.to_dict()
+        return redirect('/')
     else:
         answer_id = data_manager.create_id(data_manager.answer_csv)
         return render_template('add_answer.html', question_id=question_id, answer_id=answer_id, submission_time='1436520101', vote_nr='5')
