@@ -31,6 +31,16 @@ def add_a_question():
     return render_template("add_a_question.html", id=id, submission_time='1436520101', view_nr='5', vote_nr='5')
 
 
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+def add_an_answer(question_id):
+    if request.method == 'POST':
+        pass
+    else:
+        answer_id = data_manager.create_id(data_manager.answer_csv)
+        return render_template('add_answer.html', question_id=question_id, answer_id=answer_id)
+
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
