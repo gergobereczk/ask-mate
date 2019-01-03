@@ -8,7 +8,21 @@
     <form action="/add_answer" method="post">
         <input type="hidden" name="id" value="{{ answer_id }}">
         <input type="hidden" name="submission_time" value="{{ submission_time }}">
-        <input type="hidden" name="vote_number" value="{{ vote_nr }}">
+        <input type="hidden" name="vote_number" value="{{ vote_number }}">
+        <input type="hidden" name="question_id" value="{{ question_id }}">
+        <p>
+            <label for="answer"><strong>Your answer</strong></label>
+            <br>
+            <textarea id="answer" name="message" rows="10" cols="50" placeholder="Your answer goes here.."></textarea>
+        </p>
+        <p>
+            <label for="image"><strong>Upload your image</strong></label>
+            <br>
+            <input id="image" name="image" placeholder="give path like: image.jpg" size="50">
+        </p>
+        <p>
+            <input type="submit" value="Send Answer">
+        </p>
     </form>
 
 </body>
