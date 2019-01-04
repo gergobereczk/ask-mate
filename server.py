@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 import data_manager
+import time
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ def list_questions():
     return render_template("list_questions.html", list_of_question=list_of_question)
 
 
-@app.route("/question/<question_id>", methods=['GET', 'POST'])
+@app.route("/question/<question_id>", methods=['GET'])
 def display_question(question_id):
     question_table = data_manager.find_question_from_id(question_id)
     answer_table = data_manager.find_answer_from_id(question_id)
@@ -25,6 +26,7 @@ def display_question(question_id):
 @app.route("/add_a_question", methods=["GET", "POST"])
 def add_a_question():
     id = data_manager.create_id(data_manager.question_csv)
+    submission_time = 'default'
 
     if request.method == "POST":
         new_data = request.form.to_dict()
@@ -32,7 +34,7 @@ def add_a_question():
         data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, new_data)
         return redirect(url_for('display_question', question_id=question_id))
 
-    return render_template("add_a_question.html", id=id, submission_time='1436520101', view_nr='5', vote_nr='5')
+    return render_template("add_a_question.html", id=id, submission_time=submission_time, view_nr='5', vote_nr='5')
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
