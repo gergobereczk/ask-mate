@@ -17,19 +17,17 @@ table, th, td {
 <body>
 <h1 align="center"><strong>Ask máté</strong></h1>
 {{ list_of_question["id"] }}
-<h2>
-<table align="center">
-        <tr>
-            <td width="150" align="center">id</td>
-            <td width="150" align="center">title </td>
-            <td width="300" align="center" >message</td>
-            <td width="180" align="center">submission time</td>
-            <td width="150" align="center">view number</td>
-            <td width="150" align="center">vote number</td>
-    </tr>
-</table>
-</h2>
 <table align="center" cellpadding="10" >
+    <h2>
+        <tr>
+            <th width="150" align="center">id</th>
+            <th width="150" align="center">title </th>
+            <th width="300" align="center" >message</th>
+            <th width="180" align="center">submission time</th>
+            <th width="150" align="center">view number</th>
+            <th width="150" align="center">vote number</th>
+        </tr>
+    </h2>
 {% for line in list_of_question %}
     <tr>
             <td width="150" align="center"> {{ line['id'] }} </td>
