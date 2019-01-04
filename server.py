@@ -57,6 +57,14 @@ def delete_answer(answer_id):
         return redirect(url_for('display_question', question_id=question_id))
         #return ("POST")
 
+@app.route("/question/<question_id>/delete")
+def delete_question(question_id):
+    if request.method == "GET":
+        data_manager.delete_answers(question_id)
+        data_manager.delete_question(question_id)
+        return redirect ("/list")
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

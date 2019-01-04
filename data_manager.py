@@ -71,6 +71,22 @@ def delete_answer(id):
             item_deleted_list.append(line)
     connection.rewrite_csv(answer_csv,item_deleted_list, HEADER_ANSWER)
 
+def delete_answers(id):
+    answer_data = connection.read_csv(answer_csv)
+    item_deleted_list = []
+    for line in (answer_data):
+        if line["question_id"] != str(id):
+            item_deleted_list.append(line)
+    connection.rewrite_csv(answer_csv, item_deleted_list, HEADER_ANSWER)
+
+def delete_question(id):
+    question_data = connection.read_csv(question_csv)
+    item_deleted_list = []
+    for line in (question_data):
+        if line["id"] != str(id):
+            item_deleted_list.append(line)
+    connection.rewrite_csv(question_csv, item_deleted_list, HEADER)
+
 def pluss_view_number(question_id):
     question_data = connection.read_csv(question_csv)
     for line in question_data:
