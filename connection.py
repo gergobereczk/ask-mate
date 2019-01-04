@@ -19,6 +19,7 @@ def write_csv(from_filename, to_filename, fieldnames, form_data):
             writer.writerow(line)
         return data
 
+
 def rewrite_csv(filename, data, fieldnames):
     with open(filename, 'w') as file:
         writer = csv.DictWriter(file, fieldnames)
