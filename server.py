@@ -15,6 +15,8 @@ def list_questions():
 
 @app.route("/question/<question_id>", methods=['GET', 'POST'])
 def display_question(question_id):
+    data_manager.pluss_view_number(question_id)
+
     question_table = data_manager.find_question_from_id(question_id)
     answer_table = data_manager.find_answer_from_id(question_id)
     the_len=(len(answer_table))

@@ -69,3 +69,14 @@ def delete_answer(id):
         if line["id"] != str(id):
             item_deleted_list.append(line)
     connection.rewrite_csv(answer_csv,item_deleted_list, HEADER_ANSWER)
+
+def pluss_view_number(question_id):
+    question_data = connection.read_csv(question_csv)
+    for line in question_data:
+        if question_id == line["id"]:
+            view_count = int(line["view_number"])
+            view_count += 1
+            line["view_number"] = view_count
+    connection.rewrite_csv(question_csv,question_data,HEADER)
+
+
