@@ -48,7 +48,8 @@ h3 {line-height:50px;}
     </tr>
 
 </table>
-<h3><p align="center"><a href="{{  url_for('display_question', question_id=question_table.id) }}" type="button"><button type="button">Vote for it!</button></a></p></h3>
+<h3><p align="center"><a href="{{  url_for('display_question', question_id=question_table.id) }}"><button type="button">Vote for it!</button></a></p></h3>
+<p align="center"><a href="/question/{{ question_table["id"] }}/delete" ><button type="button">Delete Question</button></a></p>
 <h2 align="center"><strong>Answers</strong></h2>
 
     <input type="hidden" name="id" value="t">
