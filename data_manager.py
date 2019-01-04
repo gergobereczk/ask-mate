@@ -96,4 +96,8 @@ def pluss_view_number(question_id):
             line["view_number"] = view_count
     connection.rewrite_csv(question_csv,question_data,HEADER)
 
-
+def get_vote(question_id):
+    question_data = connection.read_csv(question_csv)
+    for line in question_data:
+        if question_id == line["id"]:
+            return line['vote_nr']
