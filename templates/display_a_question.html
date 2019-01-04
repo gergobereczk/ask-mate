@@ -48,7 +48,7 @@ h3 {line-height:50px;}
     </tr>
 
 </table>
-
+<h3><p align="center"><a href="{{  url_for('display_question', question_id=question_table.id) }}" type="button">Add a vote</a></p></h3>
 <h2 align="center"><strong>Answers</strong></h2>
 
     <input type="hidden" name="id" value="t">
@@ -56,7 +56,6 @@ h3 {line-height:50px;}
 {% for line in range(the_len) %}
 
 <h3 class="big" align="center"><strong>{{ answer_table[line]["message"] }}</strong></h3>
-
 <p>
 
     <table align="center">
@@ -69,16 +68,16 @@ h3 {line-height:50px;}
     <tr>
         <td width="150" align="center">{{ answer_table[line]["submission_time"] }}</td>
         <td width="150" align="center">{{ answer_table[line]["vote_number"] }}</td>
-        <td><a href="/answer/{{ answer_table[line]["id"] }}/delete" >Delete answer</a></td>
+        <td><a href="/answer/{{ answer_table[line]["id"] }}/delete" ><strong><em>Delete answer</em></strong></a></td>
 
     </tr>
     </table>
 </p>
 
 {% endfor %}
-<p align="center">
+<h3><p align="center">
 <a href="/question/{{ question_table.id }}/new-answer">Add new answer</a>
-</p>
+</p></h3>
     <h3>
         <p align="center">
             <a href="/">Back to all questions</a>
