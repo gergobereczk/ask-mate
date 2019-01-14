@@ -1,5 +1,5 @@
 id,submission_time,view_number,vote_number,title,message,image
-0,1493368154,40,7,How to make lists in Python?,"I am totally new to this, any hints?",
+0,1493368154,41,7,How to make lists in Python?,"I am totally new to this, any hints?",
 1,1493068124,18,9,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
@@ -10,4 +10,3 @@ jquery
 booklet
 app.js (bundled file with webpack, including jquery)",images/image1.png
 2,1546597157.413824,9,5,How you felt here after the ProgBasics?,I were rockin' and rollin!,
-3,1546597217.2312727,7,5,Peti kérdés,Bla bla bla bla,
