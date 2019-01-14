@@ -10,7 +10,6 @@ app = Flask(__name__)
 @app.route("/list")
 def list_questions():
     list_of_question = data_manager.show_question()
-    #print(list_of_question["id"])
     return render_template("list_questions.html", list_of_question=list_of_question)
 
 
@@ -36,7 +35,7 @@ def add_a_question():
         data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, new_data)
         return redirect(url_for('display_question', question_id=question_id))
 
-    return render_template("add_a_question.html", id=id, submission_time='default', view_nr='5', vote_nr='5')
+    return render_template("add_a_question.html", id=id, submission_time='default', view_nr='0', vote_nr='5')
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
@@ -52,6 +51,7 @@ def add_an_answer(question_id):
     return render_template('add_answer.html', question_id=question_id, answer_id=answer_id,
                            submission_time='default', vote_nr='5')
 
+
 @app.route("/answer/<answer_id>/delete")
 def delete_answer(answer_id):
     if request.method == "GET":
@@ -60,17 +60,17 @@ def delete_answer(answer_id):
         return redirect(url_for('display_question', question_id=question_id))
         #return ("POST")
 
-<<<<<<< HEAD
+
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
     if request.method == "GET":
         data_manager.delete_answers(question_id)
         data_manager.delete_question(question_id)
         return redirect ("/list")
-=======
 
-#@app.route("/question/<question_id>/vote", methods=['GET'])
-#def counting_votes(question_id):
+
+# @app.route("/question/<question_id>/vote", methods=['GET'])
+# def counting_votes(question_id):
 #    question_data = data_manager.find_question_from_id(question_id)
 #    vote_nr = question_data['vote_number']
 #    if vote_nr == None:
@@ -80,7 +80,6 @@ def delete_question(question_id):
 #    question_data['vote_number'] = vote_nr
 #    data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, question_data)
 #    return redirect(url_for('display_question', question_id=question_id))
->>>>>>> a75016bb68026b5d001de18debcfc8a741aeae3f
 
 
 if __name__ == '__main__':

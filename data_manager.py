@@ -1,4 +1,5 @@
 import connection
+import data_connection
 import csv
 
 question_csv = "sample_data/question.csv"
@@ -7,6 +8,15 @@ answer_csv = "sample_data/answer.csv"
 
 HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 HEADER_ANSWER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+
+
+@data_connection.connection_handler
+def show_all_questions(cursor):
+    cursor.execute("""
+                    SELECT * FROM question
+                   """,)
+    questions = cursor.fetchall()
+    return questions
 
 
 def show_question():
