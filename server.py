@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime
 
 import data_manager
 import time
+import time
+
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -31,7 +35,7 @@ def add_a_question():
     if request.method == "POST":
         new_data = request.form.to_dict()
         question_id = new_data['id']
-        new_data['submission_time'] = time.time()
+        new_data['submission_time'] = datetime.now()
         data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, new_data)
         return redirect(url_for('display_question', question_id=question_id))
 
@@ -44,9 +48,11 @@ def add_an_answer(question_id):
 
     if request.method == 'POST':
         answer_data = request.form.to_dict()
-        answer_data['submission_time'] = time.time()
-        data_manager.write_csv(data_manager.answer_csv, data_manager.answer_csv, data_manager.HEADER_ANSWER,
-                               answer_data)
+        message = answer_data['message']
+        submission_data = datetime.now()
+        data_manager.add_answer(question_id, message, submission_data)
+        #data_manager.write_csv(data_manager.answer_csv, data_manager.answer_csv, data_manager.HEADER_ANSWER,
+                               #answer_data)
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_answer.html', question_id=question_id, answer_id=answer_id,
@@ -56,7 +62,9 @@ def add_an_answer(question_id):
 @app.route("/answer/<answer_id>/delete")
 def delete_answer(answer_id):
     if request.method == "GET":
-        question_id = data_manager.find_question_id_from_answers(answer_id)
+        question_id_in_list = data_manager.find_question_id_from_answers(answer_id)
+        make_dict_from_list = question_id_in_list[0]
+        question_id= make_dict_from_list['question_id']
         data_manager.delete_answer(answer_id)
         return redirect(url_for('display_question', question_id=question_id))
         # return ("POST")

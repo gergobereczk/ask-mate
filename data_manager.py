@@ -29,12 +29,12 @@ def show_all_questions(cursor):
 
 
 @data_connection.connection_handler
-def find_question_by_id(cursor, question_id):
+def find_question_by_id(cursor, id):
     cursor.execute("""
                         SELECT * FROM question
                         WHERE id=%(id)s;
                        """,
-                   {'id': question_id})
+                   {'id': id})
     question = cursor.fetchall()
 
     return question
@@ -50,6 +50,15 @@ def find_answer_by_id(cursor, question_id):
     answers = cursor.fetchall()
 
     return answers
+
+@data_connection.connection_handler
+def add_answer(cursor, question_id, message, submission_data):
+    cursor.execute("""
+                            INSERT INTO answer (question_id, message, submission_time)
+                            VALUES (%(question_id)s, %(message)s, %(submission_data)s)
+                           """,
+                   {'question_id': question_id, 'message':message, 'submission_data':submission_data})
+
 
 
 def create_id(filename):
@@ -73,22 +82,26 @@ def write_csv(from_filename, to_filename, fieldnames, form_data):
             writer.writerow(line)
         return data
 
+@data_connection.connection_handler
+def find_question_id_from_answers(cursor, answer_id):
+    cursor.execute("""
+                            SELECT question_id FROM answer
+                            WHERE id=%(id)s;
+                           """,
+                   {'id': answer_id})
+    question_id = cursor.fetchall()
 
-def find_question_id_from_answers(answer_id):
-    question_data = connection.read_csv(answer_csv)
-    for line in question_data:
-        if line["id"] == answer_id:
-            right_question_id = line["question_id"]
+    return question_id
+
     return right_question_id
 
-
-def delete_answer(id):
-    answer_data = connection.read_csv(answer_csv)
-    item_deleted_list = []
-    for line in (answer_data):
-        if line["id"] != str(id):
-            item_deleted_list.append(line)
-    connection.rewrite_csv(answer_csv, item_deleted_list, HEADER_ANSWER)
+@data_connection.connection_handler
+def delete_answer(cursor, id):
+    cursor.execute("""
+                              DELETE FROM answer
+                              WHERE id=%(id)s;
+                             """,
+                   {'id': id})
 
 
 def delete_answers(id):
