@@ -14,34 +14,42 @@ HEADER_ANSWER = ['id', 'submission_time', 'vote_number', 'question_id', 'message
 def show_all_questions(cursor):
     cursor.execute("""
                     SELECT * FROM question
-                   """,)
+                   """, )
     questions = cursor.fetchall()
     return questions
 
 
-def show_question():
-    question_list = []
-    question_data = connection.read_csv(question_csv)
-    the_len_value = (len(question_data))+1
-    for item in range(1, the_len_value):
-        question_list.append(question_data[(item*-1)])
-    return question_list
+@data_connection.connection_handler
+def show_all_questions(cursor):
+    cursor.execute("""
+                    SELECT * FROM question
+                   """, )
+    questions = cursor.fetchall()
+    return questions
 
 
-def find_question_from_id(question_id):
-    question_data=connection.read_csv(question_csv)
-    for item in question_data:
-        if item['id'] == str(question_id):
-            return item
+@data_connection.connection_handler
+def find_question_by_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT * FROM question
+                        WHERE id=%(id)s;
+                       """,
+                   {'id': question_id})
+    question = cursor.fetchall()
+
+    return question
 
 
-def find_answer_from_id(question_id):
-    list_from_right_answer = []
-    answer_data = connection.read_csv(answer_csv)
-    for line in answer_data:
-        if line["question_id"] == str(question_id):
-            list_from_right_answer.append(line)
-    return list_from_right_answer
+@data_connection.connection_handler
+def find_answer_by_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT * FROM answer
+                        WHERE question_id=%(question_id)s;
+                       """,
+                   {'question_id': question_id})
+    answers = cursor.fetchall()
+
+    return answers
 
 
 def create_id(filename):
@@ -51,7 +59,7 @@ def create_id(filename):
         if id == 'id':
             id = 0
         else:
-           id = int(id) + 1
+            id = int(id) + 1
     return id
 
 
@@ -64,6 +72,7 @@ def write_csv(from_filename, to_filename, fieldnames, form_data):
         for line in data:
             writer.writerow(line)
         return data
+
 
 def find_question_id_from_answers(answer_id):
     question_data = connection.read_csv(answer_csv)
@@ -79,7 +88,8 @@ def delete_answer(id):
     for line in (answer_data):
         if line["id"] != str(id):
             item_deleted_list.append(line)
-    connection.rewrite_csv(answer_csv,item_deleted_list, HEADER_ANSWER)
+    connection.rewrite_csv(answer_csv, item_deleted_list, HEADER_ANSWER)
+
 
 def delete_answers(id):
     answer_data = connection.read_csv(answer_csv)
@@ -89,6 +99,7 @@ def delete_answers(id):
             item_deleted_list.append(line)
     connection.rewrite_csv(answer_csv, item_deleted_list, HEADER_ANSWER)
 
+
 def delete_question(id):
     question_data = connection.read_csv(question_csv)
     item_deleted_list = []
@@ -97,6 +108,7 @@ def delete_question(id):
             item_deleted_list.append(line)
     connection.rewrite_csv(question_csv, item_deleted_list, HEADER)
 
+
 def pluss_view_number(question_id):
     question_data = connection.read_csv(question_csv)
     for line in question_data:
@@ -104,7 +116,8 @@ def pluss_view_number(question_id):
             view_count = int(line["view_number"])
             view_count += 1
             line["view_number"] = view_count
-    connection.rewrite_csv(question_csv,question_data,HEADER)
+    connection.rewrite_csv(question_csv, question_data, HEADER)
+
 
 def get_vote(question_id):
     question_data = connection.read_csv(question_csv)

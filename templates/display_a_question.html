@@ -1,89 +1,118 @@
 <!DOCTYPE html>
 <head>
-    <style> p {line-height:40px;}
-    p1 {line-height:60px;}
-h1 {line-height:60px;}
-h2 {line-height:70px;}
-h3 {line-height:50px;}
-.justify {
-    text-align: justify;
-}</style>
+    <style> p {
+        line-height: 40px;
+    }
+
+    p1 {
+        line-height: 60px;
+    }
+
+    h1 {
+        line-height: 60px;
+    }
+
+    h2 {
+        line-height: 70px;
+    }
+
+    h3 {
+        line-height: 50px;
+    }
+
+    .justify {
+        text-align: justify;
+    }</style>
 
     <title>Title</title>
 </head>
 <body>
 <p>
-<h1 class="big" align="center"><strong>{{ question_table["title"] }}</strong></h1>
+{% for question in question_table %}
+<h1 class="big" align="center"><strong>{{ question.title }}</strong></h1>
+{% endfor %}
 </p>
 
 <p align="center">
-    <table align="center">
+<table align="center">
+    {% for question in question_table %}
     <tr>
         <td align="center" width="800">
- {{ question_table["message"] }}
+            {{ question.message }}
         </td>
     </tr>
+    {% endfor %}
 </table>
 </p>
 <table align="center">
     <tr>
-                <td width="150" align="center">Submission time</td>
-                        <td width="150" align="center">View number</td>
-                                <td width="150" align="center">Vote number</td>
+        <th width="150" align="center">Submission time</th>
+        <th width="150" align="center">View number</th>
+        <th width="150" align="center">Vote number</th>
     </tr>
-
+    {% for question in question_table %}
         <tr>
-
-                <td width="150" align="center">
-        {{ question_table["submission_time"] }}
-        </td>
-                        <td width="150" align="center">
-
-        {{ question_table["view_number"] }}
-                        </td>
-                                <td width="150" align="center">
-
-        {{ question_table["vote_number"] }}
-                        </td>
-    </tr>
-
+            <td width="150" align="center">{{ question.submission_time }}</td>
+            <td width="150" align="center">{{ question.view_number }}</td>
+            <td width="150" align="center">{{ question.vote_number }}</td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    {% endfor %}
 </table>
-<h3><p align="center"><a href="{{  url_for('display_question', question_id=question_table.id) }}"><button type="button">Vote for it!</button></a></p></h3>
-<p align="center"><a href="/question/{{ question_table["id"] }}/delete" ><button type="button">Delete Question</button></a></p>
+<h3>
+    <p align="center">
+        <a href="{{ url_for('display_question', question_id=question_table.id) }}">
+            <button type="button">Vote for it!</button>
+        </a>
+    </p>
+</h3>
+<p align="center"><a href="/question/{{ question_table["id"] }}/delete">
+    <button type="button">Delete Question</button>
+</a></p>
 <h2 align="center"><strong>Answers</strong></h2>
 
-    <input type="hidden" name="id" value="t">
+<input type="hidden" name="id" value="t">
 
 {% for line in range(the_len) %}
 
-<h3 class="big" align="center"><strong>{{ answer_table[line]["message"] }}</strong></h3>
-<p>
+    <h3 class="big" align="center"><strong>{{ answer_table[line]["message"] }}</strong></h3>
+    <p>
 
     <table align="center">
 
         <tr>
-        <td width="150" align="center">Submission time</td>
-        <td width="150" align="center">Vote number</td>
-    </tr>
+            <td width="150" align="center">Submission time</td>
+            <td width="150" align="center">Vote number</td>
+        </tr>
 
-    <tr>
-        <td width="150" align="center">{{ answer_table[line]["submission_time"] }}</td>
-        <td width="150" align="center">{{ answer_table[line]["vote_number"] }}</td>
-        <td><a href="/answer/{{ answer_table[line]["id"] }}/delete" ><button type="button">Delete Answer</button></a></td>
+        <tr>
+            <td width="150" align="center">{{ answer_table[line]["submission_time"] }}</td>
+            <td width="150" align="center">{{ answer_table[line]["vote_number"] }}</td>
+            <td><a href="/answer/{{ answer_table[line]["id"] }}/delete">
+                <button type="button">Delete Answer</button>
+            </a></td>
 
-    </tr>
+        </tr>
     </table>
-</p>
+    </p>
 
 {% endfor %}
-<h3><p align="center">
-<a href="/question/{{ question_table.id }}/new-answer"><button type="button">Add New Answer</button></a>
-</p></h3>
-    <h3>
-        <p align="center">
-            <a href="/"><button type="button">Back to Questions</button></a>
-        </p>
-    </h3>
+<h3>
+    <p align="center">
+        <a href="/question/{{ question_table.id }}/new-answer">
+            <button type="button">Add New Answer</button>
+        </a>
+    </p>
+</h3>
+<h3>
+    <p align="center">
+        <a href="/">
+            <button type="button">Back to Questions</button>
+        </a>
+    </p>
+</h3>
 
 </body>
 </html>
