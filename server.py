@@ -10,7 +10,6 @@ app = Flask(__name__)
 @app.route("/list")
 def list_questions():
     list_of_question = data_manager.show_question()
-    #print(list_of_question["id"])
     return render_template("list_questions.html", list_of_question=list_of_question)
 
 
@@ -52,6 +51,7 @@ def add_an_answer(question_id):
     return render_template('add_answer.html', question_id=question_id, answer_id=answer_id,
                            submission_time='default', vote_nr='5')
 
+
 @app.route("/answer/<answer_id>/delete")
 def delete_answer(answer_id):
     if request.method == "GET":
@@ -59,6 +59,7 @@ def delete_answer(answer_id):
         data_manager.delete_answer(answer_id)
         return redirect(url_for('display_question', question_id=question_id))
         #return ("POST")
+
 
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):

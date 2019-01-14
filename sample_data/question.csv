@@ -9,6 +9,5 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)",images/image1.png
-2,1546597157.413824,8,5,How you felt here after the ProgBasics?,I were rockin' and rollin!,
+2,1546597157.413824,9,5,How you felt here after the ProgBasics?,I were rockin' and rollin!,
 3,1546597217.2312727,7,5,Peti kérdés,Bla bla bla bla,
-4,1546597410.8803756,5,5,Gergő kérdése,Tibi bácsi válasza,
