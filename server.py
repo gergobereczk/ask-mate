@@ -60,14 +60,12 @@ def delete_answer(answer_id):
         return redirect(url_for('display_question', question_id=question_id))
         #return ("POST")
 
-<<<<<<< HEAD
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
     if request.method == "GET":
         data_manager.delete_answers(question_id)
         data_manager.delete_question(question_id)
         return redirect ("/list")
-=======
 
 #@app.route("/question/<question_id>/vote", methods=['GET'])
 #def counting_votes(question_id):
@@ -80,7 +78,6 @@ def delete_question(question_id):
 #    question_data['vote_number'] = vote_nr
 #    data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, question_data)
 #    return redirect(url_for('display_question', question_id=question_id))
->>>>>>> a75016bb68026b5d001de18debcfc8a741aeae3f
 
 
 if __name__ == '__main__':
