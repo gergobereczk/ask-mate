@@ -78,13 +78,15 @@ def delete_question(question_id):
         return redirect("/list")
 
 
-@app.route('/question/<question_id>/new-comment', method=['GET', 'POST'])
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_a_comment_to_question(question_id):
-    answer_id = NULL
     if request.method == 'POST':
         message_data = request.form.to_dict()
         message = message_data['message']
-        submission_data = datetime.now()
+        data_manager.add_comment(question_id, message)
+        return redirect(url_for('display_question', question_id=question_id))
+
+    return render_template('add_a_comment.html', question_id=question_id)
 
 
 

@@ -53,10 +53,6 @@ def add_answer(cursor, question_id, message, submission_data):
                    {'question_id': question_id, 'message':message, 'submission_data':submission_data})
 
 
-
-
-
-
 @data_connection.connection_handler
 def find_question_id_from_answers(cursor, answer_id):
     cursor.execute("""
@@ -78,6 +74,16 @@ def delete_answer(cursor, id):
                              """,
                    {'id': id})
 
+
+@data_connection.connection_handler
+def add_comment(cursor, question_id, message):
+    submission_time = datetime.now()
+    edited_count = 0
+    cursor.execute("""
+                    INSERT INTO comment (question_id, message, submission_time, edited_number)
+                    VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_number)) """,
+                   {'question_id': question_id, 'message': message, 'submission_time':submission_time,
+                    'edited_count': edited_count})
 
 
 
