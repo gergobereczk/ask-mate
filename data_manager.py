@@ -80,6 +80,42 @@ def delete_answer(cursor, id):
 
 
 
+@data_connection.connection_handler
+def get_answer_by_id(cursor, answer_id):
+    cursor.execute("""
+                        SELECT * FROM answer
+                        WHERE id=%(answer_id)s;
+                       """,
+                   {'answer_id': answer_id})
+    answers = cursor.fetchall()
+
+    return answers
+
+
+@data_connection.connection_handler
+def update_answer_by_id(cursor, answer_id, message, submission_time):
+    cursor.execute("""
+                        UPDATE answer
+                        SET message=%(message)s, submission_time=%(submission_time)s
+                        WHERE id=%(answer_id)s;
+                       """,
+                   {'answer_id': answer_id, 'message':message, 'submission_time':submission_time})
+
+
+@data_connection.connection_handler
+def get_question_id(cursor, answer_id):
+    cursor.execute("""
+                        SELECT question_id FROM answer
+                        WHERE id=%(answer_id)s;
+                       """,
+                   {'answer_id': answer_id})
+    answers = cursor.fetchall()
+
+    return answers
+
+
+
+
 
 def delete_question(id):
     question_data = connection.read_csv(question_csv)

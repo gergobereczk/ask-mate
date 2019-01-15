@@ -14,7 +14,6 @@ app = Flask(__name__)
 @app.route("/list")
 def list_questions():
     list_of_question = data_manager.show_all_questions()
-    print(list_of_question)
     return render_template("list_questions.html", list_of_question=list_of_question)
 
 
@@ -76,6 +75,30 @@ def delete_question(question_id):
         data_manager.delete_answers(question_id)
         data_manager.delete_question(question_id)
         return redirect("/list")
+
+@app.route("/answer/<answer_id>/edit", methods=['GET', 'POST'])
+def edit_answer(answer_id):
+    if request.method == "GET":
+        #data_manager.delete_answers(question_id)
+        #data_manager.delete_question(question_id)
+        #return redirect("/list")
+        full_answer = data_manager.get_answer_by_id(answer_id)
+
+
+
+        message = full_answer[0]['message']
+        time = datetime.now()
+        return render_template('edit_answer.html', message=message, answer_id=answer_id)
+    if request.method == "POST":
+        answer_data = request.form.to_dict()
+        message = answer_data['message']
+        question_id_in_list = data_manager.get_question_id(answer_id)
+        question_id = question_id_in_list[0]['question_id']
+        data_manager.update_answer_by_id(answer_id, message, datetime.now())
+
+
+        return redirect(url_for('display_question', question_id=question_id))
+
 
 
 # @app.route("/question/<question_id>/vote", methods=['GET'])
