@@ -78,6 +78,17 @@ def delete_question(question_id):
         return redirect("/list")
 
 
+@app.route('/question/<question_id>/new-comment', method=['GET', 'POST'])
+def add_a_comment_to_question(question_id):
+    answer_id = NULL
+    if request.method == 'POST':
+        message_data = request.form.to_dict()
+        message = message_data['message']
+        submission_data = datetime.now()
+
+
+
+
 # @app.route("/question/<question_id>/vote", methods=['GET'])
 # def counting_votes(question_id):
 #    question_data = data_manager.find_question_from_id(question_id)
