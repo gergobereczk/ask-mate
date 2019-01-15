@@ -9,17 +9,14 @@ app = Flask(__name__)
 @app.route("/list")
 def list_questions():
     list_of_question = data_manager.show_all_questions()
-    print(list_of_question)
     return render_template("list_questions.html", list_of_question=list_of_question)
 
 
 @app.route("/question/<question_id>", methods=['GET'])
 def display_question(question_id):
-    # data_manager.pluss_view_number(question_id) not ready!!!
-    question_table = data_manager.find_question_by_id(question_id)
+    question = data_manager.find_question_by_id(question_id)
     answer_table = data_manager.find_answer_by_id(question_id)
-    #the_len = (len(answer_table))
-    return render_template("display_a_question.html", question_table=question_table,
+    return render_template("display_a_question.html", question=question,
                            answer_table=answer_table)
 
 
@@ -44,18 +41,14 @@ def add_a_question():
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_an_answer(question_id):
-    #answer_id = data_manager.create_id(data_manager.answer_csv)
-
     if request.method == 'POST':
         answer_data = request.form.to_dict()
         message = answer_data['message']
         submission_data = datetime.now()
         data_manager.add_answer(question_id, message, submission_data)
-        #data_manager.write_csv(data_manager.answer_csv, data_manager.answer_csv, data_manager.HEADER_ANSWER,
-                               #answer_data)
         return redirect(url_for('display_question', question_id=question_id))
 
-    return render_template('add_answer.html', question_id=question_id, answer_id=answer_id,
+    return render_template('add_answer.html', question_id=question_id,
                            submission_time='default', vote_nr='5')
 
 
@@ -73,7 +66,6 @@ def delete_answer(answer_id):
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
     if request.method == "GET":
-        data_manager.delete_answer(question_id)
         data_manager.delete_question(question_id)
         return redirect("/list")
 

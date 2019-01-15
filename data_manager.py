@@ -27,7 +27,7 @@ def find_question_by_id(cursor, id):
                         WHERE id=%(id)s;
                        """,
                    {'id': id})
-    question = cursor.fetchall()
+    question = cursor.fetchone()
 
     return question
 
@@ -71,12 +71,12 @@ def find_question_id_from_answers(cursor, answer_id):
 
 
 @data_connection.connection_handler
-def delete_answer(cursor, id):
+def delete_answer(cursor, answer_id):
     cursor.execute("""
                               DELETE FROM answer
                               WHERE id=%(id)s;
                              """,
-                   {'id': id})
+                   {'id': answer_id})
 
 
 @data_connection.connection_handler
@@ -98,14 +98,18 @@ def add_question(cursor, submission_time, view_number, vote_number, title, messa
     return id
 
 
-
-def delete_question(id):
-    question_data = connection.read_csv(question_csv)
-    item_deleted_list = []
-    for line in (question_data):
-        if line["id"] != str(id):
-            item_deleted_list.append(line)
-    connection.rewrite_csv(question_csv, item_deleted_list, HEADER)
+@data_connection.connection_handler
+def delete_question(cursor, question_id):
+    cursor.execute("""
+                                  DELETE FROM answer
+                                  WHERE question_id=%(question_id)s;
+                                 """,
+                   {'question_id': question_id})
+    cursor.execute("""
+                                  DELETE FROM question
+                                  WHERE id=%(id)s;
+                                 """,
+                   {'id': question_id})
 
 
 def pluss_view_number(question_id):
