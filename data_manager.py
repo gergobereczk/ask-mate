@@ -80,6 +80,20 @@ def delete_answer(cursor, id):
 
 
 
+@data_connection.connection_handler
+def search_question(cursor, search_phrase):
+    cursor.execute("""
+                        SELECT * FROM question, answer
+                        WHERE title OR message LIKE search_phrase; 
+    """,
+                   {'search_phrase': '%' + search_phrase + '%'})
+
+    result = cursor.fetchall()
+
+    return result
+
+
+
 
 def delete_question(id):
     question_data = connection.read_csv(question_csv)
