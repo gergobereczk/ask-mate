@@ -28,60 +28,56 @@
 </head>
 <body>
 <p>
-    {% for title in question_table %}
-<h1 class="big" align="center"><strong>{{ title.title }}</strong></h1>
-{% endfor %}
+        <h1 class="big" align="center"><strong>{{ question.title }}</strong></h1>
 </p>
 
 <p align="center">
 <table align="center">
     <tr>
         <td align="center" width="800">
-            {% for line in question_table %}
-            {{ line.message }}
-        </td>
-    </tr>
-</table>
-</p>
-<table align="center">
-    <tr>
-        <td width="150" align="center">Submission time</td>
-        <td width="150" align="center">View number</td>
-        <td width="150" align="center">Vote number</td>
-    </tr>
+                {{ question.message }}
+                </td>
+                </tr>
+                </table>
+                </p>
+                <table align="center">
+                <tr>
+                    <td width="150" align="center">Submission time</td>
+                    <td width="150" align="center">View number</td>
+                    <td width="150" align="center">Vote number</td>
+                </tr>
 
-    <tr>
+                <tr>
 
-        <td width="150" align="center">
-            {{ line.submission_time }}
-        </td>
-        <td width="150" align="center">
+                    <td width="150" align="center">
+                        {{ question.submission_time }}
+                    </td>
+                    <td width="150" align="center">
 
-            {{ line.view_number }}
-        </td>
-        <td width="150" align="center">
+                        {{ view_number.view_number }}
+                    </td>
+                    <td width="150" align="center">
 
-            {{ line.vote_number }}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+                        {{ question.vote_number }}
+                    </td>
+                </tr>
+            </table>
+<p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}"><button type="button">Delete Question</button></a></p>
+
 <h2 align="center"><strong>Answers</strong></h2>
 
 <input type="hidden" name="id" value="t">
 
 {% for line in answer_table %}
 
-<h3 class="big" align="center"><strong>{{ line.message }}</strong></h3>
-<p>
+    <h3 class="big" align="center"><strong>{{ line.message }}</strong></h3>
 
-<table align="center">
+    <table align="center">
 
-    <tr>
-        <td width="150" align="center">Submission time</td>
-        <td width="150" align="center">Vote number</td>
-    </tr>
-
+        <tr>
+            <td width="150" align="center">Submission time</td>
+            <td width="150" align="center">Vote number</td>
+        </tr>
     <tr>
         <td width="150" align="center">{{ line.submission_time }}</td>
         <td width="150" align="center">{{ line.vote_number }}</td>
@@ -94,16 +90,14 @@
 
 
     </tr>
-</table>
-</p>
-
+    </table>
 {% endfor %}
+
+
 <h3>
     <p align="center">
-        {% for line in question_table %}
-        <a href="/question/{{ line.id }}/new-answer">
-            {% endfor %}
-            <button type="button">Add New Answer</button>
+            <a href="/question/{{ question.id }}/new-answer">
+        <button type="button">Add New Answer</button>
         </a>
     </p>
 </h3>
