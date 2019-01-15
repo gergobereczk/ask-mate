@@ -23,9 +23,9 @@ def display_question(question_id):
     # data_manager.pluss_view_number(question_id) not ready!!!
     question_table = data_manager.find_question_by_id(question_id)
     answer_table = data_manager.find_answer_by_id(question_id)
-    the_len = (len(answer_table))
+    #the_len = (len(answer_table))
     return render_template("display_a_question.html", question_table=question_table,
-                           answer_table=answer_table, the_len=the_len)
+                           answer_table=answer_table)
 
 
 @app.route("/add_a_question", methods=["GET", "POST"])
@@ -44,18 +44,18 @@ def add_a_question():
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_an_answer(question_id):
-    answer_id = data_manager.create_id(data_manager.answer_csv)
+    #answer_id = data_manager.create_id(data_manager.answer_csv)
 
     if request.method == 'POST':
         answer_data = request.form.to_dict()
         message = answer_data['message']
         submission_data = datetime.now()
         data_manager.add_answer(question_id, message, submission_data)
-        #data_manager.write_csv(data_manager.answer_csv, data_manager.answer_csv, data_manager.HEADER_ANSWER,
-                               #answer_data)
+        # data_manager.write_csv(data_manager.answer_csv, data_manager.answer_csv, data_manager.HEADER_ANSWER,
+        # answer_data)
         return redirect(url_for('display_question', question_id=question_id))
 
-    return render_template('add_answer.html', question_id=question_id, answer_id=answer_id,
+    return render_template('add_answer.html', question_id=question_id,
                            submission_time='default', vote_nr='5')
 
 
@@ -64,7 +64,7 @@ def delete_answer(answer_id):
     if request.method == "GET":
         question_id_in_list = data_manager.find_question_id_from_answers(answer_id)
         make_dict_from_list = question_id_in_list[0]
-        question_id= make_dict_from_list['question_id']
+        question_id = make_dict_from_list['question_id']
         data_manager.delete_answer(answer_id)
         return redirect(url_for('display_question', question_id=question_id))
         # return ("POST")
