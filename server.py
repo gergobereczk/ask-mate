@@ -25,7 +25,6 @@ def display_question(question_id):
 
 @app.route("/add_a_question", methods=["GET", "POST"])
 def add_a_question():
-    id = data_manager.create_id(data_manager.question_csv)
 
     if request.method == "POST":
         new_data = request.form.to_dict()

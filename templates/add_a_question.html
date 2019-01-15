@@ -9,7 +9,6 @@
     <h1>Add a new question:</h1>
 </p>
 <form action="{{ url_for('add_a_question') }}" method="POST">
-    <input type="hidden" name="id" value="{{ id }}">
     <input type="hidden" name="submission_time" value="{{ submission_time }}">
     <input type="hidden" name="view_number" value="{{ view_nr }}">
     <input type="hidden" name="vote_number" value="{{ vote_nr }}">
