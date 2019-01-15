@@ -97,6 +97,20 @@ def add_question(cursor, submission_time, view_number, vote_number, title, messa
 
     return id
 
+@data_connection.connection_handler
+def search_question(cursor, search_phrase):
+    cursor.execute("""
+                        SELECT * FROM question, answer
+                        WHERE title OR message LIKE search_phrase; 
+    """,
+                   {'search_phrase': '%' + search_phrase + '%'})
+
+    result = cursor.fetchall()
+
+    return result
+
+
+
 
 @data_connection.connection_handler
 def delete_question(cursor, question_id):
