@@ -1,10 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from datetime import datetime
-
 import data_manager
-import time
-import time
-
 from datetime import datetime
 
 app = Flask(__name__)
@@ -14,45 +9,43 @@ app = Flask(__name__)
 @app.route("/list")
 def list_questions():
     list_of_question = data_manager.show_all_questions()
-    print(list_of_question)
     return render_template("list_questions.html", list_of_question=list_of_question)
 
 
 @app.route("/question/<question_id>", methods=['GET'])
 def display_question(question_id):
-    # data_manager.pluss_view_number(question_id) not ready!!!
-    question_table = data_manager.find_question_by_id(question_id)
+    question = data_manager.find_question_by_id(question_id)
     answer_table = data_manager.find_answer_by_id(question_id)
-    #the_len = (len(answer_table))
-    return render_template("display_a_question.html", question_table=question_table,
+    return render_template("display_a_question.html", question=question,
                            answer_table=answer_table)
 
 
 @app.route("/add_a_question", methods=["GET", "POST"])
 def add_a_question():
-    id = data_manager.create_id(data_manager.question_csv)
-
     if request.method == "POST":
         new_data = request.form.to_dict()
-        question_id = new_data['id']
         new_data['submission_time'] = datetime.now()
-        data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, new_data)
+        submission_time = new_data['submission_time']
+        view_nr = new_data['view_number']
+        vote_nr = new_data['vote_number']
+        title = new_data['title']
+        message = new_data['message']
+        image = new_data['image']
+        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image)
+        question_id = question_id_dict[0]['id']
+
         return redirect(url_for('display_question', question_id=question_id))
 
-    return render_template("add_a_question.html", id=id, submission_time='default', view_nr='0', vote_nr='5')
+    return render_template("add_a_question.html", submission_time='default', view_nr='0', vote_nr='5')
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_an_answer(question_id):
-    #answer_id = data_manager.create_id(data_manager.answer_csv)
-
     if request.method == 'POST':
         answer_data = request.form.to_dict()
         message = answer_data['message']
         submission_data = datetime.now()
         data_manager.add_answer(question_id, message, submission_data)
-        # data_manager.write_csv(data_manager.answer_csv, data_manager.answer_csv, data_manager.HEADER_ANSWER,
-        # answer_data)
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_answer.html', question_id=question_id,
@@ -64,7 +57,7 @@ def delete_answer(answer_id):
     if request.method == "GET":
         question_id_in_list = data_manager.find_question_id_from_answers(answer_id)
         make_dict_from_list = question_id_in_list[0]
-        question_id = make_dict_from_list['question_id']
+        question_id= make_dict_from_list['question_id']
         data_manager.delete_answer(answer_id)
         return redirect(url_for('display_question', question_id=question_id))
         # return ("POST")
@@ -73,7 +66,6 @@ def delete_answer(answer_id):
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
     if request.method == "GET":
-        data_manager.delete_answers(question_id)
         data_manager.delete_question(question_id)
         return redirect("/list")
 
