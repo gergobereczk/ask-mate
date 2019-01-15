@@ -10,13 +10,6 @@ HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'messa
 HEADER_ANSWER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 
-@data_connection.connection_handler
-def show_all_questions(cursor):
-    cursor.execute("""
-                    SELECT * FROM question
-                   """, )
-    questions = cursor.fetchall()
-    return questions
 
 
 @data_connection.connection_handler
@@ -61,26 +54,8 @@ def add_answer(cursor, question_id, message, submission_data):
 
 
 
-def create_id(filename):
-    data = connection.read_csv(filename)
-    for item in data:
-        id = item['id']
-        if id == 'id':
-            id = 0
-        else:
-            id = int(id) + 1
-    return id
 
 
-def write_csv(from_filename, to_filename, fieldnames, form_data):
-    data = connection.read_csv(from_filename)
-    data.append(form_data)
-    with open(to_filename, 'w') as file:
-        writer = csv.DictWriter(file, fieldnames)
-        writer.writeheader()
-        for line in data:
-            writer.writerow(line)
-        return data
 
 @data_connection.connection_handler
 def find_question_id_from_answers(cursor, answer_id):
@@ -104,13 +79,6 @@ def delete_answer(cursor, id):
                    {'id': id})
 
 
-def delete_answers(id):
-    answer_data = connection.read_csv(answer_csv)
-    item_deleted_list = []
-    for line in (answer_data):
-        if line["question_id"] != str(id):
-            item_deleted_list.append(line)
-    connection.rewrite_csv(answer_csv, item_deleted_list, HEADER_ANSWER)
 
 
 def delete_question(id):
