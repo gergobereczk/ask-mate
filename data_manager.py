@@ -112,6 +112,34 @@ def delete_question(cursor, question_id):
                    {'id': question_id})
 
 
+@data_connection.connection_handler
+def add_view_count(cursor, question_id):
+    cursor.execute("""
+                    SELECT view_number FROM question
+                    WHERE id=%(id)s;
+                    """,
+                   {'id': question_id})
+    view_number = cursor.fetchone()
+    view_number['view_number'] += 1
+    number = view_number['view_number']
+
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number=(%(view_number)s)
+                    WHERE id=%(id)s;
+                    """,
+                   {'id': question_id, 'view_number': number})
+
+    cursor.execute("""
+                    SELECT view_number FROM question
+                    WHERE id=%(id)s;
+                    """,
+                   {'id': question_id})
+    updated_view_number = cursor.fetchone()
+
+    return updated_view_number
+
+
 def pluss_view_number(question_id):
     question_data = connection.read_csv(question_csv)
     for line in question_data:

@@ -16,8 +16,9 @@ def list_questions():
 def display_question(question_id):
     question = data_manager.find_question_by_id(question_id)
     answer_table = data_manager.find_answer_by_id(question_id)
+    add_view_count = data_manager.add_view_count(question_id)
     return render_template("display_a_question.html", question=question,
-                           answer_table=answer_table)
+                           answer_table=answer_table, view_number=add_view_count)
 
 
 @app.route("/add_a_question", methods=["GET", "POST"])
@@ -68,19 +69,6 @@ def delete_question(question_id):
     if request.method == "GET":
         data_manager.delete_question(question_id)
         return redirect("/list")
-
-
-# @app.route("/question/<question_id>/vote", methods=['GET'])
-# def counting_votes(question_id):
-#    question_data = data_manager.find_question_from_id(question_id)
-#    vote_nr = question_data['vote_number']
-#    if vote_nr == None:
-#        vote_nr = 0
-#    else:
-#        vote_nr = int(question_data['vote_number']) + 1
-#    question_data['vote_number'] = vote_nr
-#    data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, question_data)
-#    return redirect(url_for('display_question', question_id=question_id))
 
 
 if __name__ == '__main__':
