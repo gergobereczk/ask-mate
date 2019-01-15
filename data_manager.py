@@ -10,8 +10,6 @@ HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'messa
 HEADER_ANSWER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 
-
-
 @data_connection.connection_handler
 def show_all_questions(cursor):
     cursor.execute("""
@@ -19,6 +17,7 @@ def show_all_questions(cursor):
                    """, )
     questions = cursor.fetchall()
     return questions
+
 
 
 @data_connection.connection_handler
@@ -70,6 +69,7 @@ def find_question_id_from_answers(cursor, answer_id):
 
     return right_question_id
 
+
 @data_connection.connection_handler
 def delete_answer(cursor, id):
     cursor.execute("""
@@ -78,6 +78,24 @@ def delete_answer(cursor, id):
                              """,
                    {'id': id})
 
+
+@data_connection.connection_handler
+def add_question(cursor, submission_time, view_number, vote_number, title, message, image):
+    cursor.execute("""
+                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
+                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s);   
+                    """,
+                   {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number,
+                    'title': title, 'message': message, 'image': image})
+
+    cursor.execute("""
+                    SELECT id FROM question
+                    WHERE submission_time=%(submission_time)s;
+                    """,
+                   {'submission_time': submission_time})
+    id = cursor.fetchall()
+
+    return id
 
 
 
