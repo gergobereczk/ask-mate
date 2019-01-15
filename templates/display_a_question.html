@@ -54,7 +54,7 @@
                     </td>
                     <td width="150" align="center">
 
-                        {{ question.view_number }}
+                        {{ view_number.view_number }}
                     </td>
                     <td width="150" align="center">
 
@@ -78,20 +78,22 @@
             <td width="150" align="center">Submission time</td>
             <td width="150" align="center">Vote number</td>
         </tr>
+    <tr>
+        <td width="150" align="center">{{ line.submission_time }}</td>
+        <td width="150" align="center">{{ line.vote_number }}</td>
+        <td><a href="/answer/{{ line.id }}/delete">
+            <button type="button">Delete Answer</button>
+        </a></td>
+                <td><a href="/answer/{{ line.id }}/edit">
+            <button type="button">Edit Answer</button>
+        </a></td>
 
-        <tr>
-            <td width="150" align="center">{{ line.submission_time }}</td>
-            <td width="150" align="center">{{ line.vote_number }}</td>
-            <td><a href="/answer/{{ line.id }}/delete">
-                <button type="button">Delete Answer</button>
-            </a></td>
-            <td><a href="/answer/{{ line.id }}/edit">
-                <button type="button">Edit Answer</button>
-            </a></td>
-        </tr>
+
+    </tr>
     </table>
-
 {% endfor %}
+
+
 <h3>
     <p align="center">
             <a href="/question/{{ question.id }}/new-answer">

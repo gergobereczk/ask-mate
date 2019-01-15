@@ -16,8 +16,9 @@ def list_questions():
 def display_question(question_id):
     question = data_manager.find_question_by_id(question_id)
     answer_table = data_manager.find_answer_by_id(question_id)
+    add_view_count = data_manager.add_view_count(question_id)
     return render_template("display_a_question.html", question=question,
-                           answer_table=answer_table)
+                           answer_table=answer_table, view_number=add_view_count)
 
 
 @app.route("/add_a_question", methods=["GET", "POST"])
@@ -69,6 +70,14 @@ def delete_question(question_id):
         data_manager.delete_question(question_id)
         return redirect("/list")
 
+@app.route("/answer/<answer_id>/edit", methods=['GET', 'POST'])
+def edit_answer(answer_id):
+    if request.method == "GET":
+        #data_manager.delete_answers(question_id)
+        #data_manager.delete_question(question_id)
+        #return redirect("/list")
+        full_answer = data_manager.get_answer_by_id(answer_id)
+
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_a_comment_to_question(question_id):
@@ -94,6 +103,20 @@ def add_a_comment_to_question(question_id):
 #    question_data['vote_number'] = vote_nr
 #    data_manager.write_csv(data_manager.question_csv, data_manager.question_csv, data_manager.HEADER, question_data)
 #    return redirect(url_for('display_question', question_id=question_id))
+
+        message = full_answer[0]['message']
+        time = datetime.now()
+        return render_template('edit_answer.html', message=message, answer_id=answer_id)
+    if request.method == "POST":
+        answer_data = request.form.to_dict()
+        message = answer_data['message']
+        question_id_in_list = data_manager.get_question_id(answer_id)
+        question_id = question_id_in_list[0]['question_id']
+        data_manager.update_answer_by_id(answer_id, message, datetime.now())
+
+
+        return redirect(url_for('display_question', question_id=question_id))
+
 
 
 if __name__ == '__main__':
