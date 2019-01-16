@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add an Answer</title>
+
+    <title>Edit an Answer</title>
 </head>
 <body>
+    <form action="{{ url_for('edit_answer', answer_id=answer_id) }}" method="post">
+
+    <title>Add an Answer</title>
     <form action="{{ url_for('add_an_answer', question_id=question_id) }}" method="post">
+
         <input type="hidden" name="id" value="{{ answer_id }}">
         <input type="hidden" name="submission_time" value="{{ submission_time }}">
         <input type="hidden" name="vote_number" value="{{ vote_number }}">
@@ -13,7 +18,10 @@
         <p>
             <label for="answer"><strong>Your answer</strong></label>
             <br>
-            <input type="text" pattern=".{10,}" id="answer" name="message" size="50" placeholder="Your answer goes here..(min 10 characters)">
+
+            <input type="text" pattern=".{10,}" id="answer" name="message" size="50" placeholder="Your answer goes here..(min 10 characters)" value="{{ message }}">
+
+
         </p>
         <p>
             <label for="image"><strong>Upload your image</strong></label>
