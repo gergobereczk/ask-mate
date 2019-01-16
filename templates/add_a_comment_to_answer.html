@@ -7,6 +7,8 @@
 <body>
     <form action="{{ url_for('add_a_comment_to_answer', answer_id=answer_id, question_id=question_id) }}"
           method="post">
+        <h1>{{ question_id }}</h1>
+        <input type="hidden" name="answer_id" value="{{ answer_id }}">
         <input type="hidden" name="question_id" value="{{ question_id }}">
         <p>
             <label for="comment"><strong>Your comment</strong></label>

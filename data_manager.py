@@ -90,7 +90,7 @@ def delete_answer(cursor, answer_id):
 
 @data_connection.connection_handler
 def add_comment_to_question(cursor, question_id, message):
-    submission_time = datetime.now()
+    submission_time = datetime.now().isoformat(timespec='seconds')
     edited_count = 0
     cursor.execute("""
                     INSERT INTO comment (question_id, message, submission_time, edited_count)
@@ -101,7 +101,7 @@ def add_comment_to_question(cursor, question_id, message):
 
 @data_connection.connection_handler
 def add_comment_to_answer(cursor, answer_id, message):
-    submission_time = datetime.now()
+    submission_time = datetime.now().isoformat(timespec='seconds')
     edited_count = 0
     cursor.execute("""
                     INSERT INTO comment (answer_id, message, submission_time, edited_count)
