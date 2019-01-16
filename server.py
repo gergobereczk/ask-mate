@@ -14,7 +14,7 @@ def list_5_questions():
 @app.route("/list")
 def list_questions():
     list_of_question = data_manager.show_all_questions()
-    return render_template("list_questions.html", list_of_question=list_of_question)
+    return render_template("list_questions_2.html", list_of_question=list_of_question)
 
 
 @app.route("/question/<question_id>", methods=['GET'])
