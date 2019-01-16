@@ -6,6 +6,11 @@ app = Flask(__name__)
 
 
 @app.route("/")
+def list_5_questions():
+    list_of_question = data_manager.show_5_questions()
+    return render_template('list_questions.html', list_of_question=list_of_question)
+
+
 @app.route("/list")
 def list_questions():
     list_of_question = data_manager.show_all_questions()
@@ -25,7 +30,7 @@ def display_question(question_id):
 def add_a_question():
     if request.method == "POST":
         new_data = request.form.to_dict()
-        new_data['submission_time'] = datetime.now()
+        new_data['submission_time'] = datetime.now().isoformat(timespec='seconds')
         submission_time = new_data['submission_time']
         view_nr = new_data['view_number']
         vote_nr = new_data['vote_number']
@@ -58,7 +63,7 @@ def delete_answer(answer_id):
     if request.method == "GET":
         question_id_in_list = data_manager.find_question_id_from_answers(answer_id)
         make_dict_from_list = question_id_in_list[0]
-        question_id= make_dict_from_list['question_id']
+        question_id = make_dict_from_list['question_id']
         data_manager.delete_answer(answer_id)
         return redirect(url_for('display_question', question_id=question_id))
         # return ("POST")
@@ -70,15 +75,14 @@ def delete_question(question_id):
         data_manager.delete_question(question_id)
         return redirect("/list")
 
+
 @app.route("/answer/<answer_id>/edit", methods=['GET', 'POST'])
 def edit_answer(answer_id):
     if request.method == "GET":
-        #data_manager.delete_answers(question_id)
-        #data_manager.delete_question(question_id)
-        #return redirect("/list")
+        # data_manager.delete_answers(question_id)
+        # data_manager.delete_question(question_id)
+        # return redirect("/list")
         full_answer = data_manager.get_answer_by_id(answer_id)
-
-
 
         message = full_answer[0]['message']
         time = datetime.now()
@@ -90,9 +94,7 @@ def edit_answer(answer_id):
         question_id = question_id_in_list[0]['question_id']
         data_manager.update_answer_by_id(answer_id, message, datetime.now())
 
-
         return redirect(url_for('display_question', question_id=question_id))
-
 
 
 if __name__ == '__main__':
