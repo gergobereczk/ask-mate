@@ -1,68 +1,91 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <style> p {
-        line-height: 40px;
-    }
+    <style>
+        p {
+            line-height: 40px;
+        }
 
-    p1 {
-        line-height: 60px;
-    }
+        p1 {
+            line-height: 60px;
+        }
 
-    h1 {
-        line-height: 60px;
-    }
+        h1 {
+            line-height: 60px;
+        }
 
-    h2 {
-        line-height: 70px;
-    }
+        h2 {
+            line-height: 70px;
+        }
 
-    h3 {
-        line-height: 50px;
-    }
+        h3 {
+            line-height: 50px;
+        }
 
-    .justify {
-        text-align: justify;
-    }</style>
+        .justify {
+            text-align: justify;
+        }
+    </style>
 
     <title>Title</title>
+    <meta charset="utf-8">
 </head>
 <body>
 <p>
-        <h1 class="big" align="center"><strong>{{ question.title }}</strong></h1>
+<h1 class="big" align="center"><strong>{{ question.title }}</strong></h1>
 </p>
 
 <p align="center">
 <table align="center">
     <tr>
         <td align="center" width="800">
-                {{ question.message }}
-                </td>
-                </tr>
-                </table>
-                </p>
-                <table align="center">
-                <tr>
-                    <td width="150" align="center">Submission time</td>
-                    <td width="150" align="center">View number</td>
-                    <td width="150" align="center">Vote number</td>
-                </tr>
+            {{ question.message }}
+        </td>
+    </tr>
+</table>
+</p>
+<table align="center">
+    <tr>
+        <td width="150" align="center">Submission time</td>
+        <td width="150" align="center">View number</td>
+        <td width="150" align="center">Vote number</td>
+    </tr>
+    <tr>
+        <td width="150" align="center">
+            {{ question.submission_time }}
+        </td>
+        <td width="150" align="center">
+            {{ view_number.view_number }}
+        </td>
+        <td width="150" align="center">
+            {{ question.vote_number }}
+        </td>
+    </tr>
+</table>
+<p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}">
+    <button type="button">Delete Question</button>
+</a></p>
 
-                <tr>
+<p align="center"><a href="{{ url_for('add_a_comment_to_question', question_id = question.id) }}">
+    Comment here on a question</a></p>
 
-                    <td width="150" align="center">
-                        {{ question.submission_time }}
-                    </td>
-                    <td width="150" align="center">
+{% for line in comment_to_question %}
 
-                        {{ view_number.view_number }}
-                    </td>
-                    <td width="150" align="center">
+    <p class="comment" align="center"><em>{{ line.message }}</em></p>
 
-                        {{ question.vote_number }}
-                    </td>
-                </tr>
-            </table>
-<p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}"><button type="button">Delete Question</button></a></p>
+    <table align="center">
+
+        <tr>
+            <td width="150" align="center">Submission time</td>
+            <td width="150" align="center">Times edited</td>
+        </tr>
+        <tr>
+            <td width="150" align="center">{{ line.submission_time }}</td>
+            <td width="150" align="center">{{ line.edited_count }}</td>
+        </tr>
+    </table>
+
+{% endfor %}
 
 <h2 align="center"><strong>Answers</strong></h2>
 
@@ -78,15 +101,45 @@
             <td width="150" align="center">Submission time</td>
             <td width="150" align="center">Vote number</td>
         </tr>
-    <tr>
-        <td width="150" align="center">{{ line.submission_time }}</td>
-        <td width="150" align="center">{{ line.vote_number }}</td>
-        <td><a href="/answer/{{ line.id }}/delete">
-            <button type="button">Delete Answer</button>
-        </a></td>
-                <td><a href="/answer/{{ line.id }}/edit">
-            <button type="button">Edit Answer</button>
-        </a></td>
+        <tr>
+            <td width="150" align="center">{{ line.submission_time }}</td>
+            <td width="150" align="center">{{ line.vote_number }}</td>
+            <td><a href="/answer/{{ line.id }}/delete">
+                <button type="button">Delete Answer</button>
+            </a></td>
+            <td><a href="/answer/{{ line.id }}/edit">
+                <button type="button">Edit Answer</button>
+            </a></td>
+            <td><a href="/answer/{{ line.id }}/new-comment">
+                <button type="button">Comment here on an answer</button>
+            </a></td>
+
+
+        </tr>
+    </table>
+    {% for line in comment_to_answer %}
+        {% for answer in answer_table %}
+
+            {% if comment_to_answer.id == answer_table.id %}
+
+                <p class="comment" align="center"><em>{{ line.message }}</em></p>
+
+                <table align="center">
+
+                    <tr>
+                        <td width="150" align="center">Submission time</td>
+                        <td width="150" align="center">Times edited</td>
+                    </tr>
+                    <tr>
+                        <td width="150" align="center">{{ line.submission_time }}</td>
+                        <td width="150" align="center">{{ line.edited_count }}</td>
+                    </tr>
+                </table>
+
+            {% endif %}
+            {% endfor %}
+
+    {% endfor %}
 
 
     </tr>
@@ -96,11 +149,13 @@
 
 <h3>
     <p align="center">
-            <a href="/question/{{ question.id }}/new-answer">
-        <button type="button">Add New Answer</button>
+        <a href="/question/{{ question.id }}/new-answer">
+            <button type="button">Add New Answer</button>
         </a>
     </p>
 </h3>
+
+
 <h3>
     <p align="center">
         <a href="/">
