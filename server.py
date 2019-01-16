@@ -39,6 +39,7 @@ def display_question(question_id):
 def add_a_question():
     if request.method == "POST":
         new_data = request.form.to_dict()
+        print (new_data)
         new_data['submission_time'] = datetime.now().isoformat(timespec='seconds')
         submission_time = new_data['submission_time']
         view_nr = new_data['view_number']
@@ -88,10 +89,12 @@ def delete_question(question_id):
 @app.route("/answer/<answer_id>/edit", methods=['GET', 'POST'])
 def edit_answer(answer_id):
     if request.method == "GET":
-        # data_manager.delete_answers(question_id)
-        # data_manager.delete_question(question_id)
-        # return redirect("/list")
+        #data_manager.delete_answers(question_id)
+        #data_manager.delete_question(question_id)
+        #return redirect("/list")
         full_answer = data_manager.get_answer_by_id(answer_id)
+
+
 
         message = full_answer[0]['message']
         time = datetime.now()
@@ -113,8 +116,20 @@ def add_a_comment_to_question(question_id):
         message = message_data['message']
         data_manager.add_comment_to_question(question_id, message)
         return redirect(url_for('display_question', question_id=question_id))
-
     return render_template('add_a_comment_to_question.html', question_id=question_id)
+
+@app.route("/list1", methods=['GET', 'POST'])
+def list_sorted_question():
+    title = request.form.to_dict()['title']
+    type = request.form.to_dict()['type']
+    max_num=3
+    if type == "DESC":
+        sorted = data_manager.sorted_title_desc(title)
+    else:
+        sorted = data_manager.sorted_title_asc(title, 5)
+
+    return render_template('sort_question.html', list_of_question=sorted, title=title, type=type)
+
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
