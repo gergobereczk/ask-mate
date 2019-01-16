@@ -161,6 +161,10 @@ def search_question(cursor, search_phrase):
     """,
                    {'search_phrase': '%' + search_phrase + '%'})
 
+    result = cursor.fetchall()
+
+    return result
+
 
 @data_connection.connection_handler
 def get_answer_by_id(cursor, answer_id):
