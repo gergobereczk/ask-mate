@@ -15,10 +15,22 @@ HEADER_ANSWER = ['id', 'submission_time', 'vote_number', 'question_id', 'message
 def show_all_questions(cursor):
     cursor.execute("""
                     SELECT * FROM question
+                    ORDER BY id DESC;
                    """, )
     questions = cursor.fetchall()
     return questions
 
+
+@data_connection.connection_handler
+def show_5_questions(cursor):
+    cursor.execute("""
+                    SELECT * FROM question
+                    ORDER BY id DESC
+                    LIMIT 5;
+                    """)
+    question_list = cursor.fetchall()
+
+    return question_list
 
 
 @data_connection.connection_handler
