@@ -157,7 +157,7 @@ def add_question(cursor, submission_time, view_number, vote_number, title, messa
 def search_question(cursor, search_phrase):
     cursor.execute("""
                     SELECT * FROM question
-                    WHERE (title LIKE %(search_phrase)s OR message LIKE %(search_phrase)s);
+                    WHERE (lower(title) LIKE lower(%(search_phrase)s) OR lower(message) LIKE lower(%(search_phrase)s));
     """,
                    {'search_phrase': '%' + search_phrase + '%'})
 
