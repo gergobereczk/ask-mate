@@ -1,37 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        h1 {
-            line-height: 60px;
-        }
-
-        h2 {
-            line-height: 50px;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        .justify {
-            text-align: justify;
-        }
-    </style>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1 align="center"><strong>Ask máté</strong></h1>
+    <h1>Search Results</h1>
 
-<form action="{{ url_for('search_stuff') }}" method="POST">
 
-    <input type="search" name="search" placeholder="Search">
-    <input type="submit">
-
-</form>
-
-{{ list_of_question["id"] }}
 <table align="center" cellpadding="10">
     <h2>
         <tr>
@@ -43,7 +19,7 @@
             <th width="150" align="center">vote number</th>
         </tr>
     </h2>
-    {% for line in list_of_question %}
+    {% for line in search_message %}
         <tr>
             <td width="150" align="center"> {{ line['id'] }} </td>
             <td width="150" align="center"><a href="/question/{{ line['id'] }}">{{ line['title'] }} </a></td>
@@ -54,12 +30,6 @@
         </tr>
     {% endfor %}
 </table>
-<h3>
-    <p align="center">
-        <a href="/add_a_question">
-            <button type="button">Add a new question</button>
-        </a>
-    </p>
-</h3>
+
 </body>
 </html>

@@ -70,6 +70,15 @@ def delete_question(question_id):
         return redirect("/list")
 
 
+@app.route("/search", methods=['GET', 'POST'])
+def search_stuff():
+    if request.method == 'POST':
+        search = request.form.to_dict()
+        data = search['search']
+        search_message = data_manager.search_question(data)
+
+        return render_template("search_results.html", search_message=search_message)
+
 # @app.route("/question/<question_id>/vote", methods=['GET'])
 # def counting_votes(question_id):
 #    question_data = data_manager.find_question_from_id(question_id)
