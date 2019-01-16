@@ -23,6 +23,14 @@
 </head>
 <body>
 <h1 align="center"><strong>Ask máté</strong></h1>
+
+<form align="center" action="{{ url_for('search_stuff') }}" method="POST">
+
+    <input type="search" name="search" placeholder="Search">
+    <input type="submit">
+
+</form>
+
 {{ list_of_question["id"] }}
 <table align="center" cellpadding="10">
     <h2>

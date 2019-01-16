@@ -56,13 +56,14 @@ def find_answer_by_id(cursor, question_id):
 
     return answers
 
+
 @data_connection.connection_handler
 def add_answer(cursor, question_id, message, submission_data):
     cursor.execute("""
                             INSERT INTO answer (question_id, message, submission_time)
                             VALUES (%(question_id)s, %(message)s, %(submission_data)s)
                            """,
-                   {'question_id': question_id, 'message':message, 'submission_data':submission_data})
+                   {'question_id': question_id, 'message': message, 'submission_data': submission_data})
 
 
 @data_connection.connection_handler
@@ -151,13 +152,18 @@ def add_question(cursor, submission_time, view_number, vote_number, title, messa
 
     return id
 
+
 @data_connection.connection_handler
 def search_question(cursor, search_phrase):
     cursor.execute("""
-                        SELECT * FROM question, answer
-                        WHERE title OR message LIKE search_phrase; 
+                    SELECT * FROM question
+                    WHERE (lower(title) LIKE lower(%(search_phrase)s) OR lower(message) LIKE lower(%(search_phrase)s));
     """,
                    {'search_phrase': '%' + search_phrase + '%'})
+
+    result = cursor.fetchall()
+
+    return result
 
 
 @data_connection.connection_handler
