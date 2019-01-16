@@ -118,7 +118,7 @@ def add_a_comment_to_question(question_id):
         return redirect(url_for('display_question', question_id=question_id))
     return render_template('add_a_comment_to_question.html', question_id=question_id)
 
-@app.route("/list1", methods=['GET', 'POST'])
+@app.route("/sort", methods=['GET', 'POST'])
 def list_sorted_question():
     title = request.form.to_dict()['title']
     type = request.form.to_dict()['type']

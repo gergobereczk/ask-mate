@@ -252,7 +252,7 @@ def add_view_count(cursor, question_id):
 @data_connection.connection_handler
 def sorted_title_desc(cursor, title):
     cursor.execute(sql.SQL(""" SELECT * FROM question
-                  ORDER BY {title} DESC limit 5;
+                  ORDER BY {title} DESC;
         """).format(title=sql.Identifier(title)))
     title = cursor.fetchall()
 
@@ -261,7 +261,7 @@ def sorted_title_desc(cursor, title):
 @data_connection.connection_handler
 def sorted_title_asc(cursor, title, limit):
     cursor.execute(sql.SQL(""" SELECT * FROM question
-                  ORDER BY {title} ASC limit 5;
+                  ORDER BY {title} ASC;
         """).format(title=sql.Identifier(title)))
     title = cursor.fetchall()
 
