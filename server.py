@@ -28,7 +28,6 @@ def display_question(question_id):
     for answer in answer_table:
         comments.append(data_manager.find_comment_by_answer_id(answer['id']))
 
-    print(comments)
     return render_template("display_a_question.html", question=question,
                            answer_table=answer_table, view_number=add_view_count,
                            comment_to_question=comment_to_question,
