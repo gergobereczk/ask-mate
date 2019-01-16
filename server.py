@@ -14,15 +14,18 @@ def list_questions():
 
 @app.route("/question/<question_id>", methods=['GET'])
 def display_question(question_id):
+    comment_ids = []
     question = data_manager.find_question_by_id(question_id)
     answer_table = data_manager.find_answer_by_id(question_id)
     add_view_count = data_manager.add_view_count(question_id)
     comment_to_question = data_manager.find_comment_by_question_id(question_id)
-    comment_to_answer = data_manager.find_comment_by_answer_id(1)
+    for answer in answer_table:
+        comment_ids = data_manager.find_comment_by_answer_id(answer['id'])
+
     return render_template("display_a_question.html", question=question,
                            answer_table=answer_table, view_number=add_view_count,
                            comment_to_question=comment_to_question,
-                           comment_to_answer=comment_to_answer)
+                           comment_to_answer=comment_ids)
 
 
 @app.route("/add_a_question", methods=["GET", "POST"])
@@ -114,7 +117,7 @@ def add_a_comment_to_answer(answer_id):
         message = message_data['message']
         question_id = message_data['question_id']
         data_manager.add_comment_to_answer(answer_id, message)
-        return redirect(url_for('display_question', answer_id=answer_id, question_id=question_id))
+        return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_a_comment_to_answer.html', answer_id=answer_id)
 
