@@ -38,7 +38,6 @@ def display_question(question_id):
 def add_a_question():
     if request.method == "POST":
         new_data = request.form.to_dict()
-        print (new_data)
         new_data['submission_time'] = datetime.now().isoformat(timespec='seconds')
         submission_time = new_data['submission_time']
         view_nr = new_data['view_number']
@@ -81,6 +80,9 @@ def delete_answer(answer_id):
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
     if request.method == "GET":
+        answers_id = data_manager.find_answer_id_by_question_id(question_id)
+        for id in answers_id:
+            data_manager.delete_answer(id['id'])
         data_manager.delete_question(question_id)
         return redirect("/list")
 
@@ -127,7 +129,7 @@ def list_sorted_question():
     else:
         sorted = data_manager.sorted_title_asc(title, 5)
 
-    return render_template('sort_question.html', list_of_question=sorted, title=title, type=type)
+    return render_template("list_questions.html", list_of_question=sorted)
 
 
 

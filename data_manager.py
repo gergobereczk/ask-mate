@@ -84,6 +84,11 @@ def find_question_id_from_answers(cursor, answer_id):
 @data_connection.connection_handler
 def delete_answer(cursor, answer_id):
     cursor.execute("""
+                              DELETE FROM comment
+                              WHERE answer_id=%(id)s;
+                             """,
+                   {'id': answer_id})
+    cursor.execute("""
                               DELETE FROM answer
                               WHERE id=%(id)s;
                              """,
@@ -201,19 +206,26 @@ def get_question_id(cursor, answer_id):
 
     return answers
 
+@data_connection.connection_handler
+def find_answer_id_by_question_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT id FROM answer
+                        WHERE question_id=%(question_id)s;
+                       """,
+                   {'question_id': question_id})
+    answers = cursor.fetchall()
+
+    return answers
+
 
 @data_connection.connection_handler
 def delete_question(cursor, question_id):
-    cursor.execute("""
-                                  DELETE FROM answer
-                                  WHERE question_id=%(question_id)s;
-                                 """,
-                   {'question_id': question_id})
     cursor.execute("""
                                   DELETE FROM comment
                                   WHERE question_id=%(question_id)s;
                                  """,
                    {'question_id': question_id})
+
     cursor.execute("""
                                   DELETE FROM question
                                   WHERE id=%(question_id)s;
