@@ -80,9 +80,7 @@
     {% for row in comment_to_answer %}
         {% for comment in row %}
 
-            {% if comment.answer_id == line.id %}
-                <h1>{{ comment.answer_id }}</h1>
-                <h1>{{ comment.id }}</h1>
+            {% if comment.answer_id == line.id and comment.answer_id != none %}
                 <table align="center">
 
                         <tr>
@@ -130,14 +128,6 @@
 
         </tr>
     </table>
-    {% for answer in answer_table %}
-
-
-
-
-    {% endfor %}
-
-
     </tr>
     </table>
 {% endfor %}
