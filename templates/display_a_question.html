@@ -3,7 +3,7 @@
 <head>
 
     <title>Ask máté</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta charset="utf-8">
 </head>
 <body>
@@ -42,7 +42,7 @@
     <button class="input-buttons" type="button">Delete Question</button>
 </a></p>
 
-<p align="center"><a href="{{ url_for('add_a_comment_to_question', question_id = question.id) }}">
+<p align="center"><a class="buttons" href="{{ url_for('add_a_comment_to_question', question_id = question.id) }}">
     Comment here on a question</a></p>
 
 {% for line in comment_to_question %}
