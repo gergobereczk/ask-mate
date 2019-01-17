@@ -70,6 +70,26 @@
 {% for line in answer_table %}
 
     <h3 class="big" align="center"><strong>{{ line.message }}</strong></h3>
+    {% for row in comment_to_answer %}
+        {% for comment in row %}
+
+            {% if comment.answer_id == line.id %}
+                <table align="center">
+
+                        <tr>
+                            <td width="150" align="center">Submission time</td>
+                            <td width="150" align="center">Times edited</td>
+                        </tr>
+                        <tr>
+                            <td width="150" align="center">{{ comment.submission_time }}</td>
+                            <td width="150" align="center">{{ comment.edited_count }}</td>
+                        </tr>
+                    </table>
+
+                    <p class="comment" align="center"><em>{{ comment.message }}</em></p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
 
     <table align="center">
 
@@ -89,31 +109,18 @@
             <td><a href="/answer/{{ line.id }}/new-comment">
                 <button class="input-buttons" type="button">Comment here on an answer</button>
             </a></td>
+            <td><form action="/answer/{{ line.id }}/new-comment">
+                <input type="hidden" name="question_id" value="{{ question.id }}">
+                <button type="submit">Comment here on an answer</button>
+            </form></td>
 
 
         </tr>
     </table>
-    {% for line in comment_to_answer %}
-        {% for answer in answer_table %}
+    {% for answer in answer_table %}
 
-            {% if comment_to_answer.id == answer_table.id %}
 
-                <p class="comment" align="center"><em>{{ line.message }}</em></p>
 
-                <table align="center">
-
-                    <tr>
-                        <td width="150" align="center">Submission time</td>
-                        <td width="150" align="center">Times edited</td>
-                    </tr>
-                    <tr>
-                        <td width="150" align="center">{{ line.submission_time }}</td>
-                        <td width="150" align="center">{{ line.edited_count }}</td>
-                    </tr>
-                </table>
-
-            {% endif %}
-            {% endfor %}
 
     {% endfor %}
 
