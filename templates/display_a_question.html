@@ -107,7 +107,7 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
-<form action="/answer/{{ line.id }}/new-comment">
+<form align="center" action="/answer/{{ line.id }}/new-comment">
                 <input type="hidden" name="question_id" value="{{ question.id }}">
                 <button class="input-buttons" type="submit">Comment here on an answer</button>
             </form>
@@ -120,17 +120,14 @@
         <tr>
             <td width="150" align="center">{{ line.submission_time }}</td>
             <td width="150" align="center">{{ line.vote_number }}</td>
-            <tr>
-            <td><a href="/answer/{{ line.id }}/delete">
-                <button class="input-buttons" type="button">Delete Answer</button>
-            </a></td>
-            <td><a href="/answer/{{ line.id }}/edit">
-                <button class="input-buttons" type="button">Edit Answer</button>
-            </a></td>
 
-
-        </tr>
     </table>
+    <p align="center"><a href="/answer/{{ line.id }}/delete">
+                <button class="input-buttons" type="button">Delete Answer</button>
+    </a>
+    <a href="/answer/{{ line.id }}/edit">
+                <button class="input-buttons" type="button">Edit Answer</button>
+    </a></p>
     </tr>
     </table>
 {% endfor %}
