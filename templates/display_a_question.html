@@ -81,8 +81,7 @@
         {% for comment in row %}
 
             {% if comment.answer_id == line.id %}
-                <h1>{{ comment.answer_id }}</h1>
-                <h1>{{ comment.id }}</h1>
+
                 <table align="center">
 
                         <tr>
@@ -96,7 +95,7 @@
                                 <form action="/question/{{ line.question_id }}">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                    <button class="input-buttons" type="submit">Delete comment</button>
+
                                 </form>
                             </td>
                         </tr>
@@ -106,7 +105,7 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
-
+<p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
     <table align="center">
 
         <tr>

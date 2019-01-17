@@ -24,11 +24,15 @@ body {
 
 }
 
-#searcbar {
+.searchbar {
     text-align: left;
     background-color: whitesmoke;
     border: none;
     border-bottom: solid lightgrey;
+}
+
+.sort {
+    border: none;
 }
 
 tr:nth-child(odd) {
