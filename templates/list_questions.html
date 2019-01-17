@@ -9,8 +9,7 @@
 <body>
 <h1 align="center"><strong>Ask máté</strong></h1>
 
-<form id="searcbar" align="center" action="{{ url_for('search_stuff') }}" method="POST">
-<form action="{{ url_for('list_sorted_question') }}" method="POST">
+<form align="center" action="{{ url_for('list_sorted_question') }}" method="POST">
   First name:  <select name="title">
     <option value="submission_time">date</option>
     <option value="vote_number">votes</option>
@@ -20,18 +19,15 @@
     <option value="DESC">desc</option>
     <option value="ASC">asc</option>
   </select>
-  <br><br>
-  <br>
 
-  <input type="submit" value="Show me">
+  <input class="input-buttons" type="submit" value="Show me">
 </form>
-
+<br>
 
 <form align="center" action="{{ url_for('search_stuff') }}" method="POST">
 
     <input type="search" name="search" placeholder="Search">
     <input class="input-buttons" type="submit">
-
 </form>
 
 {{ list_of_question["id"] }}
