@@ -4,13 +4,13 @@
 
     <meta charset="UTF-8">
     <title>Ask máté</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 <h1 align="center"><strong>Ask máté</strong></h1>
 
 <form align="center" action="{{ url_for('list_sorted_question') }}" method="POST">
-  First name:  <select name="title">
+  Sort questions by:  <select name="title">
     <option value="submission_time">date</option>
     <option value="vote_number">votes</option>
     <option value="view_number">number of wievs</option>
