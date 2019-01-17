@@ -142,6 +142,14 @@ def find_comment_by_answer_id(cursor, answer_id):
 
 
 @data_connection.connection_handler
+def delete_comment(cursor, comment_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE id=%(id)s;""",
+                   {'id': comment_id})
+
+
+@data_connection.connection_handler
 def add_question(cursor, submission_time, view_number, vote_number, title, message, image):
     cursor.execute("""
                     INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
