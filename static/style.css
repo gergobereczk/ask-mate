@@ -46,7 +46,7 @@ tr:nth-child(odd) {
 .buttons {
     color: darkslategrey;
     background-color: whitesmoke;
-    padding: 10px 10px;
+    padding: 7px 7px;
     transitioin: linear;
     transition-duration: 350ms;
     transition-property: background, transform;
@@ -61,7 +61,7 @@ tr:nth-child(odd) {
 .input-buttons {
     color: darkslategrey;
     background-color: whitesmoke;
-    padding: 10px 10px;
+    padding: 7px 7px;
     transitioin: linear;
     transition-duration: 350ms;
     transition-property: background, transform;
@@ -77,3 +77,4 @@ tr:nth-child(odd) {
 body {background-color: #8db7ca}
 
 table {padding-bottom: 35px;}
+
