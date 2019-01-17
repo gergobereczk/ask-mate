@@ -3,7 +3,7 @@
 <head>
 
     <title>Ask máté</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
     <meta charset="utf-8">
 </head>
 <body>
@@ -38,16 +38,15 @@
         </td>
     </tr>
 </table>
-<p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}">
-    <button class="input-buttons" type="button">Delete Question</button>
-</a></p>
+
 
 <p align="center"><a class="buttons" href="{{ url_for('add_a_comment_to_question', question_id = question.id) }}">
     Comment here on a question</a></p>
 
+
 {% for line in comment_to_question %}
 
-    <p class="comment" align="center"><em>{{ line.message }}</em></p>
+    <p class="comment" align="center" style="text-decoration: underline;"><em>{{ line.message }}</em></p>
     <table align="center">
 
         <tr>
@@ -57,23 +56,23 @@
         <tr>
             <td width="150" align="center">{{ line.submission_time }}</td>
             <td width="150" align="center">{{ line.edited_count }}</td>
-               <td width="150" align="center">{{ line.id }}</td>
-            <td width="150" align="center">
-
-            </td>
-
         </tr>
+        <td></td>
+        <td>
               <form action="/delete_comment/{{ line.question_id }}" method="POST">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ line.id }}">
                                                  <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
 
                                 </form>
+        </td>
+
     </table>
+
 
 {% endfor %}
 
-<h2 align="center"><strong>Answers</strong></h2>
+<h2 align="center"><strong>Answers:</strong></h2>
 
 <input type="hidden" name="id" value="t">
 
@@ -96,21 +95,26 @@
                             <td width="150" align="center">{{ comment.edited_count }}</td>
                         </tr>
                     </table>
+
+                    <p class="comment" style="text-decoration: underline;" align="center"><em>{{ comment.message }}</em></p>
  <form action="/delete_comment/{{ line.question_id }}" method="POST">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
                                                  <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
 
                                 </form>
-
-                    <p class="comment" align="center"><em>{{ comment.message }}</em></p>
             {% endif %}
         {% endfor %}
     {% endfor %}
-<form action="/answer/{{ line.id }}/new-comment">
+
+<h3>
+<p align="center">
+   <form action="/answer/{{ line.id }}/new-comment">
                 <input type="hidden" name="question_id" value="{{ question.id }}">
-                <button class="input-buttons" type="submit">Comment here on an answer</button>
+                <button align="center" class="delete-button" type="submit">Comment here on an answer</button>
             </form>
+</h3>
+</p>
     <table align="center">
 
         <tr>
@@ -134,7 +138,13 @@
     </tr>
     </table>
 {% endfor %}
+<table>
+    <tr>
+        <td>
 
+        </td>
+    </tr>
+</table>
 
 <h3>
     <p align="center">
@@ -151,6 +161,9 @@
             <button class="input-buttons" type="button">Back to Questions</button>
         </a>
     </p>
+    <p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}">
+    <button class="input-buttons" type="button">Delete Question</button>
+</a></p>
 </h3>
 
 </body>
