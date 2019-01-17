@@ -2,7 +2,7 @@ h1 {
     font-family: Verdana;
     color: black;
     line-height: 60px;
-    background-color: white;
+    background-color: whitesmoke;
     transition: linear;
     transition-duration: 450ms;
     transition-property: background, transform;
@@ -10,7 +10,7 @@ h1 {
 
 h1:hover {
     color: black;
-    background-color: slategrey;
+    background-color: lightslategrey;
 }
 
 
@@ -20,12 +20,15 @@ h2 {
 
 body {
     font-family: Verdana;
+    background-color: whitesmoke;
 
 }
 
 #searcbar {
-    text-align: center;
-    border-top-color: white;
+    text-align: left;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: solid lightgrey;
 }
 
 tr:nth-child(odd) {
@@ -38,6 +41,7 @@ tr:nth-child(odd) {
 
 .buttons {
     color: darkslategrey;
+    background-color: whitesmoke;
     padding: 10px 10px;
     transitioin: linear;
     transition-duration: 350ms;
@@ -52,7 +56,7 @@ tr:nth-child(odd) {
 
 .input-buttons {
     color: darkslategrey;
-    background-color: white;
+    background-color: whitesmoke;
     padding: 10px 10px;
     transitioin: linear;
     transition-duration: 350ms;
@@ -64,15 +68,4 @@ tr:nth-child(odd) {
 .input-buttons:hover {
     color: whitesmoke;
     background-color: slategrey;
-}
-
-input[type="button"], input[type="submit"] {
-    color: darkslategrey;
-    background-color: white;
-    padding: 10px 10px;
-    transitioin: linear;
-    transition-duration: 350ms;
-    transition-property: background, transform;
-    text-decoration: none;
-    border: none;
 }
