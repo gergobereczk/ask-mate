@@ -31,7 +31,8 @@ def display_question(question_id):
     return render_template("display_a_question.html", question=question,
                            answer_table=answer_table, view_number=add_view_count,
                            comment_to_question=comment_to_question,
-                           comment_to_answer=comments)
+                           comment_to_answer=comments,
+                           question_id=question_id)
 
 
 @app.route("/add_a_question", methods=["GET", "POST"])
@@ -96,7 +97,6 @@ def edit_answer(answer_id):
         full_answer = data_manager.get_answer_by_id(answer_id)
 
 
-
         message = full_answer[0]['message']
         time = datetime.now()
         return render_template('edit_answer.html', message=message, answer_id=answer_id)
@@ -154,6 +154,18 @@ def search_stuff():
         search_message = data_manager.search_question(data)
 
         return render_template("search_results.html", search_message=search_message)
+
+
+@app.route('/comments/<comment_id>/delete', methods=['GET', 'POST'])
+def delete_comment():
+    if request.method == 'POST':
+        ids = request.form.to_dict()
+        comment_id = ids['comment_id']
+        question_id = ids['question_id']
+        data_manager.delete_comment(comment_id)
+        return redirect(url_for('display_question', question_id=question_id, comment_id=comment_id))
+
+
 
 # @app.route("/question/<question_id>/vote", methods=['GET'])
 # def counting_votes(question_id):
