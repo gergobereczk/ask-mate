@@ -1,16 +1,7 @@
 import connection
 import data_connection
 from datetime import datetime
-import csv
 from psycopg2 import sql
-
-question_csv = "sample_data/question.csv"
-
-answer_csv = "sample_data/answer.csv"
-
-HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-HEADER_ANSWER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-
 
 @data_connection.connection_handler
 def show_all_questions(cursor):
@@ -279,27 +270,10 @@ def sorted_title_desc(cursor, title):
     return title
 
 @data_connection.connection_handler
-def sorted_title_asc(cursor, title, limit):
+def sorted_title_asc(cursor, title):
     cursor.execute(sql.SQL(""" SELECT * FROM question
                   ORDER BY {title} ASC;
         """).format(title=sql.Identifier(title)))
     title = cursor.fetchall()
 
     return title
-
-
-def pluss_view_number(question_id):
-    question_data = connection.read_csv(question_csv)
-    for line in question_data:
-        if question_id == line["id"]:
-            view_count = int(line["view_number"])
-            view_count += 1
-            line["view_number"] = view_count
-    connection.rewrite_csv(question_csv, question_data, HEADER)
-
-
-def get_vote(question_id):
-    question_data = connection.read_csv(question_csv)
-    for line in question_data:
-        if question_id == line["id"]:
-            return line['vote_nr']

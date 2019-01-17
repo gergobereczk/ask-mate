@@ -48,7 +48,6 @@
 {% for line in comment_to_question %}
 
     <p class="comment" align="center"><em>{{ line.message }}</em></p>
-
     <table align="center">
 
         <tr>
@@ -58,14 +57,18 @@
         <tr>
             <td width="150" align="center">{{ line.submission_time }}</td>
             <td width="150" align="center">{{ line.edited_count }}</td>
+               <td width="150" align="center">{{ line.id }}</td>
             <td width="150" align="center">
-                <form action="/question/{{ line.id }}">
-                    <input type="hidden" name="question_id" value="{{ line.question_id }}">
-                    <input type="hidden" name="comment_id" value="{{ line.id }}">
-                    <button class="input-buttons" type="submit">Delete comment</button>
-                </form>
+
             </td>
+
         </tr>
+              <form action="/delete_comment/{{ line.question_id }}" method="POST">
+                                    <input type="hidden" name="question_id" value="{{ question_id }}">
+                                    <input type="hidden" name="comment_id" value="{{ line.id }}">
+                                                 <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
+
+                                </form>
     </table>
 
 {% endfor %}
@@ -91,21 +94,23 @@
                         <tr>
                             <td width="150" align="center">{{ comment.submission_time }}</td>
                             <td width="150" align="center">{{ comment.edited_count }}</td>
-                            <td>
-                                <form action="/question/{{ line.question_id }}">
-                                    <input type="hidden" name="question_id" value="{{ question_id }}">
-                                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
-
-                                </form>
-                            </td>
                         </tr>
                     </table>
+ <form action="/delete_comment/{{ line.question_id }}" method="POST">
+                                    <input type="hidden" name="question_id" value="{{ question_id }}">
+                                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                                 <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
+
+                                </form>
 
                     <p class="comment" align="center"><em>{{ comment.message }}</em></p>
             {% endif %}
         {% endfor %}
     {% endfor %}
-<p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
+<form action="/answer/{{ line.id }}/new-comment">
+                <input type="hidden" name="question_id" value="{{ question.id }}">
+                <button class="input-buttons" type="submit">Comment here on an answer</button>
+            </form>
     <table align="center">
 
         <tr>
@@ -115,16 +120,13 @@
         <tr>
             <td width="150" align="center">{{ line.submission_time }}</td>
             <td width="150" align="center">{{ line.vote_number }}</td>
+            <tr>
             <td><a href="/answer/{{ line.id }}/delete">
                 <button class="input-buttons" type="button">Delete Answer</button>
             </a></td>
             <td><a href="/answer/{{ line.id }}/edit">
                 <button class="input-buttons" type="button">Edit Answer</button>
             </a></td>
-            <td><form action="/answer/{{ line.id }}/new-comment">
-                <input type="hidden" name="question_id" value="{{ question.id }}">
-                <button class="input-buttons" type="submit">Comment here on an answer</button>
-            </form></td>
 
 
         </tr>
