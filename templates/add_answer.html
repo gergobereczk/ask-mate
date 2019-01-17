@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add an Answer</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <form action="{{ url_for('add_an_answer', question_id=question_id) }}" method="post">
@@ -21,7 +22,7 @@
             <input id="image" name="image" placeholder="give path like: image.jpg" size="50">
         </p>
         <p>
-            <input type="submit" value="Send Answer">
+            <input class="input-buttons" type="submit" value="Send Answer">
         </p>
     </form>
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Add a comment</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <form action="{{ url_for('add_a_comment_to_question', question_id=question_id) }}" method="post">
@@ -13,7 +14,7 @@
             <input type="text" class="comment" name="message" size="50" placeholder="Your comment goes here..">
         </p>
         <p>
-            <input type="submit" value="Send Comment">
+            <input class="input-buttons" type="submit" value="Send Comment">
         </p>
     </form>
 </body>

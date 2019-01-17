@@ -1,33 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        p {
-            line-height: 40px;
-        }
 
-        p1 {
-            line-height: 60px;
-        }
-
-        h1 {
-            line-height: 60px;
-        }
-
-        h2 {
-            line-height: 70px;
-        }
-
-        h3 {
-            line-height: 50px;
-        }
-
-        .justify {
-            text-align: justify;
-        }
-    </style>
-
-    <title>Title</title>
+    <title>Ask máté</title>
+    <link rel="stylesheet" href="static/css/style.css">
     <meta charset="utf-8">
 </head>
 <body>
@@ -63,7 +39,7 @@
     </tr>
 </table>
 <p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}">
-    <button type="button">Delete Question</button>
+    <button class="input-buttons" type="button">Delete Question</button>
 </a></p>
 
 <p align="center"><a href="{{ url_for('add_a_comment_to_question', question_id = question.id) }}">
@@ -125,10 +101,13 @@
             <td width="150" align="center">{{ line.submission_time }}</td>
             <td width="150" align="center">{{ line.vote_number }}</td>
             <td><a href="/answer/{{ line.id }}/delete">
-                <button type="button">Delete Answer</button>
+                <button class="input-buttons" type="button">Delete Answer</button>
             </a></td>
             <td><a href="/answer/{{ line.id }}/edit">
-                <button type="button">Edit Answer</button>
+                <button class="input-buttons" type="button">Edit Answer</button>
+            </a></td>
+            <td><a href="/answer/{{ line.id }}/new-comment">
+                <button class="input-buttons" type="button">Comment here on an answer</button>
             </a></td>
             <td><form action="/answer/{{ line.id }}/new-comment">
                 <input type="hidden" name="question_id" value="{{ question.id }}">
@@ -154,7 +133,7 @@
 <h3>
     <p align="center">
         <a href="/question/{{ question.id }}/new-answer">
-            <button type="button">Add New Answer</button>
+            <button class="input-buttons" type="button">Add New Answer</button>
         </a>
     </p>
 </h3>
@@ -163,7 +142,7 @@
 <h3>
     <p align="center">
         <a href="/">
-            <button type="button">Back to Questions</button>
+            <button class="input-buttons" type="button">Back to Questions</button>
         </a>
     </p>
 </h3>

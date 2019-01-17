@@ -1,0 +1,67 @@
+h1 {
+    font-family: Verdana;
+    color: black;
+    line-height: 60px;
+    background-color: white;
+    transition: linear;
+    transition-duration: 450ms;
+    transition-property: background, transform;
+}
+
+h1:hover {
+    color: black;
+    background-color: slategrey;
+}
+
+
+h2 {
+    line-height: 50px;
+}
+
+body {
+    font-family: Verdana;
+
+}
+
+#searcbar {
+    text-align: center;
+}
+
+tr:nth-child(odd) {
+    background-color: lightgrey;
+}
+
+.justify {
+    text-align: justify;
+}
+
+.buttons {
+    color: darkslategrey;
+    padding: 10px 10px;
+    transitioin: linear;
+    transition-duration: 350ms;
+    transition-property: background, transform;
+    text-decoration: none;
+}
+
+.buttons:hover {
+    color: whitesmoke;
+    background-color: slategrey;
+}
+
+
+.input-buttons {
+    color: darkslategrey;
+    background-color: white;
+    padding: 10px 10px;
+    transitioin: linear;
+    transition-duration: 350ms;
+    transition-property: background, transform;
+    text-decoration: none;
+    border: none;
+}
+
+.input-buttons:hover {
+    color: whitesmoke;
+    background-color: slategrey;
+}

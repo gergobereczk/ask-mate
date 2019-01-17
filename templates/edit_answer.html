@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
 
     <title>Edit an Answer</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <form action="{{ url_for('edit_answer', answer_id=answer_id) }}" method="post">
@@ -29,7 +30,7 @@
             <input id="image" name="image" placeholder="give path like: image.jpg" size="50">
         </p>
         <p>
-            <input type="submit" value="Send Answer">
+            <input class="input-buttons" type="submit" value="Send Answer">
         </p>
     </form>
 
