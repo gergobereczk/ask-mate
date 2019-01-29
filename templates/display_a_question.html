@@ -117,15 +117,11 @@
 
         </tr>
     </table>
-    {% for line in comment_to_answer %}
-        {% for answer in answer_table %}
-
-            {% if comment_to_answer.id == answer_table.id %}
-
+    {% for i in range(answers) %}
+        {% for k in range(comments) %}
+            {% if comments_in_list[i][k].answer_id == answer_table[i].id %}
                 <p class="comment" align="center"><em>{{ line.message }}</em></p>
-
                 <table align="center">
-
                     <tr>
                         <td width="150" align="center">Submission time</td>
                         <td width="150" align="center">Times edited</td>
@@ -135,14 +131,9 @@
                         <td width="150" align="center">{{ line.edited_count }}</td>
                     </tr>
                 </table>
-
             {% endif %}
-            {% endfor %}
-
-    {% endfor %}
-
-
-    </tr>
+        {% endfor %}
+     {% endfor %}
     </table>
 {% endfor %}
 

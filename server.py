@@ -19,18 +19,23 @@ def list_questions():
 
 @app.route("/question/<question_id>", methods=['GET'])
 def display_question(question_id):
-    comment_ids = []
+    comments_in_list = []
     question = data_manager.find_question_by_id(question_id)
     answer_table = data_manager.find_answer_by_id(question_id)
     add_view_count = data_manager.add_view_count(question_id)
     comment_to_question = data_manager.find_comment_by_question_id(question_id)
     for answer in answer_table:
-        comment_ids = data_manager.find_comment_by_answer_id(answer['id'])
+        comments_in_list.append(data_manager.find_comment_by_answer_id(answer['id']))
+    answers = len(comments_in_list)
+    comments = 0
+    for answer in comments_in_list:
+        for item in answer:
+            comments += 1
 
     return render_template("display_a_question.html", question=question,
                            answer_table=answer_table, view_number=add_view_count,
                            comment_to_question=comment_to_question,
-                           comment_to_answer=comment_ids)
+                           comments_in_list=comments_in_list, answers=answers, comments=comments)
 
 
 @app.route("/add_a_question", methods=["GET", "POST"])
