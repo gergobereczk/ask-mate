@@ -55,6 +55,7 @@ def add_a_question():
 
     return render_template("add_a_question.html", submission_time='default', view_nr='0', vote_nr='5')
 
+
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_a_comment_to_question(question_id):
     if request.method == 'POST':
@@ -77,6 +78,7 @@ def add_an_answer(question_id):
     return render_template('add_answer.html', question_id=question_id,
                            submission_time='default', vote_nr='5')
 
+
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_a_comment_to_answer(answer_id):
     question_id = request.args.get('question_id')
@@ -89,11 +91,11 @@ def add_a_comment_to_answer(answer_id):
 
     return render_template('add_a_comment_to_answer.html', answer_id=answer_id, question_id=question_id)
 
+
 @app.route("/answer/<answer_id>/edit", methods=['GET', 'POST'])
 def edit_answer(answer_id):
     if request.method == "GET":
         full_answer = data_manager.get_answer_by_id(answer_id)
-
 
         message = full_answer[0]['message']
         time = datetime.now()
@@ -127,6 +129,7 @@ def delete_question(question_id):
         data_manager.delete_question(question_id)
         return redirect("/list")
 
+
 @app.route("/sort", methods=['GET', 'POST'])
 def list_sorted_question():
     title = request.form.to_dict()['title']
@@ -137,7 +140,6 @@ def list_sorted_question():
         sorted = data_manager.sorted_title_asc(title)
 
     return render_template("list_questions.html", list_of_question=sorted)
-
 
 
 @app.route("/search", methods=['GET', 'POST'])
@@ -154,16 +156,14 @@ def search_stuff():
 def delete_comment(comment_id):
     if request.method == 'POST':
         data = request.form.to_dict()
-        print ("egy")
-        #question_id = 1
+        print("egy")
+        # question_id = 1
         ids = request.form.to_dict()
         comment_id = ids['comment_id']
         question_id = data['question_id']
-        print (comment_id,question_id,"ezekasus")
+        print(comment_id, question_id, "ezekasus")
         data_manager.delete_comment(comment_id)
         return redirect(url_for('display_question', question_id=question_id))
-
-
 
 
 if __name__ == '__main__':
