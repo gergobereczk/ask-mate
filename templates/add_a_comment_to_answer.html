@@ -3,10 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Add a comment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <form action="{{ url_for('add_a_comment_to_answer', answer_id=answer_id, question_id=question_id) }}"
           method="post">
+        <input type="hidden" name="answer_id" value="{{ answer_id }}">
         <input type="hidden" name="question_id" value="{{ question_id }}">
         <p>
             <label for="comment"><strong>Your comment</strong></label>
@@ -14,7 +16,7 @@
             <input type="text" class="comment" name="message" size="50" placeholder="Your comment goes here..">
         </p>
         <p>
-            <input type="submit" value="Send Comment">
+            <input class="input-buttons" type="submit" value="Send Comment">
         </p>
     </form>
 </body>

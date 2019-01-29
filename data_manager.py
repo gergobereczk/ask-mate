@@ -1,15 +1,7 @@
 import connection
 import data_connection
 from datetime import datetime
-import csv
-
-question_csv = "sample_data/question.csv"
-
-answer_csv = "sample_data/answer.csv"
-
-HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-HEADER_ANSWER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-
+from psycopg2 import sql
 
 @data_connection.connection_handler
 def show_all_questions(cursor):
@@ -83,6 +75,11 @@ def find_question_id_from_answers(cursor, answer_id):
 @data_connection.connection_handler
 def delete_answer(cursor, answer_id):
     cursor.execute("""
+                              DELETE FROM comment
+                              WHERE answer_id=%(id)s;
+                             """,
+                   {'id': answer_id})
+    cursor.execute("""
                               DELETE FROM answer
                               WHERE id=%(id)s;
                              """,
@@ -91,7 +88,7 @@ def delete_answer(cursor, answer_id):
 
 @data_connection.connection_handler
 def add_comment_to_question(cursor, question_id, message):
-    submission_time = datetime.now()
+    submission_time = datetime.now().isoformat(timespec='seconds')
     edited_count = 0
     cursor.execute("""
                     INSERT INTO comment (question_id, message, submission_time, edited_count)
@@ -102,7 +99,7 @@ def add_comment_to_question(cursor, question_id, message):
 
 @data_connection.connection_handler
 def add_comment_to_answer(cursor, answer_id, message):
-    submission_time = datetime.now()
+    submission_time = datetime.now().isoformat(timespec='seconds')
     edited_count = 0
     cursor.execute("""
                     INSERT INTO comment (answer_id, message, submission_time, edited_count)
@@ -135,6 +132,15 @@ def find_comment_by_answer_id(cursor, answer_id):
     return comments
 
 
+@data_connection.connection_handler
+def delete_comment(cursor, comment_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE id=%(id)s;""",
+                   {'id': comment_id})
+
+
+@data_connection.connection_handler
 def add_question(cursor, submission_time, view_number, vote_number, title, message, image):
     cursor.execute("""
                     INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
@@ -157,9 +163,13 @@ def add_question(cursor, submission_time, view_number, vote_number, title, messa
 def search_question(cursor, search_phrase):
     cursor.execute("""
                     SELECT * FROM question
-                    WHERE (title LIKE %(search_phrase)s OR message LIKE %(search_phrase)s);
+                    WHERE (lower(title) LIKE lower(%(search_phrase)s) OR lower(message) LIKE lower(%(search_phrase)s));
     """,
                    {'search_phrase': '%' + search_phrase + '%'})
+
+    result = cursor.fetchall()
+
+    return result
 
 
 @data_connection.connection_handler
@@ -195,19 +205,31 @@ def get_question_id(cursor, answer_id):
 
     return answers
 
+@data_connection.connection_handler
+def find_answer_id_by_question_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT id FROM answer
+                        WHERE question_id=%(question_id)s;
+                       """,
+                   {'question_id': question_id})
+    answers = cursor.fetchall()
+
+    return answers
+
 
 @data_connection.connection_handler
 def delete_question(cursor, question_id):
     cursor.execute("""
-                                  DELETE FROM answer
+                                  DELETE FROM comment
                                   WHERE question_id=%(question_id)s;
                                  """,
                    {'question_id': question_id})
+
     cursor.execute("""
                                   DELETE FROM question
-                                  WHERE id=%(id)s;
+                                  WHERE id=%(question_id)s;
                                  """,
-                   {'id': question_id})
+                   {'question_id': question_id})
 
 
 @data_connection.connection_handler
@@ -238,18 +260,20 @@ def add_view_count(cursor, question_id):
     return updated_view_number
 
 
-def pluss_view_number(question_id):
-    question_data = connection.read_csv(question_csv)
-    for line in question_data:
-        if question_id == line["id"]:
-            view_count = int(line["view_number"])
-            view_count += 1
-            line["view_number"] = view_count
-    connection.rewrite_csv(question_csv, question_data, HEADER)
+@data_connection.connection_handler
+def sorted_title_desc(cursor, title):
+    cursor.execute(sql.SQL(""" SELECT * FROM question
+                  ORDER BY {title} DESC;
+        """).format(title=sql.Identifier(title)))
+    title = cursor.fetchall()
 
+    return title
 
-def get_vote(question_id):
-    question_data = connection.read_csv(question_csv)
-    for line in question_data:
-        if question_id == line["id"]:
-            return line['vote_nr']
+@data_connection.connection_handler
+def sorted_title_asc(cursor, title):
+    cursor.execute(sql.SQL(""" SELECT * FROM question
+                  ORDER BY {title} ASC;
+        """).format(title=sql.Identifier(title)))
+    title = cursor.fetchall()
+
+    return title

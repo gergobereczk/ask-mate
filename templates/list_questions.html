@@ -1,46 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        h1 {
-            line-height: 60px;
-        }
 
-        h2 {
-            line-height: 50px;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        .justify {
-            text-align: justify;
-        }
-    </style>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Ask máté</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 <h1 align="center"><strong>Ask máté</strong></h1>
 
-<form action="{{ url_for('search_stuff') }}" method="POST">
+<br>
 
-    <input type="search" name="search" placeholder="Search">
-    <input type="submit">
+<form align="center" action="{{ url_for('search_stuff') }}" method="POST">
 
+    <input class="searchbar" type="search" name="search" placeholder="Search">
+    <input class="input-buttons" type="submit">
 </form>
 
 {{ list_of_question["id"] }}
 <table align="center" cellpadding="10">
     <h2>
         <tr>
-            <th width="150" align="center">id</th>
-            <th width="150" align="center">title</th>
-            <th width="300" align="center">message</th>
-            <th width="180" align="center">submission time</th>
-            <th width="150" align="center">view number</th>
-            <th width="150" align="center">vote number</th>
+            <th width="150" align="center">Id</th>
+            <th width="150" align="center">Title</th>
+            <th width="300" align="center">Message</th>
+            <th width="180" align="center">Submission time</th>
+            <th width="150" align="center">View number</th>
+            <th width="150" align="center">Vote number</th>
         </tr>
     </h2>
     {% for line in list_of_question %}
@@ -54,12 +40,25 @@
         </tr>
     {% endfor %}
 </table>
+<form align="center" action="{{ url_for('list_sorted_question') }}" method="POST">
+  <select class="sort" name="title">
+    <option value="submission_time">date</option>
+    <option value="vote_number">votes</option>
+    <option value="view_number">number of wievs</option>
+  </select>
+    <select class="sort" name="type">
+    <option value="DESC">desc</option>
+    <option value="ASC">asc</option>
+  </select>
+
+  <input class="input-buttons" type="submit" value="Show me">
+</form>
 <h3>
-    <p align="center"><a href="{{ url_for('list_questions') }}"><button>Show all questions</button></a></p>
     <p align="center">
         <a href="/add_a_question">
-            <button type="button">Add a new question</button>
+            <button class="input-buttons" type="button">Add a new question</button>
         </a>
+            <p align="center"><a href="{{ url_for('list_questions') }}"><button class="input-buttons">Show all questions</button></a></p>
     </p>
 </h3>
 </body>
