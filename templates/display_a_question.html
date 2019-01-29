@@ -38,15 +38,16 @@
         </td>
     </tr>
 </table>
-
+<p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}">
+    <button class="input-buttons" type="button">Delete Question</button>
+</a></p>
 
 <p align="center"><a class="buttons" href="{{ url_for('add_a_comment_to_question', question_id = question.id) }}">
     Comment here on a question</a></p>
 
-
 {% for line in comment_to_question %}
 
-    <p class="comment" align="center" style="text-decoration: underline;"><em>{{ line.message }}</em></p>
+    <p class="comment" align="center"><em>{{ line.message }}</em></p>
     <table align="center">
 
         <tr>
@@ -56,40 +57,23 @@
         <tr>
             <td width="150" align="center">{{ line.submission_time }}</td>
             <td width="150" align="center">{{ line.edited_count }}</td>
-<<<<<<< HEAD
             <td width="150" align="center">{{ line.id }}</td>
             <td width="150" align="center">
 
             </td>
 
         </tr>
-        <form action="/delete_comment/{{ line.question_id }}" method="POST">
-            <input type="hidden" name="question_id" value="{{ question_id }}">
-            <input type="hidden" name="comment_id" value="{{ line.id }}">
-            <p align="center">
-                <button class="input-buttons" type="submit">Delete comment</button>
-            </p>
-
-        </form>
-=======
-        </tr>
-        <td></td>
-        <td>
               <form action="/delete_comment/{{ line.question_id }}" method="POST">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ line.id }}">
                                                  <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
 
                                 </form>
-        </td>
-
->>>>>>> e6615656fa3e528975bc8d43abff42e9e1fe420e
     </table>
-
 
 {% endfor %}
 
-<h2 align="center"><strong>Answers:</strong></h2>
+<h2 align="center"><strong>Answers</strong></h2>
 
 <input type="hidden" name="id" value="t">
 
@@ -103,34 +87,6 @@
 
                 <table align="center">
 
-<<<<<<< HEAD
-                    <tr>
-                        <td width="150" align="center">Submission time</td>
-                        <td width="150" align="center">Times edited</td>
-                    </tr>
-                    <tr>
-                        <td width="150" align="center">{{ comment.submission_time }}</td>
-                        <td width="150" align="center">{{ comment.edited_count }}</td>
-                    </tr>
-                </table>
-                <form action="/delete_comment/{{ line.question_id }}" method="POST">
-                    <input type="hidden" name="question_id" value="{{ question_id }}">
-                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                    <p align="center">
-                        <button class="input-buttons" type="submit">Delete comment</button>
-                    </p>
-
-                </form>
-
-                <p class="comment" align="center"><em>{{ comment.message }}</em></p>
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
-    <form align="center" action="/answer/{{ line.id }}/new-comment">
-        <input type="hidden" name="question_id" value="{{ question.id }}">
-        <button class="input-buttons" type="submit">Comment here on an answer</button>
-    </form>
-=======
                         <tr>
                             <td width="150" align="center">Submission time</td>
                             <td width="150" align="center">Times edited</td>
@@ -140,27 +96,21 @@
                             <td width="150" align="center">{{ comment.edited_count }}</td>
                         </tr>
                     </table>
-
-                    <p class="comment" style="text-decoration: underline;" align="center"><em>{{ comment.message }}</em></p>
  <form action="/delete_comment/{{ line.question_id }}" method="POST">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
                                                  <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
 
                                 </form>
+
+                    <p class="comment" align="center"><em>{{ comment.message }}</em></p>
             {% endif %}
         {% endfor %}
     {% endfor %}
-
-<h3>
-<p align="center">
-   <form action="/answer/{{ line.id }}/new-comment">
+<form align="center" action="/answer/{{ line.id }}/new-comment">
                 <input type="hidden" name="question_id" value="{{ question.id }}">
-                <button align="center" class="delete-button" type="submit">Comment here on an answer</button>
+                <button class="input-buttons" type="submit">Comment here on an answer</button>
             </form>
-</h3>
-</p>
->>>>>>> e6615656fa3e528975bc8d43abff42e9e1fe420e
     <table align="center">
 
         <tr>
@@ -170,38 +120,18 @@
         <tr>
             <td width="150" align="center">{{ line.submission_time }}</td>
             <td width="150" align="center">{{ line.vote_number }}</td>
-<<<<<<< HEAD
 
     </table>
     <p align="center"><a href="/answer/{{ line.id }}/delete">
-        <button class="input-buttons" type="button">Delete Answer</button>
-    </a>
-        <a href="/answer/{{ line.id }}/edit">
-            <button class="input-buttons" type="button">Edit Answer</button>
-        </a></p>
-=======
-            <tr>
-            <td><a href="/answer/{{ line.id }}/delete">
                 <button class="input-buttons" type="button">Delete Answer</button>
-            </a></td>
-            <td><a href="/answer/{{ line.id }}/edit">
+    </a>
+    <a href="/answer/{{ line.id }}/edit">
                 <button class="input-buttons" type="button">Edit Answer</button>
-            </a></td>
-
-
-        </tr>
-    </table>
->>>>>>> e6615656fa3e528975bc8d43abff42e9e1fe420e
+    </a></p>
     </tr>
     </table>
 {% endfor %}
-<table>
-    <tr>
-        <td>
 
-        </td>
-    </tr>
-</table>
 
 <h3>
     <p align="center">
@@ -218,9 +148,6 @@
             <button class="input-buttons" type="button">Back to Questions</button>
         </a>
     </p>
-    <p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}">
-    <button class="input-buttons" type="button">Delete Question</button>
-</a></p>
 </h3>
 
 </body>
