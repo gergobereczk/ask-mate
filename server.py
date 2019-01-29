@@ -166,6 +166,14 @@ def delete_comment(comment_id):
         return redirect(url_for('display_question', question_id=question_id))
 
 
+@app.route('/registration', methods=['GET', 'POST'])
+def register_user():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        pass
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
