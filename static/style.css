@@ -67,6 +67,7 @@ body {
 .pass_submit{
     float:left;
     margin-right: 5px;
+
 }
 
 #login a{
@@ -101,6 +102,11 @@ body {
 
 .pass_submit_reg{
     float:bottom;
+    margin-left: 5px;
+    text-decoration: none;
+    color: grey;
+    border-style: none;
+    background-color: none;
 }
 
 .sort {
