@@ -89,31 +89,32 @@ def delete_answer(cursor, answer_id):
 
 
 @data_connection.connection_handler
-def add_comment_to_question(cursor, question_id, message):
+def add_comment_to_question(cursor, question_id, message, user_id):
     submission_time = datetime.now().isoformat(timespec='seconds')
     edited_count = 0
     cursor.execute("""
-                    INSERT INTO comment (question_id, message, submission_time, edited_count)
-                    VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s); """,
+                    INSERT INTO comment (question_id, message, submission_time, edited_count, user_id)
+                    VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s,%(user_id)s); """,
                    {'question_id': question_id, 'message': message, 'submission_time': submission_time,
-                    'edited_count': edited_count})
+                    'edited_count': edited_count, 'user_id':user_id})
 
 
 @data_connection.connection_handler
-def add_comment_to_answer(cursor, answer_id, message):
+def add_comment_to_answer(cursor, answer_id, message, user_id):
     submission_time = datetime.now().isoformat(timespec='seconds')
     edited_count = 0
     cursor.execute("""
-                    INSERT INTO comment (answer_id, message, submission_time, edited_count)
-                    VALUES (%(answer_id)s, %(message)s, %(submission_time)s, %(edited_count)s); """,
+                    INSERT INTO comment (answer_id, message, submission_time, edited_count, user_id)
+                    VALUES (%(answer_id)s, %(message)s, %(submission_time)s, %(edited_count)s,%(user_id)s); """,
                    {'answer_id': answer_id, 'message': message, 'submission_time': submission_time,
-                    'edited_count': edited_count})
+                    'edited_count': edited_count,'user_id':user_id})
 
 
 @data_connection.connection_handler
 def find_comment_by_question_id(cursor, question_id):
     cursor.execute("""
                         SELECT * FROM comment
+                        LEFT JOIN user_table ut on comment.user_id = ut.user_id
                         WHERE question_id=%(question_id)s;
                        """,
                    {'question_id': question_id})
@@ -126,6 +127,7 @@ def find_comment_by_question_id(cursor, question_id):
 def find_comment_by_answer_id(cursor, answer_id):
     cursor.execute("""
                         SELECT * FROM comment
+                        LEFT JOIN user_table ut on comment.user_id = ut.user_id
                         WHERE answer_id=%(answer_id)s;
                        """,
                    {'answer_id': answer_id})
@@ -309,3 +311,14 @@ def add_user(cursor, username, password):
     user = cursor.fetchone()
 
     return user
+
+@data_connection.connection_handler
+def check_login_data(cursor, username):
+    cursor.execute("""
+                    SELECT username, password FROM user_table
+                    WHERE username=%(username)s;
+    """,            {'username': username})
+
+    login_info = cursor.fetchall()
+
+    return login_info

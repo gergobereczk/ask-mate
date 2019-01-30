@@ -60,7 +60,9 @@
 <h3>
     <p align="center">
         <a href="/add_a_question">
+             {% if 'username' in session: %}
             <button class="input-buttons" type="button">Add a new question</button>
+            {% endif %}
         </a>
     </p>
 </h3>
