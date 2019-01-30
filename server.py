@@ -177,7 +177,7 @@ def register_user():
 
         return redirect(url_for('list_5_questions'))
 
-    return render_template('login.html')
+    return render_template('register.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
