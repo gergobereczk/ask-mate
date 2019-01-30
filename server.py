@@ -186,9 +186,6 @@ def login():
             return redirect(url_for('list_5_questions'))
         else:
             return redirect(url_for('list_5_questions'))
-
-        return render_template('list_questions.html')
-
     else:
         return render_template('list_questions.html')
 
@@ -197,8 +194,25 @@ def login():
 def register_user():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
-        pass
+        password = hash.hash_password(request.form['password'])
+        data_manager.add_user(username, password)
+
+        return redirect(url_for('list_5_questions'))
+
+    return render_template('register.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('login'))
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
 
 
 if __name__ == '__main__':

@@ -24,7 +24,9 @@ body {
 
 }
 
+
 .searchbar {
+    float: left;
     text-align: left;
     background-color: whitesmoke;
     border: none;
