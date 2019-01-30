@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session, escape
 import data_manager
 import hash
-import session
 from datetime import datetime
 
 app = Flask(__name__)
 
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = b'this_is_a_very_secret_key'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -204,9 +203,6 @@ def register_user():
     return render_template('login.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    pass
 
 
 if __name__ == '__main__':
