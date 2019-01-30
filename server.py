@@ -1,26 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session, escape
+from flask import Flask, render_template, request, redirect, url_for, session
 import data_manager
 import hash
+import session
 from datetime import datetime
 
 app = Flask(__name__)
 
-app.secret_key = b'this_is_a_very_secret_key'
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('list_questions'))
-    return '''
-        <form method="post">
-            <p><input type=text name=username>
-            <p><input type=submit value=Login>
-        </form>
-    '''
-
-# csak teszt töröld ami felette van !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 @app.route("/")
@@ -40,8 +26,6 @@ def display_question(question_id):
     comment_ids = []
     comments = []
     question = data_manager.find_question_by_id(question_id)
-    print(question)
-
     answer_table = data_manager.find_answer_by_id(question_id)
     add_view_count = data_manager.add_view_count(question_id)
     comment_to_question = data_manager.find_comment_by_question_id(question_id)
@@ -200,10 +184,20 @@ def register_user():
 
         return redirect(url_for('list_5_questions'))
 
-    return render_template('login.html')
+    return render_template('register.html')
 
 
-
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('login'))
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
 
 if __name__ == '__main__':
     app.run(
