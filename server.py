@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import data_manager
 import hash
-import session
 from datetime import datetime
 
 app = Flask(__name__)
@@ -182,8 +181,15 @@ def register_user():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    pass
-
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('login'))
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
 
 if __name__ == '__main__':
     app.run(
