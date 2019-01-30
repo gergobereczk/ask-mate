@@ -277,3 +277,12 @@ def sorted_title_asc(cursor, title):
     title = cursor.fetchall()
 
     return title
+
+
+@data_connection.connection_handler
+def check_login_data(cursor, username, password):
+    cursor.execute("""
+                    SELECT * FROM user_table
+                    WHERE username LIKE %(username)s AND password LIKE 
+    """)
+

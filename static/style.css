@@ -24,11 +24,48 @@ body {
 
 }
 
+#login{
+    height: 50px;
+    width: auto;
+    margin: 10px 20px 10px 310px;
+}
+
+
 .searchbar {
+    float: left;
     text-align: left;
     background-color: whitesmoke;
     border: none;
     border-bottom: solid lightgrey;
+    margin-right: 5px;
+}
+
+
+.input-buttons-search{
+    float: left;
+    margin-right: 530px;
+}
+
+.user{
+    float:left;
+    margin-right: 5px;
+    text-align: left;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: solid lightgrey;
+}
+
+.password{
+    float:left;
+    margin-right: 5px;
+    text-align: left;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: solid lightgrey;
+}
+
+.pass_submit{
+    float:left;
 }
 
 .sort {

@@ -4,7 +4,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = b'_3#y2L"D7W))5z\n\yak]/'
 
 
 @app.route("/")
@@ -164,6 +164,8 @@ def delete_comment(comment_id):
         return redirect(url_for('display_question', question_id=question_id))
 
 
+#@app.route('/login', methods=['POST'])
+#def login():
 
 
 if __name__ == '__main__':
