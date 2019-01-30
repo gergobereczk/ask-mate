@@ -3,6 +3,7 @@ import data_connection
 from datetime import datetime
 from psycopg2 import sql
 
+
 @data_connection.connection_handler
 def show_all_questions(cursor):
     cursor.execute("""
@@ -29,7 +30,8 @@ def show_5_questions(cursor):
 def find_question_by_id(cursor, id):
     cursor.execute("""
                         SELECT * FROM question
-                        WHERE id=%(id)s;
+                        LEFT JOIN user_table ut on question.user_id = ut.user_id
+                        WHERE question.id=%(id)s;
                        """,
                    {'id': id})
     question = cursor.fetchone()
@@ -93,7 +95,7 @@ def add_comment_to_question(cursor, question_id, message):
     cursor.execute("""
                     INSERT INTO comment (question_id, message, submission_time, edited_count)
                     VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s); """,
-                   {'question_id': question_id, 'message': message, 'submission_time':submission_time,
+                   {'question_id': question_id, 'message': message, 'submission_time': submission_time,
                     'edited_count': edited_count})
 
 
@@ -141,13 +143,13 @@ def delete_comment(cursor, comment_id):
 
 
 @data_connection.connection_handler
-def add_question(cursor, submission_time, view_number, vote_number, title, message, image):
+def add_question(cursor, submission_time, view_number, vote_number, title, message, image, user_id):
     cursor.execute("""
-                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
-                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s);   
+                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image, user_id)
+                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s,%(user_id)s);   
                     """,
                    {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number,
-                    'title': title, 'message': message, 'image': image})
+                    'title': title, 'message': message, 'image': image,'user_id': user_id})
 
     cursor.execute("""
                     SELECT id FROM question
@@ -191,7 +193,7 @@ def update_answer_by_id(cursor, answer_id, message, submission_time):
                         SET message=%(message)s, submission_time=%(submission_time)s
                         WHERE id=%(answer_id)s;
                        """,
-                   {'answer_id': answer_id, 'message':message, 'submission_time':submission_time})
+                   {'answer_id': answer_id, 'message': message, 'submission_time': submission_time})
 
 
 @data_connection.connection_handler
@@ -269,6 +271,7 @@ def sorted_title_desc(cursor, title):
 
     return title
 
+
 @data_connection.connection_handler
 def sorted_title_asc(cursor, title):
     cursor.execute(sql.SQL(""" SELECT * FROM question
@@ -277,3 +280,32 @@ def sorted_title_asc(cursor, title):
     title = cursor.fetchall()
 
     return title
+
+@data_connection.connection_handler
+def get_user_id(cursor, username):
+    cursor.execute(sql.SQL(""" SELECT user_id FROM user_table
+                  WHERE username = %(username)s;
+        """), {'username': username})
+    id = cursor.fetchone()
+
+    return id
+
+
+@data_connection.connection_handler
+def add_user(cursor, username, password):
+    cursor.execute("""
+                    INSERT INTO user_table (username, password) 
+                    VALUES (%(username)s, %(password)s); 
+                    """,
+                   {'username': username, 'password': password})
+
+    cursor.execute("""
+                    SELECT username, password
+                    FROM user_table
+                    WHERE username=%(username)s;
+                    """,
+                   {'username': username})
+
+    user = cursor.fetchone()
+
+    return user

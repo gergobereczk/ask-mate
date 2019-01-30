@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import data_manager
+import hash
 from datetime import datetime
 
 app = Flask(__name__)
@@ -48,12 +49,20 @@ def add_a_question():
         title = new_data['title']
         message = new_data['message']
         image = new_data['image']
-        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image)
+        user_name = session['username']
+
+
+        user_id = data_manager.get_user_id(user_name)
+        print(user_id['user_id'],"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4")
+
+
+        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,user_id['user_id'])
         question_id = question_id_dict[0]['id']
 
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template("add_a_question.html", submission_time='default', view_nr='0', vote_nr='5')
+
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_a_comment_to_question(question_id):
@@ -77,6 +86,7 @@ def add_an_answer(question_id):
     return render_template('add_answer.html', question_id=question_id,
                            submission_time='default', vote_nr='5')
 
+
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_a_comment_to_answer(answer_id):
     question_id = request.args.get('question_id')
@@ -89,11 +99,11 @@ def add_a_comment_to_answer(answer_id):
 
     return render_template('add_a_comment_to_answer.html', answer_id=answer_id, question_id=question_id)
 
+
 @app.route("/answer/<answer_id>/edit", methods=['GET', 'POST'])
 def edit_answer(answer_id):
     if request.method == "GET":
         full_answer = data_manager.get_answer_by_id(answer_id)
-
 
         message = full_answer[0]['message']
         time = datetime.now()
@@ -127,6 +137,7 @@ def delete_question(question_id):
         data_manager.delete_question(question_id)
         return redirect("/list")
 
+
 @app.route("/sort", methods=['GET', 'POST'])
 def list_sorted_question():
     title = request.form.to_dict()['title']
@@ -137,7 +148,6 @@ def list_sorted_question():
         sorted = data_manager.sorted_title_asc(title)
 
     return render_template("list_questions.html", list_of_question=sorted)
-
 
 
 @app.route("/search", methods=['GET', 'POST'])
@@ -154,17 +164,39 @@ def search_stuff():
 def delete_comment(comment_id):
     if request.method == 'POST':
         data = request.form.to_dict()
-        print ("egy")
-        #question_id = 1
+        print("egy")
+        # question_id = 1
         ids = request.form.to_dict()
         comment_id = ids['comment_id']
         question_id = data['question_id']
-        print (comment_id,question_id,"ezekasus")
+        print(comment_id, question_id, "ezekasus")
         data_manager.delete_comment(comment_id)
         return redirect(url_for('display_question', question_id=question_id))
 
 
+@app.route('/registration', methods=['GET', 'POST'])
+def register_user():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = hash.hash_password(request.form['password'])
+        data_manager.add_user(username, password)
 
+        return redirect(url_for('list_5_questions'))
+
+    return render_template('register.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('login'))
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
 
 if __name__ == '__main__':
     app.run(

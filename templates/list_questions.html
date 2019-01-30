@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <title>Ask máté</title>
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 <h1 align="center"><strong>Ask máté</strong></h1>
-
-<br>
-
-<form align="center" action="{{ url_for('search_stuff') }}" method="POST">
-
+<div id="login">
+<form action="{{ url_for('search_stuff') }}" method="POST">
     <input class="searchbar" type="search" name="search" placeholder="Search">
-    <input class="input-buttons" type="submit">
+    <input class="input-buttons-search" type="submit">
 </form>
-
+    <form action="{{ url_for('login') }}" method="post">
+        <input class="user" type="text" name="username" placeholder="username">
+        <input class="password" type="password" name="password" placeholder="password">
+        <input class="pass_submit" type="submit" value="Login">
+    </form>
+    <a href="{{url_for('register_user')}}">Register</a>
+</div>
 {{ list_of_question["id"] }}
 <table align="center" cellpadding="10">
     <h2>
@@ -41,24 +43,26 @@
     {% endfor %}
 </table>
 <form align="center" action="{{ url_for('list_sorted_question') }}" method="POST">
-  <select class="sort" name="title">
-    <option value="submission_time">date</option>
-    <option value="vote_number">votes</option>
-    <option value="view_number">number of wievs</option>
-  </select>
+    <select class="sort" name="title">
+        <option value="submission_time">date</option>
+        <option value="vote_number">votes</option>
+        <option value="view_number">number of wievs</option>
+    </select>
     <select class="sort" name="type">
-    <option value="DESC">desc</option>
-    <option value="ASC">asc</option>
-  </select>
+        <option value="DESC">desc</option>
+        <option value="ASC">asc</option>
+    </select>
 
-  <input class="input-buttons" type="submit" value="Show me">
+    <input class="input-buttons" type="submit" value="Show me">
 </form>
 <h3>
     <p align="center">
         <a href="/add_a_question">
             <button class="input-buttons" type="button">Add a new question</button>
         </a>
-            <p align="center"><a href="{{ url_for('list_questions') }}"><button class="input-buttons">Show all questions</button></a></p>
+    <p align="center"><a href="{{ url_for('list_questions') }}">
+        <button class="input-buttons">Show all questions</button>
+    </a></p>
     </p>
 </h3>
 </body>
