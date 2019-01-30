@@ -202,19 +202,6 @@ def register_user():
     return render_template('register.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('login'))
-    return '''
-        <form method="post">
-            <p><input type=text name=username>
-            <p><input type=submit value=Login>
-        </form>
-    '''
-
-
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
