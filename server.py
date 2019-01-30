@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, session, escape, redirect, url_for
 import data_manager
 import hash
 from datetime import datetime
@@ -179,6 +179,11 @@ def login():
         print(actual_password)
         hashed_pass = hash.verify_password(unhashed_pass, actual_password)
         print(hashed_pass)
+        if hashed_pass is True:
+            session['username'] = request.form['username']
+            return redirect(url_for('list_5_questions'))
+        else:
+            return redirect(url_for('list_5_questions'))
 
         return render_template('list_questions.html')
 
