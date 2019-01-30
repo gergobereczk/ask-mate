@@ -40,16 +40,20 @@
         </td>
     </tr>
 </table>
+ {% if 'username' in session: %}
 <p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}">
     <button class="input-buttons" type="button">Delete Question</button>
+    {% endif %}
 </a></p>
-
+ {% if 'username' in session: %}
 <p align="center"><a class="buttons" href="{{ url_for('add_a_comment_to_question', question_id = question.id) }}">
     Comment here on a question</a></p>
+ {% endif %}
 
 {% for line in comment_to_question %}
 
     <p class="comment" align="center"><em>{{ line.message }}</em></p>
+ <p class="comment" align="center"><em>{{ line.username }}</em></p>
     <table align="center">
 
         <tr>
@@ -68,7 +72,10 @@
               <form action="/delete_comment/{{ line.question_id }}" method="POST">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ line.id }}">
+
+                   {% if 'username' in session: %}
                                                  <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
+                   {% endif %}
 
                                 </form>
     </table>
@@ -98,20 +105,25 @@
                             <td width="150" align="center">{{ comment.edited_count }}</td>
                         </tr>
                     </table>
+ {% if 'username' in session: %}
  <form action="/delete_comment/{{ line.question_id }}" method="POST">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
                                                  <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
 
                                 </form>
+{% endif %}
 
                     <p class="comment" align="center"><em>{{ comment.message }}</em></p>
+  <p class="comment" align="center"><em>{{ comment.username }}</em></p>
             {% endif %}
         {% endfor %}
     {% endfor %}
 <form align="center" action="/answer/{{ line.id }}/new-comment">
+     {% if 'username' in session: %}
                 <input type="hidden" name="question_id" value="{{ question.id }}">
                 <button class="input-buttons" type="submit">Comment here on an answer</button>
+    {% endif %}
             </form>
     <table align="center">
 
@@ -125,10 +137,14 @@
 
     </table>
     <p align="center"><a href="/answer/{{ line.id }}/delete">
+         {% if 'username' in session: %}
                 <button class="input-buttons" type="button">Delete Answer</button>
+        {% endif %}
     </a>
     <a href="/answer/{{ line.id }}/edit">
+         {% if 'username' in session: %}
                 <button class="input-buttons" type="button">Edit Answer</button>
+        {% endif %}
     </a></p>
     </tr>
     </table>
@@ -138,7 +154,9 @@
 <h3>
     <p align="center">
         <a href="/question/{{ question.id }}/new-answer">
+             {% if 'username' in session: %}
             <button class="input-buttons" type="button">Add New Answer</button>
+            {% endif %}
         </a>
     </p>
 </h3>
