@@ -43,7 +43,7 @@ body {
 
 .input-buttons-search{
     float: left;
-    margin-right: 530px;
+    margin-right: 480px;
 }
 
 .user{
@@ -66,6 +66,30 @@ body {
 
 .pass_submit{
     float:left;
+    margin-right: 5px;
+}
+
+.user_reg{
+    float: bottom;
+    margin-top: 300px;
+    margin-left: 200px;
+    text-align: left;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: solid lightgrey;
+}
+
+.password_reg{
+    float: bottom;
+    margin-right: 5px;
+    text-align: left;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: solid lightgrey;
+}
+
+.pass_submit_reg{
+    float:bottom;
 }
 
 .sort {
@@ -112,8 +136,7 @@ tr:nth-child(odd) {
 }
 
 .registration{
-    float: bottom;
-    width: 1000px;
+    width: 800px;
     height: 100px;
-    margin: 100px;
-}
+    margin: auto;
+    }
