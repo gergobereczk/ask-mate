@@ -39,11 +39,15 @@
             {{ question.vote_number }}
         </td>
     </tr>
+
+{{session['username']}}
 </table>
- {% if 'username' in session: %}
+ {% if 'username' in session : %}
+{% if session['username']==question.username: %}
 <p align="center"><a href="{{ url_for('delete_question', question_id = question.id) }}">
     <button class="input-buttons" type="button">Delete Question</button>
     {% endif %}
+      {% endif %}
 </a></p>
  {% if 'username' in session: %}
 <p align="center"><a class="buttons" href="{{ url_for('add_a_comment_to_question', question_id = question.id) }}">
@@ -69,13 +73,16 @@
             </td>
 
         </tr>
+
               <form action="/delete_comment/{{ line.question_id }}" method="POST">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ line.id }}">
 
                    {% if 'username' in session: %}
+                  {% if session['username']==line.username: %}
                                                  <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
                    {% endif %}
+                    {% endif %}
 
                                 </form>
     </table>
@@ -106,12 +113,14 @@
                         </tr>
                     </table>
  {% if 'username' in session: %}
+   {% if session['username']==comment.username: %}
  <form action="/delete_comment/{{ line.question_id }}" method="POST">
                                     <input type="hidden" name="question_id" value="{{ question_id }}">
                                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
                                                  <p align="center"><button class="input-buttons" type="submit">Delete comment</button></p>
 
                                 </form>
+{% endif %}
 {% endif %}
 
                     <p class="comment" align="center"><em>{{ comment.message }}</em></p>
