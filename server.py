@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import data_manager
 import hash
-import session
 from datetime import datetime
 
 app = Flask(__name__)
