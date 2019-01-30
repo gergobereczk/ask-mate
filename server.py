@@ -1,10 +1,25 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, escape
 import data_manager
 from datetime import datetime
 
 app = Flask(__name__)
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('list_questions'))
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
+
+# csak teszt töröld ami felette van !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 
 @app.route("/")
@@ -24,6 +39,8 @@ def display_question(question_id):
     comment_ids = []
     comments = []
     question = data_manager.find_question_by_id(question_id)
+    print(question)
+
     answer_table = data_manager.find_answer_by_id(question_id)
     add_view_count = data_manager.add_view_count(question_id)
     comment_to_question = data_manager.find_comment_by_question_id(question_id)
@@ -48,7 +65,14 @@ def add_a_question():
         title = new_data['title']
         message = new_data['message']
         image = new_data['image']
-        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image)
+        user_name = session['username']
+
+
+        user_id = data_manager.get_user_id(user_name)
+        print(user_id['user_id'],"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4")
+
+
+        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,user_id['user_id'])
         question_id = question_id_dict[0]['id']
 
         return redirect(url_for('display_question', question_id=question_id))

@@ -29,10 +29,12 @@ def show_5_questions(cursor):
 def find_question_by_id(cursor, id):
     cursor.execute("""
                         SELECT * FROM question
-                        WHERE id=%(id)s;
+                        LEFT JOIN user_table ut on question.user_id = ut.user_id
+                        WHERE question.id=%(id)s;
                        """,
                    {'id': id})
     question = cursor.fetchone()
+
 
     return question
 
@@ -141,13 +143,13 @@ def delete_comment(cursor, comment_id):
 
 
 @data_connection.connection_handler
-def add_question(cursor, submission_time, view_number, vote_number, title, message, image):
+def add_question(cursor, submission_time, view_number, vote_number, title, message, image, user_id):
     cursor.execute("""
-                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
-                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s);   
+                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image, user_id)
+                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s,%(user_id)s);   
                     """,
                    {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number,
-                    'title': title, 'message': message, 'image': image})
+                    'title': title, 'message': message, 'image': image,'user_id': user_id})
 
     cursor.execute("""
                     SELECT id FROM question
@@ -277,3 +279,12 @@ def sorted_title_asc(cursor, title):
     title = cursor.fetchall()
 
     return title
+
+@data_connection.connection_handler
+def get_user_id(cursor, username):
+    cursor.execute(sql.SQL(""" SELECT user_id FROM user_table
+                  WHERE username = %(username)s;
+        """), {'username': username})
+    id = cursor.fetchone()
+
+    return id
