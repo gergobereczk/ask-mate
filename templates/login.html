@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add an Answer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <form class="registration" action="{{ url_for('register_user') }}" method="post">
+       <input class="user" type="text" name="username" placeholder="username">
+        <input class="password" type="text" name="password" placeholder="password">
+        <input class="pass_submit" type="submit" value="Register">
+    </form>
+</body>
+</html>
