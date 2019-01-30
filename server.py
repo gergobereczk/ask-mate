@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import data_manager
+import hash
 from datetime import datetime
 
 app = Flask(__name__)
@@ -164,8 +165,25 @@ def delete_comment(comment_id):
         return redirect(url_for('display_question', question_id=question_id))
 
 
-#@app.route('/login', methods=['POST'])
-#def login():
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        user_info = request.form.to_dict()
+        username = user_info['username']
+        print(username)
+        unhashed_pass = user_info['password']
+        print(unhashed_pass)
+        retrieve_password = data_manager.check_login_data(username)
+        print(retrieve_password)
+        actual_password = retrieve_password[0]['password']
+        print(actual_password)
+        hashed_pass = hash.verify_password(unhashed_pass, actual_password)
+        print(hashed_pass)
+
+        return render_template('list_questions.html')
+
+    else:
+        return render_template('list_questions.html')
 
 
 if __name__ == '__main__':
