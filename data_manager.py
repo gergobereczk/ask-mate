@@ -283,6 +283,18 @@ def sorted_title_asc(cursor, title):
 
 
 @data_connection.connection_handler
+def check_login_data(cursor, username):
+    cursor.execute("""
+                    SELECT username, password FROM user_table
+                    WHERE username=%(username)s;
+    """,            {'username': username})
+
+    login_info = cursor.fetchall()
+
+    return login_info
+
+
+@data_connection.connection_handler
 def add_user(cursor, username, password):
     cursor.execute("""
                     INSERT INTO user_table (username, password) 
