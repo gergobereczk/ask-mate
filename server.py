@@ -11,6 +11,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route("/")
 def list_5_questions():
     list_of_question = data_manager.show_5_questions()
+    print(data_manager.get_user_all_info())
     return render_template('list_questions.html', list_of_question=list_of_question)
 
 
