@@ -31,7 +31,7 @@ def display_question(question_id):
     comment_to_question = data_manager.find_comment_by_question_id(question_id)
     for answer in answer_table:
         comments.append(data_manager.find_comment_by_answer_id(answer['id']))
-    print(question)
+    print(answer_table)
 
     return render_template("display_a_question.html", question=question,
                            answer_table=answer_table, view_number=add_view_count,
@@ -84,7 +84,9 @@ def add_an_answer(question_id):
         answer_data = request.form.to_dict()
         message = answer_data['message']
         submission_data = datetime.now()
-        data_manager.add_answer(question_id, message, submission_data)
+        username = session['username']
+        user_id = data_manager.get_user_id(username)
+        data_manager.add_answer(question_id, message, submission_data, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_answer.html', question_id=question_id,
@@ -178,29 +180,6 @@ def delete_comment(comment_id):
 
         data_manager.delete_comment(comment_id)
         return redirect(url_for('display_question', question_id=question_id))
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    if request.method == 'POST':
-        user_info = request.form.to_dict()
-        username = user_info['username']
-        print(username)
-        unhashed_pass = user_info['password']
-        print(unhashed_pass)
-        retrieve_password = data_manager.check_login_data(username)
-        print(retrieve_password)
-        actual_password = retrieve_password[0]['password']
-        print(actual_password)
-        hashed_pass = hash.verify_password(unhashed_pass, actual_password)
-        print(hashed_pass)
-        if hashed_pass is True:
-            session['username'] = request.form['username']
-            return redirect(url_for('list_5_questions'))
-        else:
-            return redirect(url_for('list_5_questions'))
-    else:
-        return render_template('list_questions.html')
 
 
 @app.route('/registration', methods=['GET', 'POST'])
