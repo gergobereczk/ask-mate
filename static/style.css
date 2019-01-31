@@ -283,4 +283,23 @@ div.accept {
     font: 200 20px/1.5 Verdana;
     border-bottom: 1px solid lightgrey;
     text-align: center;
+    margin-bottom: 30px;
+}
+
+li a {
+    height: 10px;
+    text-decoration: none;
+    color: slategray;
+    background-color: ghostwhite;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+li a:hover {
+    text-decoration: none;
+    color: white;
+    background-color: slategray;
+    padding: 5px;
+    border-radius: 5px;
+    transition-duration: 0.5s;
 }
