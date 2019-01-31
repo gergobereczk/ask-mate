@@ -323,3 +323,52 @@ def add_user(cursor, username, password):
     user = cursor.fetchone()
 
     return user
+
+
+@data_connection.connection_handler
+def get_user_all_question(cursor,id):
+    cursor.execute("""select question.title,question.message
+from user_table
+left join question on user_table.user_id = question.user_id
+WHERE user_table.user_id = %(id)s;
+        """,  {'id': id})
+
+    infos=cursor.fetchall()
+
+    return infos
+
+@data_connection.connection_handler
+def list_all_user(cursor):
+    cursor.execute("""
+                    SELECT * FROM user_table
+                    
+                   """, )
+    users = cursor.fetchall()
+    return users
+
+@data_connection.connection_handler
+def get_user_all_answers(cursor,id):
+    cursor.execute("""select answer.message, question.title as question_title
+from user_table
+left join answer on user_table.user_id = answer.user_id
+left join question on user_table.user_id = question.user_id
+WHERE user_table.user_id = %(id)s;
+        """,  {'id': id})
+
+    infos=cursor.fetchall()
+
+    return infos
+
+@data_connection.connection_handler
+def get_user_all_comments(cursor,id):
+    cursor.execute("""select username,comment.message,question.title as question_title
+from user_table 
+left join comment on user_table.user_id = comment.user_id
+left join  question on question.id= comment.question_id
+left join  answer on answer.id = comment.answer_id 
+WHERE user_table.user_id = %(id)s;
+        """,  {'id': id})
+
+    infos=cursor.fetchall()
+
+    return infos

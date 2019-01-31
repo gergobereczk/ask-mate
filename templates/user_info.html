@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>User info</title>
+</head>
+<body>
+idejöna jusername
+
+questiontable alatta
+<table>
+
+    {% for question in questions %}
+                                    <tr>
+            <td>
+
+{{ question.title }}
+
+                {{ question.message }}
+                        </td>
+
+
+          </tr>
+
+
+
+
+
+
+
+{% endfor %}
+</table>
+jön a válasz
+<table>
+
+    {% for answer in answers %}
+                                    <tr>
+            <td>
+
+{{ answer.message }}
+                        </td>
+
+
+          </tr>
+                                        <tr>
+            <td align="center">
+
+{{ answer.question_title }}
+                        </td>
+
+
+          </tr>
+
+
+
+
+
+
+{% endfor %}
+</table>
+
+jön a komment
+
+<table>
+
+    {% for comment in comments %}
+                                    <tr>
+            <td>
+
+{{ comment.message }}
+                        </td>
+
+
+          </tr>
+                                        <tr>
+            <td align="center">
+
+{{ comment.question_title }}
+                        </td>
+
+
+          </tr>
+                                        <tr>
+            <td>
+
+{{ comment.question_title }}
+                        </td>
+
+
+          </tr>
+
+
+
+
+
+
+{% endfor %}
+</table>
+</body>
+</html>

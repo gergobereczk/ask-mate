@@ -216,6 +216,22 @@ def register_user():
 
     return render_template('register.html')
 
+@app.route("/list_users")
+def list_users():
+    users = data_manager.list_all_user()
+    return render_template('list_users.html', users=users)
+
+@app.route("/user_info/<int:id>")
+def list_user_info(id):
+
+    questions = data_manager.get_user_all_question(id)
+
+    answers = data_manager.get_user_all_answers(id)
+    comments = data_manager.get_user_all_comments(id)
+    print(comments,'asus 15:00')
+    return render_template('user_info.html', questions=questions, answers=answers, comments=comments)
+
+
 
 if __name__ == '__main__':
     app.run(
