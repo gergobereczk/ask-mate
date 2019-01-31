@@ -5,7 +5,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-app.secret_key = b'_3#y2L"D7W))5z\n\yak]/'
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 @app.route("/")
@@ -49,7 +49,14 @@ def add_a_question():
         title = new_data['title']
         message = new_data['message']
         image = new_data['image']
-        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image)
+        user_name = session['username']
+
+
+        user_id = data_manager.get_user_id(user_name)
+
+
+
+        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,user_id['user_id'])
         question_id = question_id_dict[0]['id']
 
         return redirect(url_for('display_question', question_id=question_id))
@@ -62,7 +69,11 @@ def add_a_comment_to_question(question_id):
     if request.method == 'POST':
         message_data = request.form.to_dict()
         message = message_data['message']
-        data_manager.add_comment_to_question(question_id, message)
+
+        user_name = session['username']
+
+        user_id = data_manager.get_user_id(user_name)
+        data_manager.add_comment_to_question(question_id, message, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
     return render_template('add_a_comment_to_question.html', question_id=question_id)
 
@@ -87,7 +98,10 @@ def add_a_comment_to_answer(answer_id):
         message_data = request.form.to_dict()
         message = message_data['message']
         answer_id = request.form.get('answer_id')
-        data_manager.add_comment_to_answer(answer_id, message)
+        user_name = session['username']
+
+        user_id = data_manager.get_user_id(user_name)
+        data_manager.add_comment_to_answer(answer_id, message,user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_a_comment_to_answer.html', answer_id=answer_id, question_id=question_id)
@@ -157,12 +171,11 @@ def search_stuff():
 def delete_comment(comment_id):
     if request.method == 'POST':
         data = request.form.to_dict()
-        print("egy")
-        # question_id = 1
+
         ids = request.form.to_dict()
         comment_id = ids['comment_id']
         question_id = data['question_id']
-        print(comment_id, question_id, "ezekasus")
+
         data_manager.delete_comment(comment_id)
         return redirect(url_for('display_question', question_id=question_id))
 

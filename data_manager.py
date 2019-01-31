@@ -30,7 +30,8 @@ def show_5_questions(cursor):
 def find_question_by_id(cursor, id):
     cursor.execute("""
                         SELECT * FROM question
-                        WHERE id=%(id)s;
+                        LEFT JOIN user_table ut on question.user_id = ut.user_id
+                        WHERE question.id=%(id)s;
                        """,
                    {'id': id})
     question = cursor.fetchone()
@@ -88,31 +89,32 @@ def delete_answer(cursor, answer_id):
 
 
 @data_connection.connection_handler
-def add_comment_to_question(cursor, question_id, message):
+def add_comment_to_question(cursor, question_id, message, user_id):
     submission_time = datetime.now().isoformat(timespec='seconds')
     edited_count = 0
     cursor.execute("""
-                    INSERT INTO comment (question_id, message, submission_time, edited_count)
-                    VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s); """,
+                    INSERT INTO comment (question_id, message, submission_time, edited_count, user_id)
+                    VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s,%(user_id)s); """,
                    {'question_id': question_id, 'message': message, 'submission_time': submission_time,
-                    'edited_count': edited_count})
+                    'edited_count': edited_count, 'user_id':user_id})
 
 
 @data_connection.connection_handler
-def add_comment_to_answer(cursor, answer_id, message):
+def add_comment_to_answer(cursor, answer_id, message, user_id):
     submission_time = datetime.now().isoformat(timespec='seconds')
     edited_count = 0
     cursor.execute("""
-                    INSERT INTO comment (answer_id, message, submission_time, edited_count)
-                    VALUES (%(answer_id)s, %(message)s, %(submission_time)s, %(edited_count)s); """,
+                    INSERT INTO comment (answer_id, message, submission_time, edited_count, user_id)
+                    VALUES (%(answer_id)s, %(message)s, %(submission_time)s, %(edited_count)s,%(user_id)s); """,
                    {'answer_id': answer_id, 'message': message, 'submission_time': submission_time,
-                    'edited_count': edited_count})
+                    'edited_count': edited_count,'user_id':user_id})
 
 
 @data_connection.connection_handler
 def find_comment_by_question_id(cursor, question_id):
     cursor.execute("""
                         SELECT * FROM comment
+                        LEFT JOIN user_table ut on comment.user_id = ut.user_id
                         WHERE question_id=%(question_id)s;
                        """,
                    {'question_id': question_id})
@@ -125,6 +127,7 @@ def find_comment_by_question_id(cursor, question_id):
 def find_comment_by_answer_id(cursor, answer_id):
     cursor.execute("""
                         SELECT * FROM comment
+                        LEFT JOIN user_table ut on comment.user_id = ut.user_id
                         WHERE answer_id=%(answer_id)s;
                        """,
                    {'answer_id': answer_id})
@@ -142,13 +145,13 @@ def delete_comment(cursor, comment_id):
 
 
 @data_connection.connection_handler
-def add_question(cursor, submission_time, view_number, vote_number, title, message, image):
+def add_question(cursor, submission_time, view_number, vote_number, title, message, image, user_id):
     cursor.execute("""
-                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
-                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s);   
+                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image, user_id)
+                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s,%(user_id)s);   
                     """,
                    {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number,
-                    'title': title, 'message': message, 'image': image})
+                    'title': title, 'message': message, 'image': image,'user_id': user_id})
 
     cursor.execute("""
                     SELECT id FROM question
@@ -205,7 +208,6 @@ def get_question_id(cursor, answer_id):
     answers = cursor.fetchall()
 
     return answers
-
 
 @data_connection.connection_handler
 def find_answer_id_by_question_id(cursor, question_id):
@@ -280,6 +282,15 @@ def sorted_title_asc(cursor, title):
     title = cursor.fetchall()
 
     return title
+
+@data_connection.connection_handler
+def get_user_id(cursor, username):
+    cursor.execute(sql.SQL(""" SELECT user_id FROM user_table
+                  WHERE username = %(username)s;
+        """), {'username': username})
+    id = cursor.fetchone()
+
+    return id
 
 
 @data_connection.connection_handler
