@@ -21,7 +21,7 @@
 <p align="center">
 <table align="center">
     <tr>
-        <td align="center" width="800">
+        <td class="q_message" align="center" width="800">
             {{ question.message }}
         </td>
     </tr>
@@ -97,7 +97,7 @@
 
 {% for line in answer_table %}
 
-    <h3 class="big" align="center"><strong>{{ line.message }}</strong></h3>
+    <h3 align="center"><strong>{{ line.message }}</strong></h3>
     <p class="comment_user">{{ line.username }}</p>
     {% for row in comment_to_answer %}
         {% for comment in row %}

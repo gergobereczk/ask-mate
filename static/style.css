@@ -39,7 +39,23 @@ body {
 
 .input-buttons-search{
     float: left;
+    padding: 8px;
+    cursor: pointer;
     margin-right: 480px;
+    border-style: none;
+    background: none;
+    color: grey;
+}
+
+.input-buttons-search:hover{
+    float: left;
+    cursor: pointer;
+    margin-right: 480px;
+    border-style: none;
+    background-color: slategray;
+    color: white;
+    transition-duration: 0.5s;
+    border-radius: 10px;
 }
 
 .user{
@@ -61,7 +77,22 @@ body {
 .pass_submit{
     float:left;
     margin-right: 5px;
+    cursor: pointer;
+    border-style: none;
+    background: none;
+    padding: 7px;
+    color: grey;
 
+}
+
+.pass_submit:hover{
+    cursor: pointer;
+    margin-right: 5px;
+    border-style: none;
+    background-color: slategray;
+    color: white;
+    transition-duration: 0.5s;
+    border-radius: 10px;
 }
 
 #login a{
@@ -136,7 +167,7 @@ body {
 }
 
 tr:nth-child(odd) {
-    background-color: lightgrey;
+    background-color: #E8E8E8;
 }
 
 .justify {
@@ -145,15 +176,14 @@ tr:nth-child(odd) {
 
 .buttons {
     color: darkslategrey;
-    background-color: whitesmoke;
     padding: 10px 10px;
-    transitioin: linear;
-    transition-duration: 350ms;
-    transition-property: background, transform;
     text-decoration: none;
 }
 
 .buttons:hover {
+    transition-property: background, transform;
+    transitioin: linear;
+    transition-duration: 350ms;
     color: whitesmoke;
     background-color: slategrey;
 }
@@ -186,7 +216,7 @@ tr:nth-child(odd) {
     font-size: 20px;
     font-weight: normal;
     font-style: italic;
-    margin-top: 0px;
+    margin-top: 0px;question_tag
 }
 
 .username{
@@ -204,4 +234,10 @@ tr:nth-child(odd) {
 .login_info{
     width: auto;
     margin-left: 1030px;
+}
+
+.q_message{
+    height: 50px;
+    font-size: 18px;
+    background: none;
 }
