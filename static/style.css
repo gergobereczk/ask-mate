@@ -25,6 +25,7 @@ body {
 }
 
 #login{
+
     height: 30px;
     width: auto;
     margin: 10px 20px 10px 310px;
@@ -100,6 +101,34 @@ body {
     border-bottom: solid lightgrey;
 }
 
+
+.input-buttons-search{
+    float: left;
+    margin-right: 530px;
+}
+
+.user{
+    float:left;
+    margin-right: 5px;
+    text-align: left;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: solid lightgrey;
+}
+
+.password{
+    float:left;
+    margin-right: 5px;
+    text-align: left;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: solid lightgrey;
+}
+
+.pass_submit{
+    float:left;
+}
+
 .pass_submit_reg{
     float:bottom;
     margin-left: 5px;
@@ -152,6 +181,7 @@ tr:nth-child(odd) {
     background-color: slategrey;
 }
 
+
 .registration{
     width: 800px;
     height: 100px;
@@ -177,3 +207,4 @@ tr:nth-child(odd) {
     font-size: 17px;
     text-align: center;
 }
+
