@@ -68,6 +68,7 @@ body {
 .pass_submit{
     float:left;
     margin-right: 5px;
+
 }
 
 #login a{
@@ -103,7 +104,7 @@ body {
 
 .input-buttons-search{
     float: left;
-    margin-right: 530px;
+    margin-right: 480px;
 }
 
 .user{
@@ -130,6 +131,11 @@ body {
 
 .pass_submit_reg{
     float:bottom;
+    margin-left: 5px;
+    text-decoration: none;
+    color: grey;
+    border-style: none;
+    background-color: none;
 }
 
 .sort {
@@ -180,4 +186,29 @@ tr:nth-child(odd) {
     width: 800px;
     height: 100px;
     margin: auto;
+    }
+
+.question_label{
+    text-align: center;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: italic;
+    margin-top: 0px;
+}
+
+.username{
+    font-style: italic;
+    font-size: 20px;
+    padding-left: 20px;
+}
+
+.comment_user{
+    font-style: italic;
+    font-size: 17px;
+    text-align: center;
+}
+
+.login_info{
+    width: auto;
+    margin-left: 1030px;
 }
