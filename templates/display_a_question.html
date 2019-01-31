@@ -8,7 +8,6 @@
 </head>
 <body>
 <p>
-<h1 class="big" align="center"><strong>{{ question.title }}</strong></h1>
 </p>
 
 {% if 'username' in session %}
@@ -22,7 +21,7 @@
 <p align="center">
 <table align="center">
     <tr>
-        <td align="center" width="800">
+        <td class="q_message" align="center" width="800">
             {{ question.message }}
         </td>
     </tr>
@@ -99,6 +98,7 @@
 
 {% for line in answer_table %}
 
+
 {% if 'username' in session: %}
     {% if session['username']==question.username: %}
 <form action="/accept" method="POST">
@@ -118,6 +118,9 @@
 <div class="accept">
 
     <h3 class="big" align="center"><strong>{{ line.message }}</strong></h3>
+
+    <h3 align="center"><strong>{{ line.message }}</strong></h3>
+
     <p class="comment_user">{{ line.username }}</p>
 
     </div>
