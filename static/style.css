@@ -19,7 +19,7 @@ body {
 
 }
 
-#login{
+#login {
 
     height: 30px;
     width: auto;
@@ -37,7 +37,7 @@ body {
 }
 
 
-.input-buttons-search{
+.input-buttons-search {
     float: left;
     padding: 8px;
     cursor: pointer;
@@ -47,7 +47,7 @@ body {
     color: grey;
 }
 
-.input-buttons-search:hover{
+.input-buttons-search:hover {
     float: left;
     cursor: pointer;
     margin-right: 480px;
@@ -58,24 +58,24 @@ body {
     border-radius: 10px;
 }
 
-.user{
-    float:left;
+.user {
+    float: left;
     margin-right: 5px;
     text-align: left;
     border: none;
     border-bottom: solid lightgrey;
 }
 
-.password{
-    float:left;
+.password {
+    float: left;
     margin-right: 5px;
     text-align: left;
     border: none;
     border-bottom: solid lightgrey;
 }
 
-.pass_submit{
-    float:left;
+.pass_submit {
+    float: left;
     margin-right: 5px;
     cursor: pointer;
     border-style: none;
@@ -85,7 +85,7 @@ body {
 
 }
 
-.pass_submit:hover{
+.pass_submit:hover {
     cursor: pointer;
     margin-right: 5px;
     border-style: none;
@@ -95,18 +95,18 @@ body {
     border-radius: 10px;
 }
 
-#login a{
+#login a {
     margin-left: 5px;
     text-decoration: none;
     color: grey;
 }
 
-#login a:hover{
+#login a:hover {
     padding-left: 15px;
     transition-duration: 0.5s;
 }
 
-.user_reg{
+.user_reg {
     float: bottom;
     margin-top: 300px;
     margin-left: 200px;
@@ -116,7 +116,7 @@ body {
     border-bottom: solid lightgrey;
 }
 
-.password_reg{
+.password_reg {
     float: bottom;
     margin-right: 5px;
     text-align: left;
@@ -126,13 +126,13 @@ body {
 }
 
 
-.input-buttons-search{
+.input-buttons-search {
     float: left;
     margin-right: 480px;
 }
 
-.user{
-    float:left;
+.user {
+    float: left;
     margin-right: 5px;
     text-align: left;
     border: none;
@@ -140,8 +140,8 @@ body {
     border-bottom: solid lightgrey;
 }
 
-.password{
-    float:left;
+.password {
+    float: left;
     margin-right: 5px;
     text-align: left;
     background: none;
@@ -149,12 +149,12 @@ body {
     border-bottom: solid lightgrey;
 }
 
-.pass_submit{
-    float:left;
+.pass_submit {
+    float: left;
 }
 
-.pass_submit_reg{
-    float:bottom;
+.pass_submit_reg {
+    float: bottom;
     margin-left: 5px;
     text-decoration: none;
     color: grey;
@@ -204,44 +204,81 @@ tr:nth-child(odd) {
     background-color: slategrey;
 }
 
+.input-buttons-answer {
+    margin-left: 850px;
+    color: darkslategrey;
+    background-color: whitesmoke;
+    padding: 10px 10px;
+    transitioin: linear;
+    transition-duration: 350ms;
+    transition-property: background, transform;
+    text-decoration: none;
+    border: none;
+}
 
-.registration{
+.input-buttons-answer:hover {
+    color: whitesmoke;
+    background-color: slategrey;
+}
+
+
+.registration {
     width: 800px;
     height: 100px;
     margin: auto;
-    }
+}
 
-.question_label{
+.question_label {
     text-align: center;
     font-size: 20px;
     font-weight: normal;
     font-style: italic;
-    margin-top: 0px;question_tag
+    margin-top: 0px;
+    question_tag
 }
 
-.username{
+.username {
     font-style: italic;
     font-size: 20px;
     padding-left: 20px;
 }
 
-.comment_user{
+.comment_user {
     font-style: italic;
     font-size: 17px;
     text-align: center;
 }
 
-.login_info{
+.login_info {
     width: auto;
     margin-left: 1030px;
 }
 
 
-div.accept { border:2px solid black;}
+div.accept {
+    border: 2px solid black;
+}
 
-.q_message{
+.q_message {
     height: 50px;
     font-size: 18px;
     background: none;
+}
+
+p.users {
+    margin-left: 630px;
+    font-size: 40px;
+    margin-bottom: 90px;
+}
+
+div.all_user {
+    margin-left: 600px;
+    margin-right: 590px;
+
+    margin-bottom: 70px;
+    padding: 10px;
+    border: 2px solid black;
+    background-color: #ececec;
+    text-align: center;
 }
 
