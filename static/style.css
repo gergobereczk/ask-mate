@@ -236,8 +236,12 @@ tr:nth-child(odd) {
     margin-left: 1030px;
 }
 
+
+div.accept { border:2px solid black;}
+
 .q_message{
     height: 50px;
     font-size: 18px;
     background: none;
 }
+
