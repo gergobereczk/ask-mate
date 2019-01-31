@@ -186,6 +186,12 @@ def login():
             return render_template('list_questions.html')
 
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('list_5_questions'))
+
+
 @app.route('/registration', methods=['GET', 'POST'])
 def register_user():
     if request.method == 'POST':
