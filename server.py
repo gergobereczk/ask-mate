@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, escape, redirect, url_for
 import data_manager
 import hash
-from datetime import datetime
+from datetime import datetime,date
 
 app = Flask(__name__)
 
@@ -51,12 +51,10 @@ def add_a_question():
         image = new_data['image']
         user_name = session['username']
 
-
         user_id = data_manager.get_user_id(user_name)
 
-
-
-        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,user_id['user_id'])
+        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,
+                                                     user_id['user_id'])
         question_id = question_id_dict[0]['id']
 
         return redirect(url_for('display_question', question_id=question_id))
@@ -83,8 +81,10 @@ def add_an_answer(question_id):
     if request.method == 'POST':
         answer_data = request.form.to_dict()
         message = answer_data['message']
-        submission_data = datetime.now()
-        data_manager.add_answer(question_id, message, submission_data)
+        submission_data = datetime.now().isoformat(timespec='seconds')
+        username = session['username']
+        user_id = data_manager.get_user_id(username)
+        data_manager.add_answer(question_id, message, submission_data, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_answer.html', question_id=question_id,
@@ -101,7 +101,7 @@ def add_a_comment_to_answer(answer_id):
         user_name = session['username']
 
         user_id = data_manager.get_user_id(user_name)
-        data_manager.add_comment_to_answer(answer_id, message,user_id['user_id'])
+        data_manager.add_comment_to_answer(answer_id, message, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_a_comment_to_answer.html', answer_id=answer_id, question_id=question_id)
@@ -210,7 +210,8 @@ def register_user():
     if request.method == 'POST':
         username = request.form['username']
         password = hash.hash_password(request.form['password'])
-        data_manager.add_user(username, password)
+        registry_date = date.today()
+        data_manager.add_user(username, password, registry_date)
 
         return redirect(url_for('list_5_questions'))
 
