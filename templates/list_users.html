@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List_users</title>
+</head>
+<body>
+<table>
+                                <tr>
+            <td>
+Username:
+
+        </td>
+        </tr>
+
+{% for user in users %}
+      <td>
+
+
+        <tr>
+            <td>
+<a href="/user_info/{{ user.user_id }}">{{ user.username }}</a>
+
+        </td>
+        </tr>
+
+
+          </td>
+{% endfor %}
+</table>
+</body>
+</html>
