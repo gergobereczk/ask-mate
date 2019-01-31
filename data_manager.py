@@ -63,7 +63,7 @@ def add_answer(cursor, question_id, message, submission_data, user_id):
 
 
 @data_connection.connection_handler
-def find_question_id_from_answers(cursor, answer_id):0
+def find_question_id_from_answers(cursor, answer_id):
     cursor.execute("""
                             SELECT question_id FROM answer
                             WHERE id=%(id)s;
