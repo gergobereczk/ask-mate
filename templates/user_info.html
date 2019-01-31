@@ -2,100 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_info.css') }}">
     <title>User info</title>
 </head>
 <body>
-idejöna jusername
+<p class="users">{{ username.username }}</p>
 
-questiontable alatta
-<table>
+<p class="interaction_title">Questions</p>
 
     {% for question in questions %}
-                                    <tr>
-            <td>
+
+<div class='question'>
 
 {{ question.title }}
-
+<br>
                 {{ question.message }}
-                        </td>
 
-
-          </tr>
-
-
-
-
-
-
-
+</div>
 {% endfor %}
-</table>
-jön a válasz
-<table>
+
+<p class="interaction_title">Answers</p>
 
     {% for answer in answers %}
-                                    <tr>
-            <td>
 
-{{ answer.message }}
-                        </td>
-
-
-          </tr>
-                                        <tr>
-            <td align="center">
+<div class='answer'>
 
 {{ answer.question_title }}
-                        </td>
+<br>
+    <p class="answer_in_answer">{{ answer.message }}</p>
 
-
-          </tr>
-
-
-
-
-
+</div>
 
 {% endfor %}
-</table>
 
-jön a komment
+<p class="interaction_title">Comment to questions</p>
 
-<table>
+    {% for comment in comments_for_questions %}
 
-    {% for comment in comments %}
-                                    <tr>
-            <td>
-
-{{ comment.message }}
-                        </td>
-
-
-          </tr>
-                                        <tr>
-            <td align="center">
+<div class='question'>
 
 {{ comment.question_title }}
-                        </td>
-
-
-          </tr>
-                                        <tr>
-            <td>
-
-{{ comment.question_title }}
-                        </td>
-
-
-          </tr>
-
-
-
-
-
-
+<br>
+                {{ comment.question_message }}
+    <br>
+    <p class="comments"> {{ comment.message }} </p>
+</div>
 {% endfor %}
-</table>
+
+<p class="interaction_title">Comment to answers</p>
+
+    {% for comment in comments_for_answers %}
+
+<div class='question'>
+
+{{ comment.answer_message }}
+
+    <p class="comments"> {{ comment.message }} </p>
+</div>
+{% endfor %}
+
+        <a href="/">
+            <button class="input-buttons" type="button">Back to Questions</button>
+        </a>
+
+
+
+
 </body>
 </html>

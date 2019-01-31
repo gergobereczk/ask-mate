@@ -83,6 +83,7 @@
                     <p align="center">
                         <button class="input-buttons" type="submit">Delete comment</button>
                     </p>
+
                 {% endif %}
             {% endif %}
 
@@ -97,8 +98,40 @@
 
 {% for line in answer_table %}
 
-    <h3 align="center"><strong>{{ line.message }}</strong></h3>
+
+{% if 'username' in session: %}
+    {% if session['username']==question.username: %}
+<form action="/accept" method="POST">
+                            <input type="hidden" name="question_id" value="{{ question_id }}">
+      <input type="hidden" name="user_id" value="{{ line.id }}">
+     <button class="input-buttons" type="submit">Accept this answer</button>
+
+</form>
+
+{% endif %}
+
+{% endif %}
+
+
+ {% if line.accepted == True: %}
+
+<div class="accept">
+
+    <h3 class="big" align="center"><strong>{{ line.message }}</strong></h3>
+    
+
     <p class="comment_user">{{ line.username }}</p>
+
+    </div>
+
+{% else %}
+
+  <h3 class="big" align="center"><strong>{{ line.message }}</strong></h3>
+    <p class="comment_user">{{ line.username }}</p>
+
+ {% endif %}
+
+
     {% for row in comment_to_answer %}
         {% for comment in row %}
 

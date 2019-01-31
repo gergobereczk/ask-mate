@@ -330,7 +330,7 @@ def add_user(cursor, username, password, registry_date):
 def get_user_all_question(cursor,id):
     cursor.execute("""select question.title,question.message
 from user_table
-left join question on user_table.user_id = question.user_id
+right join question on user_table.user_id = question.user_id
 WHERE user_table.user_id = %(id)s;
         """,  {'id': id})
 
@@ -351,8 +351,8 @@ def list_all_user(cursor):
 def get_user_all_answers(cursor,id):
     cursor.execute("""select answer.message, question.title as question_title
 from user_table
-left join answer on user_table.user_id = answer.user_id
-left join question on user_table.user_id = question.user_id
+right join answer on user_table.user_id = answer.user_id
+right join question on user_table.user_id = question.user_id
 WHERE user_table.user_id = %(id)s;
         """,  {'id': id})
 
@@ -361,12 +361,24 @@ WHERE user_table.user_id = %(id)s;
     return infos
 
 @data_connection.connection_handler
-def get_user_all_comments(cursor,id):
-    cursor.execute("""select username,comment.message,question.title as question_title
+def get_user_all_comments_question(cursor,id):
+    cursor.execute("""select username,comment.message,question.title as question_title ,question.message as question_message
 from user_table 
-left join comment on user_table.user_id = comment.user_id
-left join  question on question.id= comment.question_id
-left join  answer on answer.id = comment.answer_id 
+right join comment on user_table.user_id = comment.user_id
+right join  question on question.id= comment.question_id
+WHERE user_table.user_id = %(id)s;
+        """,  {'id': id})
+
+    comments=cursor.fetchall()
+
+    return comments
+
+@data_connection.connection_handler
+def get_user_all_comments_answer(cursor,id):
+    cursor.execute("""select username,comment.message,answer.message as answer_message
+from user_table 
+right join comment on user_table.user_id = comment.user_id
+right join  answer on answer.id = comment.answer_id 
 WHERE user_table.user_id = %(id)s;
         """,  {'id': id})
 
@@ -384,3 +396,27 @@ def check_login_data(cursor, username):
     login_info = cursor.fetchall()
 
     return login_info
+
+@data_connection.connection_handler
+def get_user_by_id(cursor, id):
+    cursor.execute(sql.SQL(""" SELECT username FROM user_table
+                  WHERE user_id = %(id)s;
+        """), {'id': id})
+    id = cursor.fetchone()
+
+    return id
+
+
+@data_connection.connection_handler
+def false_all_accept(cursor):
+    cursor.execute("""
+                    update answer set accepted = 'False'
+where id >'0'
+                   """, )
+
+@data_connection.connection_handler
+def true_accept(cursor,id):
+    cursor.execute("""
+                    update answer set accepted = 'True'
+where id = %(id)s;
+        """, {'id': id})
