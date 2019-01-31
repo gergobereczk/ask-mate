@@ -405,3 +405,18 @@ def get_user_by_id(cursor, id):
     id = cursor.fetchone()
 
     return id
+
+
+@data_connection.connection_handler
+def false_all_accept(cursor):
+    cursor.execute("""
+                    update answer set accepted = 'False'
+where id >'0'
+                   """, )
+
+@data_connection.connection_handler
+def true_accept(cursor,id):
+    cursor.execute("""
+                    update answer set accepted = 'True'
+where id = %(id)s;
+        """, {'id': id})

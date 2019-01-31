@@ -208,3 +208,5 @@ tr:nth-child(odd) {
     width: auto;
     margin-left: 1030px;
 }
+
+div.accept { border:2px solid black;}
