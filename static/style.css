@@ -204,6 +204,23 @@ tr:nth-child(odd) {
     background-color: slategrey;
 }
 
+.input-buttons-answer {
+    margin-left: 850px;
+    color: darkslategrey;
+    background-color: whitesmoke;
+    padding: 10px 10px;
+    transitioin: linear;
+    transition-duration: 350ms;
+    transition-property: background, transform;
+    text-decoration: none;
+    border: none;
+}
+
+.input-buttons-answer:hover {
+    color: whitesmoke;
+    background-color: slategrey;
+}
+
 
 .registration {
     width: 800px;
@@ -264,3 +281,4 @@ div.all_user {
     background-color: #ececec;
     text-align: center;
 }
+
