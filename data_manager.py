@@ -42,9 +42,10 @@ def find_question_by_id(cursor, id):
 @data_connection.connection_handler
 def find_answer_by_id(cursor, question_id):
     cursor.execute("""
-                        SELECT * FROM answer
-                        WHERE question_id=%(question_id)s;
-                       """,
+        SELECT * FROM answer
+        JOIN user_table ut on answer.user_id = ut.user_id
+        WHERE question_id=%(question_id)s;
+       """,
                    {'question_id': question_id})
     answers = cursor.fetchall()
 
@@ -52,16 +53,17 @@ def find_answer_by_id(cursor, question_id):
 
 
 @data_connection.connection_handler
-def add_answer(cursor, question_id, message, submission_data):
+def add_answer(cursor, question_id, message, submission_data, user_id):
     cursor.execute("""
-                            INSERT INTO answer (question_id, message, submission_time)
-                            VALUES (%(question_id)s, %(message)s, %(submission_data)s)
+                            INSERT INTO answer (question_id, message, submission_time, user_id)
+                            VALUES (%(question_id)s, %(message)s, %(submission_data)s, %(user_id)s)
                            """,
-                   {'question_id': question_id, 'message': message, 'submission_data': submission_data})
+                   {'question_id': question_id, 'message': message, 'submission_data': submission_data,
+                    'user_id': user_id})
 
 
 @data_connection.connection_handler
-def find_question_id_from_answers(cursor, answer_id):
+def find_question_id_from_answers(cursor, answer_id):0
     cursor.execute("""
                             SELECT question_id FROM answer
                             WHERE id=%(id)s;
@@ -96,7 +98,7 @@ def add_comment_to_question(cursor, question_id, message, user_id):
                     INSERT INTO comment (question_id, message, submission_time, edited_count, user_id)
                     VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s,%(user_id)s); """,
                    {'question_id': question_id, 'message': message, 'submission_time': submission_time,
-                    'edited_count': edited_count, 'user_id':user_id})
+                    'edited_count': edited_count, 'user_id': user_id})
 
 
 @data_connection.connection_handler
@@ -107,7 +109,7 @@ def add_comment_to_answer(cursor, answer_id, message, user_id):
                     INSERT INTO comment (answer_id, message, submission_time, edited_count, user_id)
                     VALUES (%(answer_id)s, %(message)s, %(submission_time)s, %(edited_count)s,%(user_id)s); """,
                    {'answer_id': answer_id, 'message': message, 'submission_time': submission_time,
-                    'edited_count': edited_count,'user_id':user_id})
+                    'edited_count': edited_count, 'user_id': user_id})
 
 
 @data_connection.connection_handler
@@ -151,7 +153,7 @@ def add_question(cursor, submission_time, view_number, vote_number, title, messa
                     VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s,%(user_id)s);   
                     """,
                    {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number,
-                    'title': title, 'message': message, 'image': image,'user_id': user_id})
+                    'title': title, 'message': message, 'image': image, 'user_id': user_id})
 
     cursor.execute("""
                     SELECT id FROM question
@@ -208,6 +210,7 @@ def get_question_id(cursor, answer_id):
     answers = cursor.fetchall()
 
     return answers
+
 
 @data_connection.connection_handler
 def find_answer_id_by_question_id(cursor, question_id):
@@ -283,6 +286,7 @@ def sorted_title_asc(cursor, title):
 
     return title
 
+
 @data_connection.connection_handler
 def get_user_id(cursor, username):
     cursor.execute(sql.SQL(""" SELECT user_id FROM user_table
@@ -298,7 +302,7 @@ def check_login_data(cursor, username):
     cursor.execute("""
                     SELECT username, password FROM user_table
                     WHERE username=%(username)s;
-    """,            {'username': username})
+    """, {'username': username})
 
     login_info = cursor.fetchall()
 
@@ -323,3 +327,27 @@ def add_user(cursor, username, password):
     user = cursor.fetchone()
 
     return user
+
+@data_connection.connection_handler
+def check_login_data(cursor, username):
+    cursor.execute("""
+                    SELECT username, password FROM user_table
+                    WHERE username=%(username)s;
+    """, {'username': username})
+
+    login_info = cursor.fetchall()
+
+    return login_info
+
+
+@data_connection.connection_handler
+def get_user_all_info(cursor):
+    cursor.execute(sql.SQL("""select user_table.user_id, user_table.username, question.message as question_message,question.title as question_title,comment.message as comment_message, answer.message as answer_message
+from user_table
+left join question on user_table.user_id = question.user_id
+left join comment on user_table.user_id = comment.user_id
+left join answer on user_table.user_id = answer.user_id
+        """))
+    infos = cursor.fetchall()
+
+    return infos
