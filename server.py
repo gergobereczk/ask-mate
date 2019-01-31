@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, escape, redirect, url_for
 import data_manager
 import hash
-from datetime import datetime
+from datetime import datetime,date
 
 app = Flask(__name__)
 
@@ -210,7 +210,8 @@ def register_user():
     if request.method == 'POST':
         username = request.form['username']
         password = hash.hash_password(request.form['password'])
-        data_manager.add_user(username, password)
+        registry_date = date.today()
+        data_manager.add_user(username, password, registry_date)
 
         return redirect(url_for('list_5_questions'))
 

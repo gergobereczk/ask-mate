@@ -306,15 +306,15 @@ def check_login_data(cursor, username):
 
 
 @data_connection.connection_handler
-def add_user(cursor, username, password):
+def add_user(cursor, username, password, registry_date):
     cursor.execute("""
-                    INSERT INTO user_table (username, password) 
-                    VALUES (%(username)s, %(password)s); 
+                    INSERT INTO user_table (username, password, registry_date) 
+                    VALUES (%(username)s, %(password)s, %(registry_date)s); 
                     """,
-                   {'username': username, 'password': password})
+                   {'username': username, 'password': password, 'registry_date': registry_date})
 
     cursor.execute("""
-                    SELECT username, password
+                    SELECT username, password, registry_date
                     FROM user_table
                     WHERE username=%(username)s;
                     """,
