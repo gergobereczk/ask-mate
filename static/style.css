@@ -104,7 +104,7 @@ body {
 
 .input-buttons-search{
     float: left;
-    margin-right: 530px;
+    margin-right: 480px;
 }
 
 .user{
@@ -208,3 +208,7 @@ tr:nth-child(odd) {
     text-align: center;
 }
 
+.login_info{
+    width: auto;
+    margin-left: 1030px;
+}
