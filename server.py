@@ -220,6 +220,7 @@ def register_user():
 @app.route("/list_users")
 def list_users():
     users = data_manager.list_all_user()
+    print(users)
     return render_template('list_users.html', users=users)
 
 @app.route("/user_info/<int:id>")

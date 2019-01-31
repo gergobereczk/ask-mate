@@ -153,14 +153,14 @@
     </table>
     <p align="center"><a href="/answer/{{ line.id }}/delete">
         {% if 'username' in session: %}
-            {% if session['username']==answer_table.username: %}
+    {% if session['username']==line.username: %}
                 <button class="input-buttons" type="button">Delete Answer</button>
             {% endif %}
         {% endif %}
     </a>
         <a href="/answer/{{ line.id }}/edit">
             {% if 'username' in session: %}
-                {% if session['username']==answer_table.username: %}
+                {% if session['username']==line.username: %}
                     <button class="input-buttons" type="button">Edit Answer</button>
                 {% endif %}
             {% endif %}
