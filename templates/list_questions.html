@@ -9,15 +9,22 @@
 <h1 align="center"><strong>Ask máté</strong></h1>
 <div id="login">
 <form action="{{ url_for('search_stuff') }}" method="POST">
-    <input class="searchbar" type="search" name="search" placeholder="Search">
+    <input class="searchbar" type="search" name="search" placeholder="search">
     <input class="input-buttons-search" type="submit">
 </form>
-    <form action="{{ url_for('login') }}" method="post">
-        <input class="user" type="text" name="username" placeholder="username">
-        <input class="password" type="password" name="password" placeholder="password">
-        <input class="pass_submit" type="submit" value="Login">
-    </form>
-    <a href="{{url_for('register_user')}}">Register</a>
+    {% if 'username' not in session %}
+        <form action="{{ url_for('login') }}" method="post">
+            <input class="user" type="text" name="username" placeholder="username">
+            <input class="password" type="password" name="password" placeholder="password">
+            <input class="pass_submit" type="submit" value="Log in">
+            <a href="{{url_for('register_user')}}">Register</a>
+        </form>
+    {% else %}
+        <div class="login_info">
+        {{ "Logged in as " + session.username }}
+        <a href="{{url_for('logout')}}">Log out</a>
+        </div>
+    {% endif %}
 </div>
 {{ list_of_question["id"] }}
 <table align="center" cellpadding="10">
@@ -58,12 +65,16 @@
 <h3>
     <p align="center">
         <a href="/add_a_question">
+             {% if 'username' in session: %}
             <button class="input-buttons" type="button">Add a new question</button>
-        </a>
+            {% endif %}
+        </a></p>
     <p align="center"><a href="{{ url_for('list_questions') }}">
-        <button class="input-buttons">Show all questions</button>
+        <button class="input-buttons">Show all questions</button></a></p>
+        <p align="center"><a href="{{ url_for('list_users') }}">
+        <button class="input-buttons">Show all users</button>
     </a></p>
-    </p>
+
 </h3>
 </body>
 </html>

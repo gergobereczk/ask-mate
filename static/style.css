@@ -2,15 +2,8 @@ h1 {
     font-family: Verdana;
     color: black;
     line-height: 60px;
-    background-color: whitesmoke;
-    transition: linear;
-    transition-duration: 450ms;
-    transition-property: background, transform;
-}
-
-h1:hover {
-    color: black;
-    background-color: lightslategrey;
+    padding-bottom: 30px;
+    padding-top: 20px;
 }
 
 
@@ -20,11 +13,14 @@ h2 {
 
 body {
     font-family: Verdana;
-    background-color: whitesmoke;
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
 
 }
 
-#login{
+#login {
+
     height: 30px;
     width: auto;
     margin: 10px 20px 10px 310px;
@@ -34,53 +30,83 @@ body {
 .searchbar {
     float: left;
     text-align: left;
-    background-color: whitesmoke;
     border: none;
+    background: none;
     border-bottom: solid lightgrey;
     margin-right: 5px;
 }
 
 
-.input-buttons-search{
+.input-buttons-search {
     float: left;
+    padding: 8px;
+    cursor: pointer;
     margin-right: 480px;
+    border-style: none;
+    background: none;
+    color: grey;
 }
 
-.user{
-    float:left;
+.input-buttons-search:hover {
+    float: left;
+    cursor: pointer;
+    margin-right: 480px;
+    border-style: none;
+    background-color: slategray;
+    color: white;
+    transition-duration: 0.5s;
+    border-radius: 10px;
+}
+
+.user {
+    float: left;
     margin-right: 5px;
     text-align: left;
-    background-color: whitesmoke;
     border: none;
     border-bottom: solid lightgrey;
 }
 
-.password{
-    float:left;
+.password {
+    float: left;
     margin-right: 5px;
     text-align: left;
-    background-color: whitesmoke;
     border: none;
     border-bottom: solid lightgrey;
 }
 
-.pass_submit{
-    float:left;
+.pass_submit {
+    float: left;
     margin-right: 5px;
+    cursor: pointer;
+    border-style: none;
+    background: none;
+    padding: 7px;
+    color: grey;
+
 }
 
-#login a{
+.pass_submit:hover {
+    cursor: pointer;
+    margin-right: 5px;
+    border-style: none;
+    background-color: slategray;
+    color: white;
+    transition-duration: 0.5s;
+    border-radius: 10px;
+}
+
+#login a {
     margin-left: 5px;
     text-decoration: none;
     color: grey;
 }
 
-#login a:hover{
+#login a:hover {
     padding-left: 15px;
     transition-duration: 0.5s;
 }
 
-.user_reg{
+.user_reg {
     float: bottom;
     margin-top: 300px;
     margin-left: 200px;
@@ -90,7 +116,7 @@ body {
     border-bottom: solid lightgrey;
 }
 
-.password_reg{
+.password_reg {
     float: bottom;
     margin-right: 5px;
     text-align: left;
@@ -99,8 +125,41 @@ body {
     border-bottom: solid lightgrey;
 }
 
-.pass_submit_reg{
-    float:bottom;
+
+.input-buttons-search {
+    float: left;
+    margin-right: 480px;
+}
+
+.user {
+    float: left;
+    margin-right: 5px;
+    text-align: left;
+    border: none;
+    background: none;
+    border-bottom: solid lightgrey;
+}
+
+.password {
+    float: left;
+    margin-right: 5px;
+    text-align: left;
+    background: none;
+    border: none;
+    border-bottom: solid lightgrey;
+}
+
+.pass_submit {
+    float: left;
+}
+
+.pass_submit_reg {
+    float: bottom;
+    margin-left: 5px;
+    text-decoration: none;
+    color: grey;
+    border-style: none;
+    background-color: none;
 }
 
 .sort {
@@ -108,7 +167,7 @@ body {
 }
 
 tr:nth-child(odd) {
-    background-color: lightgrey;
+    background-color: #E8E8E8;
 }
 
 .justify {
@@ -117,15 +176,14 @@ tr:nth-child(odd) {
 
 .buttons {
     color: darkslategrey;
-    background-color: whitesmoke;
     padding: 10px 10px;
-    transitioin: linear;
-    transition-duration: 350ms;
-    transition-property: background, transform;
     text-decoration: none;
 }
 
 .buttons:hover {
+    transition-property: background, transform;
+    transitioin: linear;
+    transition-duration: 350ms;
     color: whitesmoke;
     background-color: slategrey;
 }
@@ -139,6 +197,8 @@ tr:nth-child(odd) {
     transition-property: background, transform;
     text-decoration: none;
     border: none;
+    cursor: pointer;
+    border-radius: 10px;
 }
 
 .input-buttons:hover {
@@ -146,8 +206,100 @@ tr:nth-child(odd) {
     background-color: slategrey;
 }
 
-.registration{
+.input-buttons-answer {
+    margin-left: 850px;
+    color: darkslategrey;
+    background-color: whitesmoke;
+    padding: 10px 10px;
+    transitioin: linear;
+    transition-duration: 350ms;
+    transition-property: background, transform;
+    text-decoration: none;
+    border: none;
+}
+
+.input-buttons-answer:hover {
+    color: whitesmoke;
+    background-color: slategrey;
+}
+
+
+.registration {
     width: 800px;
     height: 100px;
     margin: auto;
-    }
+}
+
+.question_label {
+    text-align: center;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: italic;
+    margin-top: 0px;
+    question_tag
+}
+
+.username {
+    font-style: italic;
+    font-size: 20px;
+    padding-left: 20px;
+}
+
+.comment_user {
+    font-style: italic;
+    font-size: 17px;
+    text-align: center;
+}
+
+.login_info {
+    width: auto;
+    margin-left: 1030px;
+}
+
+
+div.accept {
+    border: 2px solid black;
+}
+
+.q_message {
+    height: 50px;
+    font-size: 18px;
+    background: none;
+}
+
+.all_user {
+    padding-left: 600px;
+    padding-right: 600px;
+}
+
+.user_list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.user_line {
+    font: 200 20px/1.5 Verdana;
+    border-bottom: 1px solid lightgrey;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+li a {
+    height: 10px;
+    text-decoration: none;
+    color: slategray;
+    background-color: ghostwhite;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+li a:hover {
+    text-decoration: none;
+    color: white;
+    background-color: slategray;
+    padding: 5px;
+    border-radius: 5px;
+    transition-duration: 0.5s;
+}

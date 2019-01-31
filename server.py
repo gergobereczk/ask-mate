@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, session, escape, redirect, url_for
 import data_manager
 import hash
-from datetime import datetime
+from datetime import datetime, date
 
 app = Flask(__name__)
 
@@ -28,6 +28,7 @@ def display_question(question_id):
     answer_table = data_manager.find_answer_by_id(question_id)
     add_view_count = data_manager.add_view_count(question_id)
     comment_to_question = data_manager.find_comment_by_question_id(question_id)
+
     for answer in answer_table:
         comments.append(data_manager.find_comment_by_answer_id(answer['id']))
 
@@ -51,12 +52,10 @@ def add_a_question():
         image = new_data['image']
         user_name = session['username']
 
-
         user_id = data_manager.get_user_id(user_name)
-        print(user_id['user_id'],"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4")
 
-
-        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,user_id['user_id'])
+        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,
+                                                     user_id['user_id'])
         question_id = question_id_dict[0]['id']
 
         return redirect(url_for('display_question', question_id=question_id))
@@ -69,7 +68,11 @@ def add_a_comment_to_question(question_id):
     if request.method == 'POST':
         message_data = request.form.to_dict()
         message = message_data['message']
-        data_manager.add_comment_to_question(question_id, message)
+
+        user_name = session['username']
+
+        user_id = data_manager.get_user_id(user_name)
+        data_manager.add_comment_to_question(question_id, message, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
     return render_template('add_a_comment_to_question.html', question_id=question_id)
 
@@ -79,8 +82,10 @@ def add_an_answer(question_id):
     if request.method == 'POST':
         answer_data = request.form.to_dict()
         message = answer_data['message']
-        submission_data = datetime.now()
-        data_manager.add_answer(question_id, message, submission_data)
+        submission_data = datetime.now().isoformat(timespec='seconds')
+        username = session['username']
+        user_id = data_manager.get_user_id(username)
+        data_manager.add_answer(question_id, message, submission_data, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_answer.html', question_id=question_id,
@@ -94,7 +99,10 @@ def add_a_comment_to_answer(answer_id):
         message_data = request.form.to_dict()
         message = message_data['message']
         answer_id = request.form.get('answer_id')
-        data_manager.add_comment_to_answer(answer_id, message)
+        user_name = session['username']
+
+        user_id = data_manager.get_user_id(user_name)
+        data_manager.add_comment_to_answer(answer_id, message, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_a_comment_to_answer.html', answer_id=answer_id, question_id=question_id)
@@ -164,14 +172,38 @@ def search_stuff():
 def delete_comment(comment_id):
     if request.method == 'POST':
         data = request.form.to_dict()
-        print("egy")
-        # question_id = 1
+
         ids = request.form.to_dict()
         comment_id = ids['comment_id']
         question_id = data['question_id']
-        print(comment_id, question_id, "ezekasus")
+
         data_manager.delete_comment(comment_id)
         return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        if request.method == 'POST':
+            user_info = request.form.to_dict()
+            username = user_info['username']
+            unhashed_pass = user_info['password']
+            retrieve_password = data_manager.check_login_data(username)
+            actual_password = retrieve_password[0]['password']
+            hashed_pass = hash.verify_password(unhashed_pass, actual_password)
+            if hashed_pass is True:
+                session['username'] = request.form['username']
+                return redirect(url_for('list_5_questions'))
+            else:
+                return redirect(url_for('list_5_questions'))
+        else:
+            return render_template('list_questions.html')
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('list_5_questions'))
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -179,24 +211,49 @@ def register_user():
     if request.method == 'POST':
         username = request.form['username']
         password = hash.hash_password(request.form['password'])
-        data_manager.add_user(username, password)
+        registry_date = date.today()
+        data_manager.add_user(username, password, registry_date)
 
         return redirect(url_for('list_5_questions'))
 
     return render_template('register.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route("/list_users")
+def list_users():
+    users = data_manager.list_all_user()
+
+    return render_template('list_users.html', users=users)
+
+
+@app.route("/user_info/<int:id>")
+def list_user_info(id):
+    questions = data_manager.get_user_all_question(id)
+    answers = data_manager.get_user_all_answers(id)
+    comments_for_answers = data_manager.get_user_all_comments_answer(id)
+    comments_for_questions = data_manager.get_user_all_comments_question(id)
+    username = data_manager.get_user_by_id(id)
+    print(comments_for_answers, 'asus 15:00')
+    return render_template('user_info.html', questions=questions, answers=answers,
+                           comments_for_answers=comments_for_answers, comments_for_questions=comments_for_questions,
+                           username=username)
+
+
+@app.route('/accept', methods=['GET', 'POST'])
+def accept():
     if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('login'))
-    return '''
-        <form method="post">
-            <p><input type=text name=username>
-            <p><input type=submit value=Login>
-        </form>
-    '''
+        ids = request.form.to_dict()
+
+        question_id = ids['question_id']
+
+        user_id = ids['user_id']
+
+        data_manager.false_all_accept()
+
+        data_manager.true_accept(user_id)
+
+        return redirect(url_for('display_question', question_id=question_id))
+
 
 if __name__ == '__main__':
     app.run(

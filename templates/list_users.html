@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+       <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Users</title>
+</head>
+<body>
+
+<h1 align="center">Users</h1>
+
+
+
+{% for user in users %}
+<div class="all_user">
+<ul class="user_list">
+<li class="user_line"><a href="/user_info/{{ user.user_id }}">{{ user.username }}</a>
+
+<br>
+{{ "Joined: " }} {{ user.registry_date }}</li>
+</ul>
+</div>
+{% endfor %}
+
+     <p align="center"><a href="/" >
+            <button class="input-buttons" type="button">Back to Questions</button>
+        </a></p>
+</body>
+</html>
