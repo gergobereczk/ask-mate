@@ -220,7 +220,7 @@ def register_user():
 @app.route("/list_users")
 def list_users():
     users = data_manager.list_all_user()
-    print(users)
+
     return render_template('list_users.html', users=users)
 
 @app.route("/user_info/<int:id>")
@@ -229,9 +229,11 @@ def list_user_info(id):
     questions = data_manager.get_user_all_question(id)
 
     answers = data_manager.get_user_all_answers(id)
-    comments = data_manager.get_user_all_comments(id)
-    print(comments,'asus 15:00')
-    return render_template('user_info.html', questions=questions, answers=answers, comments=comments)
+    comments_for_answers = data_manager.get_user_all_comments_answer(id)
+    comments_for_questions = data_manager.get_user_all_comments_question(id)
+    username = data_manager.get_user_by_id(id)
+    print(comments_for_answers,'asus 15:00')
+    return render_template('user_info.html', questions=questions, answers=answers, comments_for_answers=comments_for_answers, comments_for_questions=comments_for_questions, username=username)
 
 
 

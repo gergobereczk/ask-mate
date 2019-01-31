@@ -16,3 +16,15 @@ margin-right:590px;
      background-color: #ececec;
        text-align: center;
  }
+
+  .input-buttons {
+    color: darkslategrey;
+    background-color: whitesmoke;
+    padding: 10px 10px;
+    transitioin: linear;
+    transition-duration: 350ms;
+    transition-property: background, transform;
+    text-decoration: none;
+    border: none;
+    margin-left: 615px;
+}
