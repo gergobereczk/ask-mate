@@ -49,7 +49,14 @@ def add_a_question():
         title = new_data['title']
         message = new_data['message']
         image = new_data['image']
-        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image)
+        user_name = session['username']
+
+
+        user_id = data_manager.get_user_id(user_name)
+        print(user_id['user_id'],"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4")
+
+
+        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,user_id['user_id'])
         question_id = question_id_dict[0]['id']
 
         return redirect(url_for('display_question', question_id=question_id))
