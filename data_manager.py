@@ -370,7 +370,9 @@ left join  answer on answer.id = comment.answer_id
 WHERE user_table.user_id = %(id)s;
         """,  {'id': id})
 
-    infos=cursor.fetchall()
+    comments=cursor.fetchall()
+
+    return comments
 
 @data_connection.connection_handler
 def check_login_data(cursor, username):
