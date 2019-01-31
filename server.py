@@ -11,6 +11,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route("/")
 def list_5_questions():
     list_of_question = data_manager.show_5_questions()
+    print(data_manager.get_user_all_info())
     return render_template('list_questions.html', list_of_question=list_of_question)
 
 
@@ -30,6 +31,7 @@ def display_question(question_id):
     comment_to_question = data_manager.find_comment_by_question_id(question_id)
     for answer in answer_table:
         comments.append(data_manager.find_comment_by_answer_id(answer['id']))
+    print(question)
 
     return render_template("display_a_question.html", question=question,
                            answer_table=answer_table, view_number=add_view_count,
@@ -51,12 +53,10 @@ def add_a_question():
         image = new_data['image']
         user_name = session['username']
 
-
         user_id = data_manager.get_user_id(user_name)
-        print(user_id['user_id'],"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4")
 
-
-        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,user_id['user_id'])
+        question_id_dict = data_manager.add_question(submission_time, view_nr, vote_nr, title, message, image,
+                                                     user_id['user_id'])
         question_id = question_id_dict[0]['id']
 
         return redirect(url_for('display_question', question_id=question_id))
@@ -69,7 +69,11 @@ def add_a_comment_to_question(question_id):
     if request.method == 'POST':
         message_data = request.form.to_dict()
         message = message_data['message']
-        data_manager.add_comment_to_question(question_id, message)
+
+        user_name = session['username']
+
+        user_id = data_manager.get_user_id(user_name)
+        data_manager.add_comment_to_question(question_id, message, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
     return render_template('add_a_comment_to_question.html', question_id=question_id)
 
@@ -94,7 +98,10 @@ def add_a_comment_to_answer(answer_id):
         message_data = request.form.to_dict()
         message = message_data['message']
         answer_id = request.form.get('answer_id')
-        data_manager.add_comment_to_answer(answer_id, message)
+        user_name = session['username']
+
+        user_id = data_manager.get_user_id(user_name)
+        data_manager.add_comment_to_answer(answer_id, message, user_id['user_id'])
         return redirect(url_for('display_question', question_id=question_id))
 
     return render_template('add_a_comment_to_answer.html', answer_id=answer_id, question_id=question_id)
@@ -164,12 +171,11 @@ def search_stuff():
 def delete_comment(comment_id):
     if request.method == 'POST':
         data = request.form.to_dict()
-        print("egy")
-        # question_id = 1
+
         ids = request.form.to_dict()
         comment_id = ids['comment_id']
         question_id = data['question_id']
-        print(comment_id, question_id, "ezekasus")
+
         data_manager.delete_comment(comment_id)
         return redirect(url_for('display_question', question_id=question_id))
 
@@ -207,6 +213,34 @@ def register_user():
         return redirect(url_for('list_5_questions'))
 
     return render_template('register.html')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        user_info = request.form.to_dict()
+        username = user_info['username']
+
+        unhashed_pass = user_info['password']
+
+        retrieve_password = data_manager.check_login_data(username)
+
+        actual_password = retrieve_password[0]['password']
+
+        hashed_pass = hash.verify_password(unhashed_pass, actual_password)
+        print(hashed_pass, 'hash?')
+        print(username)
+        if hashed_pass is True:
+            session['username'] = request.form['username']
+            asus = 'yes'
+            print('ok')
+            return redirect(url_for('list_5_questions'))
+        else:
+            hdmi = 'no'
+            list_of_question = data_manager.show_5_questions()
+            return render_template('list_questions.html', hdmi=hdmi, list_of_question=list_of_question)
+    else:
+        return render_template('list_questions.html')
 
 
 if __name__ == '__main__':
