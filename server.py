@@ -170,24 +170,25 @@ def delete_comment(comment_id):
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        user_info = request.form.to_dict()
-        username = user_info['username']
-        print(username)
-        unhashed_pass = user_info['password']
-        print(unhashed_pass)
-        retrieve_password = data_manager.check_login_data(username)
-        print(retrieve_password)
-        actual_password = retrieve_password[0]['password']
-        print(actual_password)
-        hashed_pass = hash.verify_password(unhashed_pass, actual_password)
-        print(hashed_pass)
-        if hashed_pass is True:
-            session['username'] = request.form['username']
-            return redirect(url_for('list_5_questions'))
+        if request.method == 'POST':
+            user_info = request.form.to_dict()
+            username = user_info['username']
+            print(username)
+            unhashed_pass = user_info['password']
+            print(unhashed_pass)
+            retrieve_password = data_manager.check_login_data(username)
+            print(retrieve_password)
+            actual_password = retrieve_password[0]['password']
+            print(actual_password)
+            hashed_pass = hash.verify_password(unhashed_pass, actual_password)
+            print(hashed_pass)
+            if hashed_pass is True:
+                session['username'] = request.form['username']
+                return redirect(url_for('list_5_questions'))
+            else:
+                return redirect(url_for('list_5_questions'))
         else:
-            return redirect(url_for('list_5_questions'))
-    else:
-        return render_template('list_questions.html')
+            return render_template('list_questions.html')
 
 
 @app.route('/registration', methods=['GET', 'POST'])
