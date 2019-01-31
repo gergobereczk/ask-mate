@@ -2,15 +2,9 @@ h1 {
     font-family: Verdana;
     color: black;
     line-height: 60px;
-    background-color: whitesmoke;
     transition: linear;
     transition-duration: 450ms;
     transition-property: background, transform;
-}
-
-h1:hover {
-    color: black;
-    background-color: lightslategrey;
 }
 
 
@@ -20,7 +14,9 @@ h2 {
 
 body {
     font-family: Verdana;
-    background-color: whitesmoke;
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
 
 }
 
