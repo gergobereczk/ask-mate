@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, session, escape, redirect, url_for
 import data_manager
 import hash
 from datetime import datetime
@@ -11,7 +11,6 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route("/")
 def list_5_questions():
     list_of_question = data_manager.show_5_questions()
-    print(data_manager.get_user_all_info())
     return render_template('list_questions.html', list_of_question=list_of_question)
 
 
@@ -31,7 +30,6 @@ def display_question(question_id):
     comment_to_question = data_manager.find_comment_by_question_id(question_id)
     for answer in answer_table:
         comments.append(data_manager.find_comment_by_answer_id(answer['id']))
-    print(question)
 
     return render_template("display_a_question.html", question=question,
                            answer_table=answer_table, view_number=add_view_count,
@@ -88,7 +86,6 @@ def add_an_answer(question_id):
         submission_data = datetime.now()
         data_manager.add_answer(question_id, message, submission_data)
         return redirect(url_for('display_question', question_id=question_id))
-
 
     return render_template('add_answer.html', question_id=question_id,
                            submission_time='default', vote_nr='5')
@@ -183,6 +180,31 @@ def delete_comment(comment_id):
         return redirect(url_for('display_question', question_id=question_id))
 
 
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        if request.method == 'POST':
+            user_info = request.form.to_dict()
+            username = user_info['username']
+            unhashed_pass = user_info['password']
+            retrieve_password = data_manager.check_login_data(username)
+            actual_password = retrieve_password[0]['password']
+            hashed_pass = hash.verify_password(unhashed_pass, actual_password)
+            if hashed_pass is True:
+                session['username'] = request.form['username']
+                return redirect(url_for('list_5_questions'))
+            else:
+                return redirect(url_for('list_5_questions'))
+        else:
+            return render_template('list_questions.html')
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('list_5_questions'))
+
+
 @app.route('/registration', methods=['GET', 'POST'])
 def register_user():
     if request.method == 'POST':
@@ -194,32 +216,7 @@ def register_user():
 
     return render_template('register.html')
 
-@app.route('/login', methods=['POST'])
-def login():
-    if request.method == 'POST':
-        user_info = request.form.to_dict()
-        username = user_info['username']
 
-        unhashed_pass = user_info['password']
-
-        retrieve_password = data_manager.check_login_data(username)
-
-        actual_password = retrieve_password[0]['password']
-
-        hashed_pass = hash.verify_password(unhashed_pass, actual_password)
-        print (hashed_pass,'hash?')
-        print(username)
-        if hashed_pass is True:
-            session['username'] = request.form['username']
-            asus = 'yes'
-            print ('ok')
-            return redirect(url_for('list_5_questions'))
-        else:
-            hdmi='no'
-            list_of_question = data_manager.show_5_questions()
-            return render_template('list_questions.html', hdmi=hdmi,list_of_question=list_of_question)
-    else:
-        return render_template('list_questions.html')
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

@@ -294,6 +294,18 @@ def get_user_id(cursor, username):
 
 
 @data_connection.connection_handler
+def check_login_data(cursor, username):
+    cursor.execute("""
+                    SELECT username, password FROM user_table
+                    WHERE username=%(username)s;
+    """,            {'username': username})
+
+    login_info = cursor.fetchall()
+
+    return login_info
+
+
+@data_connection.connection_handler
 def add_user(cursor, username, password):
     cursor.execute("""
                     INSERT INTO user_table (username, password) 
@@ -311,26 +323,3 @@ def add_user(cursor, username, password):
     user = cursor.fetchone()
 
     return user
-
-@data_connection.connection_handler
-def check_login_data(cursor, username):
-    cursor.execute("""
-                    SELECT username, password FROM user_table
-                    WHERE username=%(username)s;
-    """,            {'username': username})
-
-    login_info = cursor.fetchall()
-
-    return login_info
-
-@data_connection.connection_handler
-def get_user_all_info(cursor):
-    cursor.execute(sql.SQL("""select user_table.user_id, user_table.username, question.message as question_message,question.title as question_title,comment.message as comment_message, answer.message as answer_message
-from user_table
-left join question on user_table.user_id = question.user_id
-left join comment on user_table.user_id = comment.user_id
-left join answer on user_table.user_id = answer.user_id
-        """))
-    infos = cursor.fetchall()
-
-    return infos
