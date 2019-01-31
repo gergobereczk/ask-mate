@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>List_users</title>
+    <title>Users</title>
 </head>
 <body>
 
-<p class="users">Users</p>
+<h1 align="center">Users</h1>
 
 
 
 {% for user in users %}
 <div class="all_user">
-<a href="/user_info/{{ user.user_id }}">{{ user.username }}</a>
+<ul class="user_list">
+<li class="user_line"><a href="/user_info/{{ user.user_id }}">{{ user.username }}</a>
 
 <br>
-{{ user.registry_date }}
-
+{{ "Joined: " }} {{ user.registry_date }}</li>
+</ul>
 </div>
 {% endfor %}
-     <a href="/">
+
+     <p align="center"><a href="/" >
             <button class="input-buttons" type="button">Back to Questions</button>
-        </a>
+        </a></p>
 </body>
 </html>

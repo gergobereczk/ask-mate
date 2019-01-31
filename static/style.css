@@ -197,6 +197,8 @@ tr:nth-child(odd) {
     transition-property: background, transform;
     text-decoration: none;
     border: none;
+    cursor: pointer;
+    border-radius: 10px;
 }
 
 .input-buttons:hover {
@@ -265,20 +267,20 @@ div.accept {
     background: none;
 }
 
-p.users {
-    margin-left: 630px;
-    font-size: 40px;
-    margin-bottom: 90px;
+.all_user {
+    padding-left: 600px;
+    padding-right: 600px;
 }
 
-div.all_user {
-    margin-left: 600px;
-    margin-right: 590px;
-
-    margin-bottom: 70px;
-    padding: 10px;
-    border: 2px solid black;
-    background-color: #ececec;
+.user_list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
     text-align: center;
 }
 
+.user_line {
+    font: 200 20px/1.5 Verdana;
+    border-bottom: 1px solid lightgrey;
+    text-align: center;
+}
