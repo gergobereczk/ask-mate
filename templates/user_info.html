@@ -2,68 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='user_info.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>User info</title>
 </head>
 <body>
-<p class="users">{{ username.username }}</p>
+<h1 align="center">User info</h1>
+<h2 align="center">{{ "Username: " }} {{ username.username }}</h2>
 
-<p class="interaction_title">Questions</p>
-
+<h3 align="center">Questions</h3>
     {% for question in questions %}
 
-<div class='question'>
+<div class='all_user'>
 
-{{ question.title }}
-<br>
-                {{ question.message }}
-
+<ul class="user_list">
+    <li class="user_line">{{ question.title }}
+        <br>
+        <p>{{ question.message }}</p>
+    </li>
+</ul>
 </div>
 {% endfor %}
-
-<p class="interaction_title">Answers</p>
+<br>
+<h3 align="center">Answers</h3>
 
     {% for answer in answers %}
 
-<div class='answer'>
-
-{{ answer.question_title }}
+<div class='all_user'>
+    <ul class="user_list">
+        <li class="user_line">{{ answer.question_title }}
 <br>
     <p class="answer_in_answer">{{ answer.message }}</p>
-
+        </li>
+    </ul>
 </div>
 
 {% endfor %}
 
-<p class="interaction_title">Comment to questions</p>
+<h3 align="center">Comments to questions</h3>
 
     {% for comment in comments_for_questions %}
 
-<div class='question'>
-
-{{ comment.question_title }}
+<div class='all_user'>
+    <ul class="user_list">
+        <li class="user_line">{{ comment.question_title }}
 <br>
                 {{ comment.question_message }}
     <br>
     <p class="comments"> {{ comment.message }} </p>
+        </li>
+    </ul>
 </div>
 {% endfor %}
 
-<p class="interaction_title">Comment to answers</p>
+<h3 align="center">Comments to answers</h3>
 
     {% for comment in comments_for_answers %}
 
-<div class='question'>
-
-{{ comment.answer_message }}
-
-    <p class="comments"> {{ comment.message }} </p>
+<div class='all_user'>
+    <ul class="user_list">
+        <li class="user_line">{{ comment.answer_message }}
+            <br>
+            <p class="comments"> {{ comment.message }} </p>
+        </li>
+    </ul>
 </div>
 {% endfor %}
 
-        <a href="/">
-            <button class="input-buttons" type="button">Back to Questions</button>
-        </a>
+<a href="/list_users"><br>
+            <p align="center"><button class="input-buttons" type="button">Back to Users</button></p>
+</a>
+<a href="/">
+    <p align="center"><button class="input-buttons" type="button">Back to Questions</button></p>
+</a>
 
 
 
