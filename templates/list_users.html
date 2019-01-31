@@ -2,37 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+       <link rel="stylesheet" href="{{ url_for('static', filename='list_users_style.css') }}">
     <title>List_users</title>
 </head>
 <body>
-<table>
-                                <tr>
-            <td>
-Username:
 
-        </td>
-        </tr>
+<p class="users">Users</p>
+
+
 
 {% for user in users %}
-      <td>
-
-
-        <tr>
-            <td>
+<div class="all_user">
 <a href="/user_info/{{ user.user_id }}">{{ user.username }}</a>
 
-        </td>
-        </tr>
-                  <tr>
-            <td>
+<br>
 {{ user.registry_date }}
 
-        </td>
-        </tr>
-
-
-          </td>
+</div>
 {% endfor %}
-</table>
+
 </body>
 </html>
