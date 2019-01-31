@@ -1,4 +1,3 @@
-import connection
 import data_connection
 from datetime import datetime
 from psycopg2 import sql

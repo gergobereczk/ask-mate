@@ -81,7 +81,7 @@ def add_an_answer(question_id):
     if request.method == 'POST':
         answer_data = request.form.to_dict()
         message = answer_data['message']
-        submission_data = datetime.now()
+        submission_data = datetime.now().isoformat(timespec='seconds')
         username = session['username']
         user_id = data_manager.get_user_id(username)
         data_manager.add_answer(question_id, message, submission_data, user_id['user_id'])
