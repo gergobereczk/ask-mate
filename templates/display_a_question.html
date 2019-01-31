@@ -7,6 +7,10 @@
     <meta charset="utf-8">
 </head>
 <body>
+<p>
+<h1 class="big" align="center"><strong>{{ question.title }}</strong></h1>
+</p>
+
 {% if 'username' in session %}
     <p class="username">Logged in as {{ session['username'] }}</p>
 {% else %}
